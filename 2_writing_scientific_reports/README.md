@@ -1,22 +1,22 @@
 Writing scientific reports
 ================
 Steven Moran
-(13 October, 2022)
+(19 January, 2023)
 
--   <a href="#scientific-reports-why"
-    id="toc-scientific-reports-why">Scientific reports: why?</a>
--   <a href="#r-markdown-overview" id="toc-r-markdown-overview">R Markdown:
-    overview</a>
--   <a href="#title" id="toc-title">Title</a>
-    -   <a href="#subtitle" id="toc-subtitle">Subtitle</a>
--   <a href="#automatic-referencing"
-    id="toc-automatic-referencing">Automatic referencing</a>
--   <a href="#additional-resources" id="toc-additional-resources">Additional
-    resources</a>
-    -   <a href="#r-markdown" id="toc-r-markdown">R Markdown</a>
-    -   <a href="#reference-management-software"
-        id="toc-reference-management-software">Reference management software</a>
--   <a href="#references" id="toc-references">References</a>
+- <a href="#scientific-reports-why"
+  id="toc-scientific-reports-why">Scientific reports: why?</a>
+- <a href="#r-markdown-overview" id="toc-r-markdown-overview">R Markdown:
+  overview</a>
+- <a href="#title" id="toc-title">Title</a>
+  - <a href="#subtitle" id="toc-subtitle">Subtitle</a>
+- <a href="#automatic-referencing"
+  id="toc-automatic-referencing">Automatic referencing</a>
+- <a href="#additional-resources" id="toc-additional-resources">Additional
+  resources</a>
+  - <a href="#r-markdown" id="toc-r-markdown">R Markdown</a>
+  - <a href="#reference-management-software"
+    id="toc-reference-management-software">Reference management software</a>
+- <a href="#references" id="toc-references">References</a>
 
 This report uses the [R programming
 language](https://cran.r-project.org/doc/FAQ/R-FAQ.html) (R Core Team
@@ -53,7 +53,7 @@ Do you follow a particular
 [IMRAD](https://en.wikipedia.org/wiki/IMRAD) organizational structure
 for the systematic organization of a research paper:
 
-![IMRAD workflow.](Wineglass_model_for_IMRaD_structure.png)
+![IMRAD workflow.](figures/Wineglass_model_for_IMRaD_structure.png)
 
 If so, let’s take a minute and discuss how we can organize ourselves.
 
@@ -70,11 +70,11 @@ data, changing code, etc., we find ourselves in science in a
 [replication crisis](https://en.wikipedia.org/wiki/Replication_crisis).
 Here are some resources that discuss this issue:
 
--   <https://doi.org/10.1371/journal.pmed.1004085>
--   <https://www.nature.com/articles/533452a>
--   <https://www.pnas.org/content/115/11/2628>
--   <https://www.vox.com/future-perfect/21504366/science-replication-crisis-peer-review-statistics>
--   <https://www.nature.com/articles/s41562-016-0021>
+- <https://doi.org/10.1371/journal.pmed.1004085>
+- <https://www.nature.com/articles/533452a>
+- <https://www.pnas.org/content/115/11/2628>
+- <https://www.vox.com/future-perfect/21504366/science-replication-crisis-peer-review-statistics>
+- <https://www.nature.com/articles/s41562-016-0021>
 
 Wikipedia puts it succinctly:
 
@@ -87,8 +87,8 @@ Science should be **reproducible**! Otherwise, scientists cannot test
 (i.e., reproduce or refute) each other’s results. Science at its core is
 meant to be reproducible! That’s why we have the scientific method:
 
--   <https://en.wikipedia.org/wiki/Scientific_method>
--   <https://www.sciencebuddies.org/science-fair-projects/science-fair/steps-of-the-scientific-method>
+- <https://en.wikipedia.org/wiki/Scientific_method>
+- <https://www.sciencebuddies.org/science-fair-projects/science-fair/steps-of-the-scientific-method>
 
 As such, data in published experiments and the code that was used to
 produce the data and/or analysis should be [openly
@@ -156,7 +156,7 @@ paper](https://www.frontiersin.org/articles/10.3389/fpsyg.2020.570895/full)
 using their data and analysis, which I put into an R Markdown report,
 which itself is reproducible:
 
--   <https://github.com/bambooforest/reviews/tree/master/Macklin-CordesRound2020>
+- <https://github.com/bambooforest/reviews/tree/master/Macklin-CordesRound2020>
 
 Needless to say, I found errors in their data, which they then went on
 to fix for the published version.
@@ -164,16 +164,16 @@ to fix for the published version.
 Thus, to combat the replication crisis, scientific workflows and ways of
 organization are helpful tools for creating reproducible science, e.g.:
 
--   <https://www.nature.com/articles/s41559-017-0160>
--   <https://doi.org/10.1371/journal.pcbi.1000424>
--   <https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1002303>
+- <https://www.nature.com/articles/s41559-017-0160>
+- <https://doi.org/10.1371/journal.pcbi.1000424>
+- <https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1002303>
 
 A popular form of creating reproducible work is to use data science
 notebooks, including R Markdown, e.g.:
 
--   <https://rmarkdown.rstudio.com/lesson-10.html>
--   <https://jupyter.org/>
--   <https://magenta.tensorflow.org/demos/colab/>
+- <https://rmarkdown.rstudio.com/lesson-10.html>
+- <https://jupyter.org/>
+- <https://magenta.tensorflow.org/demos/colab/>
 
 The tools you use may largely depend on the programming language(s) you
 are using.
@@ -182,13 +182,13 @@ There are also so-called “open data handbooks” that give more details
 about these issues. Two that I know of are these (but there may be ones
 in your own field):
 
--   <https://mitpress.mit.edu/books/open-handbook-linguistic-data-management>
--   <https://opendatahandbook.org>
+- <https://mitpress.mit.edu/books/open-handbook-linguistic-data-management>
+- <https://opendatahandbook.org>
 
 Lastly, a great resource about scientific writing and publishing is
 available here:
 
--   <https://plos.org/resources/writing-center/>
+- <https://plos.org/resources/writing-center/>
 
 ------------------------------------------------------------------------
 
@@ -200,7 +200,7 @@ automatic citation software (discussed below).
 
 Here is an example that even devises analyses as R packages:
 
--   <http://rmflight.github.io/posts/2014/07/analyses_as_packages.html>
+- <http://rmflight.github.io/posts/2014/07/analyses_as_packages.html>
 
 This is a bit advanced, nevertheless an interesting approach that we can
 discuss in class, if you are interested.
@@ -213,8 +213,8 @@ distribution of
 [uvular](https://en.wikipedia.org/wiki/Uvular_consonant) speech sounds
 (Urban and Moran 2021):
 
--   <https://github.com/urban-m/elev/blob/master/phylogenetic_study/phylogenetic_study.md>
--   <https://github.com/urban-m/elev/blob/master/phylogenetic_study/phylogenetic_study_plots.md>
+- <https://github.com/urban-m/elev/blob/master/phylogenetic_study/phylogenetic_study.md>
+- <https://github.com/urban-m/elev/blob/master/phylogenetic_study/phylogenetic_study_plots.md>
 
 # R Markdown: overview
 
@@ -224,11 +224,11 @@ in [R Markdown](https://rmarkdown.rstudio.com/lesson-1.html).
 
 For an overview of R Markdown, check out this video:
 
--   <https://rmarkdown.rstudio.com/lesson-1.html>
+- <https://rmarkdown.rstudio.com/lesson-1.html>
 
 And the tutorials here:
 
--   <https://rmarkdown.rstudio.com>
+- <https://rmarkdown.rstudio.com>
 
 What you are currently reading is [itself](README.Rmd) generated from an
 R Markdown file.
@@ -257,7 +257,7 @@ file should be generated, e.g., I am telling it to produce a
     ---
     title: "Writing scientific reports"
     author: "Steven Moran"
-    date: "(13 October, 2022)"
+    date: "(19 January, 2023)"
     output:
       github_document
     ---
@@ -265,8 +265,8 @@ file should be generated, e.g., I am telling it to produce a
 This is because then the output (i.e., the .md file) will display nicely
 in the browser. There are many options for different output formats:
 
--   <https://rmarkdown.rstudio.com/lesson-9.html>
--   <https://epirhandbook.com/en/reports-with-r-markdown.html>
+- <https://rmarkdown.rstudio.com/lesson-9.html>
+- <https://epirhandbook.com/en/reports-with-r-markdown.html>
 
 For example, you can set your report to create an [HTML
 document](https://bookdown.org/yihui/rmarkdown/html-document.html):
@@ -274,7 +274,7 @@ document](https://bookdown.org/yihui/rmarkdown/html-document.html):
     ---
     title: "Writing scientific reports"
     author: "Steven Moran"
-    date: "(13 October, 2022)"
+    date: "(19 January, 2023)"
     output:
       html_document
     ---
@@ -286,7 +286,7 @@ this report, e.g., so that you can submit it for publication?
     ---
     title: "Writing scientific reports"
     author: "Steven Moran"
-    date: "(13 October, 2022)"
+    date: "(19 January, 2023)"
     output:
       pdf_document
     ---
@@ -299,7 +299,7 @@ one of my old professors):
     ---
     title: "Writing scientific reports"
     author: "Steven Moran"
-    date: "(13 October, 2022)"
+    date: "(19 January, 2023)"
     output:
       word_document
     ---
@@ -310,7 +310,7 @@ You can even create for example slides, such as in
     ---
     title: "Writing scientific reports"
     author: "Steven Moran"
-    date: "(13 October, 2022)"
+    date: "(19 January, 2023)"
     output:
       powerpoint_presentation
     ---
@@ -324,7 +324,7 @@ below). So, for example, this file specifies the header as:
     ---
     title: "Writing scientific reports"
     author: "Steven Moran"
-    date: "(13 October, 2022)"
+    date: "(19 January, 2023)"
     output:
       github_document:
           toc: true
@@ -346,7 +346,7 @@ that specifies how document should be displayed.
 
 Here are some basics:
 
--   <https://bookdown.org/yihui/rmarkdown/basics.html>
+- <https://bookdown.org/yihui/rmarkdown/basics.html>
 
 For example, if I use the `#` hash symbol like this:
 
@@ -369,8 +369,8 @@ A good thing to keep near when you are learning R Markdown are [cheat
 sheets](https://en.wikipedia.org/wiki/Cheat_sheet). [Let me google some
 for you](https://www.dictionary.com/e/slang/lmgtfy/):
 
--   <https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf>
--   <https://ethz.ch/content/dam/ethz/special-interest/math/statistics/sfs/Education/Advanced%20Studies%20in%20Applied%20Statistics/course-material-1719/Datenanalyse/rmarkdown-2.pdf>
+- <https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf>
+- <https://ethz.ch/content/dam/ethz/special-interest/math/statistics/sfs/Education/Advanced%20Studies%20in%20Applied%20Statistics/course-material-1719/Datenanalyse/rmarkdown-2.pdf>
 
 These cheat sheets are condense visualizations and explain the R
 Markdown workflow. Please have a look at them.
@@ -378,8 +378,8 @@ Markdown workflow. Please have a look at them.
 There are not that many things to remember with regard to basic
 formatting. For example, bullet lists are helpful:
 
--   Item 1
--   Item 2
+- Item 1
+- Item 2
 
 Which is formatted like this:
 
@@ -401,8 +401,8 @@ Or this:
 Scientific reports and scientific publications require that you cite
 (aka reference) your sources, e.g.:
 
--   <https://guides.library.ucsc.edu/writing/cite_sources>
--   <https://en.wikipedia.org/wiki/Wikipedia:Citing_sources>
+- <https://guides.library.ucsc.edu/writing/cite_sources>
+- <https://en.wikipedia.org/wiki/Wikipedia:Citing_sources>
 
 One way of [citing your sources](https://en.wikipedia.org/wiki/Citation)
 and creating a references cited section at the end of your report or
@@ -413,13 +413,13 @@ style you are using).
 
 There are many citation styles:
 
--   <https://www.scribbr.com/citing-sources/citation-styles/>
+- <https://www.scribbr.com/citing-sources/citation-styles/>
 
 including:
 
--   [MLA](https://en.wikipedia.org/wiki/MLA_Handbook)
--   [APA](https://en.wikipedia.org/wiki/APA_style)
--   [Chicago](https://en.wikipedia.org/wiki/The_Chicago_Manual_of_Style)
+- [MLA](https://en.wikipedia.org/wiki/MLA_Handbook)
+- [APA](https://en.wikipedia.org/wiki/APA_style)
+- [Chicago](https://en.wikipedia.org/wiki/The_Chicago_Manual_of_Style)
 
 which differ in terms of how they are displayed (particular in the
 position or presentation of the authors or year). For example, MLA:
@@ -445,7 +445,7 @@ Chicago:
 You can of course create your references cited by hand. A good place to
 get citations is [Google Scholar](https://scholar.google.com), e.g.:
 
--   <https://libguides.tulane.edu/citation_tools/google_scholar>
+- <https://libguides.tulane.edu/citation_tools/google_scholar>
 
 However, if you are going to be doing a lot of scientific research,
 which requires a lot of citing, I implore you to consider using
@@ -464,7 +464,7 @@ Many people use [Mendeley](https://www.mendeley.com).
 As usual, there are a lot of different reference management software
 packages, e.g.:
 
--   <https://en.wikipedia.org/wiki/Comparison_of_reference_management_software>
+- <https://en.wikipedia.org/wiki/Comparison_of_reference_management_software>
 
 I tend to write papers in the
 [LaTeX](https://en.wikipedia.org/wiki/LaTeX), a typesetting software
@@ -490,26 +490,26 @@ systems](https://langsci-press.org/catalog/book/176) (Moran and Cysouw
 I wrote both books in LaTeX and BibTeX. For example, the source code for
 Unicode Cookbook is available here in GitHub:
 
--   <https://github.com/unicode-cookbook/cookbook>
+- <https://github.com/unicode-cookbook/cookbook>
 
 For example, here is a chapter of the book written in LaTeX Markdown:
 
--   <https://github.com/unicode-cookbook/cookbook/blob/master/book/chapters/pitfalls.tex>
+- <https://github.com/unicode-cookbook/cookbook/blob/master/book/chapters/pitfalls.tex>
 
 And here are the references as they are in the BibTeX Markdown:
 
--   <https://github.com/unicode-cookbook/cookbook/blob/master/book/localbibliography.bib>
+- <https://github.com/unicode-cookbook/cookbook/blob/master/book/localbibliography.bib>
 
 If you are interested in LaTeX, here is an excellent tutorial:
 
--   <http://mally.stanford.edu/~sr/computing/latex.html>
+- <http://mally.stanford.edu/~sr/computing/latex.html>
 
 Unless you are a bit tech savvy or hungry to learn LaTeX (it’s actually
 not that hard), ask me about it! Nowadays, many people use LaTeX through
 the online and collaborative web interface
 [Overleaf](https://www.overleaf.com), e.g.:
 
--   <https://www.overleaf.com/learn>
+- <https://www.overleaf.com/learn>
 
 ------------------------------------------------------------------------
 
@@ -550,8 +550,8 @@ responsible for tooth growth) in 60 guinea pigs. Each animal received
 one of three dose levels of vitamin C (0.5, 1, and 2 mg/day). By one of
 two delivery methods (sup):
 
--   orange juice (OJ) or
--   ascorbic acid/vitamin C (VC)
+- orange juice (OJ) or
+- ascorbic acid/vitamin C (VC)
 
 Now let’s ask if the dose of vitamin C affects the growth of their teeth
 and whether it depends on the delivery method.
@@ -582,7 +582,7 @@ header in the .Rmd file:
     ---
     title: "Writing scientific reports"
     author: "Steven Moran"
-    date: "(13 October, 2022)"
+    date: "(19 January, 2023)"
     output:
       github_document
     bibliography: 'references.bib'
@@ -609,11 +609,11 @@ this:
 Bibliographies and citations in R Markdown reports are discussed for
 example here:
 
--   <https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html>
+- <https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html>
 
 in this pretty good online book:
 
--   <https://bookdown.org/yihui/rmarkdown-cookbook/>
+- <https://bookdown.org/yihui/rmarkdown-cookbook/>
 
 and which of course the proper thing to do is cite it (Xie, Dervieux,
 and Riederer 2020). What’s an easy way to do that? Of course you can do
@@ -624,16 +624,16 @@ the citation (I simply click on `Bibtex` and copy and paste the text
 into the .bib file and then I usually have to clean it up by making some
 edits).
 
-![Getting the citation.](citation_example.png) I can give a demo in the
-class.
+![Getting the citation.](figures/citation_example.png) I can give a demo
+in the class.
 
 # Additional resources
 
 ## R Markdown
 
--   <https://r4ds.had.co.nz/r-markdown.html>
--   <https://www.earthdatascience.org/courses/earth-analytics/document-your-science/intro-to-the-rmarkdown-format-and-knitr/>
--   <https://bookdown.org/yihui/rmarkdown/>
+- <https://r4ds.had.co.nz/r-markdown.html>
+- <https://www.earthdatascience.org/courses/earth-analytics/document-your-science/intro-to-the-rmarkdown-format-and-knitr/>
+- <https://bookdown.org/yihui/rmarkdown/>
 
 ## Reference management software
 
@@ -644,18 +644,18 @@ plain text, as mentioned above, one can interact with it through a
 BibTeX I use [BibDesk](https://en.wikipedia.org/wiki/BibDesk), but note
 it is only available for Mac:
 
--   <https://bibdesk.sourceforge.io>
+- <https://bibdesk.sourceforge.io>
 
 A nice Windows BibTeX GUI is
 [JabRef](https://en.wikipedia.org/wiki/JabRef):
 
--   <https://www.jabref.org>
+- <https://www.jabref.org>
 
 Note however, there are lots of good software programs out there. Recall
 again the comparison of software for reference management software
 programs:
 
--   <https://en.wikipedia.org/wiki/Comparison_of_reference_management_software>
+- <https://en.wikipedia.org/wiki/Comparison_of_reference_management_software>
 
 But obviously you can also search the web for the newest, or easiest to
 use, or most popular programs – if you are not already using one
