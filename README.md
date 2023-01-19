@@ -4,9 +4,7 @@
 
 * Spring 2023, University of Miami
 * Location: TBA (Tuesdays and Thursdays, 11:00--12:15)
-* Course instructor: [Steven Moran](https://www.unine.ch/evolang/home/team/steven-moran.html) (he/him). Email: \<steven.moran@miami.edu\>
-* Office: TBA
-* Office hours: By appointment via email
+* Course instructor: [Steven Moran](https://www.unine.ch/evolang/home/team/steven-moran.html) (he/him).
 
 ## Course description
 
@@ -19,6 +17,16 @@ The basic principles and methods of [data science](https://en.wikipedia.org/wiki
 * Learn to do basic scientific reporting in R, RMarkdown
 * Learn basic data manipulation and statistical modeling
 * Conduct a scientific data practical
+
+## Evaluation  
+
+Continuous assessment with data science exercises (graded). Work not submitted by the required deadline will result in a fail for that given assessment.
+
+* Completion of all homework assignment in DataCamp (pass/fail)
+* Presentation of material in the weekly reading / data practical (30%)
+* [Data practical](data_practical.md) (70%)
+
+Graduate students will have additional readings and an in-class presentation.
 
 **Grade scale**: The grade scale will be as follows: A+, 99-100; A, 93-98; A-, 90-92; B+, 87-89; B, 83-86; B-, 80- 82; C+, 77-79; C, 73-76; C-, 70-72; D+, 67-69; D, 63-66; F, 0-62. Standard rounding protocols will be used, in  that values >0.5% will be rounded up.  
 
