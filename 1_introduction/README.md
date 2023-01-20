@@ -9,10 +9,19 @@ This course assumes you are familiar with the basics of the [R programming langu
 
 * https://app.datacamp.com/learn/courses/free-introduction-to-r
 
+Here's some history about R and a description of what it is sued for and by whom:
+
+* https://www.datacamp.com/blog/all-about-r
+
 
 ## RStudio
 
 Install [RStudio](https://www.rstudio.com), unless you are already an R pro and prefer some other [GUI](https://en.wikipedia.org/wiki/Graphical_user_interface), [CLI](https://en.wikipedia.org/wiki/Command-line_interface), or [computer program](https://en.wikipedia.org/wiki/Computer_program) that allows you to [create R markdown](https://rmarkdown.rstudio.com/authoring_quick_tour.html) reports that will be stored in your GitHub repository. Note: be weary of automatic spell checking -- and presumably grammar checking -- in RStudio.
+
+There are a lot of tutorials out there about RStudio. Here are two useful ones:
+
+* https://www.youtube.com/watch?v=FIrsOBy5k58
+* https://www.datacamp.com/tutorial/r-studio-tutorial
 
 
 ## Spreadsheets
