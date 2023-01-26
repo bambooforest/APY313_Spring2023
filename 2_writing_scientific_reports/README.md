@@ -1,7 +1,7 @@
 Writing scientific reports
 ================
 Steven Moran
-(19 January, 2023)
+(24 January, 2023)
 
 - <a href="#scientific-reports-why"
   id="toc-scientific-reports-why">Scientific reports: why?</a>
@@ -257,7 +257,7 @@ file should be generated, e.g., I am telling it to produce a
     ---
     title: "Writing scientific reports"
     author: "Steven Moran"
-    date: "(19 January, 2023)"
+    date: "(24 January, 2023)"
     output:
       github_document
     ---
@@ -274,7 +274,7 @@ document](https://bookdown.org/yihui/rmarkdown/html-document.html):
     ---
     title: "Writing scientific reports"
     author: "Steven Moran"
-    date: "(19 January, 2023)"
+    date: "(24 January, 2023)"
     output:
       html_document
     ---
@@ -286,7 +286,7 @@ this report, e.g., so that you can submit it for publication?
     ---
     title: "Writing scientific reports"
     author: "Steven Moran"
-    date: "(19 January, 2023)"
+    date: "(24 January, 2023)"
     output:
       pdf_document
     ---
@@ -299,7 +299,7 @@ one of my old professors):
     ---
     title: "Writing scientific reports"
     author: "Steven Moran"
-    date: "(19 January, 2023)"
+    date: "(24 January, 2023)"
     output:
       word_document
     ---
@@ -310,7 +310,7 @@ You can even create for example slides, such as in
     ---
     title: "Writing scientific reports"
     author: "Steven Moran"
-    date: "(19 January, 2023)"
+    date: "(24 January, 2023)"
     output:
       powerpoint_presentation
     ---
@@ -324,7 +324,7 @@ below). So, for example, this file specifies the header as:
     ---
     title: "Writing scientific reports"
     author: "Steven Moran"
-    date: "(19 January, 2023)"
+    date: "(24 January, 2023)"
     output:
       github_document:
           toc: true
@@ -582,7 +582,7 @@ header in the .Rmd file:
     ---
     title: "Writing scientific reports"
     author: "Steven Moran"
-    date: "(19 January, 2023)"
+    date: "(24 January, 2023)"
     output:
       github_document
     bibliography: 'references.bib'
