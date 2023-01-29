@@ -8,6 +8,7 @@ output:
 bibliography: '../2_writing_scientific_reports/references.bib'      
 ---
 
+*** 
 This report uses the [R programming language](https://cran.r-project.org/doc/FAQ/R-FAQ.html) [@R] and the following [R libraries](https://r-pkgs.org/intro.html) [@tidyverse;@knitr].
 
 ```{r, message=FALSE, warning=FALSE}
@@ -82,8 +83,8 @@ What does the plot tell us about the raw data?
 
 Here are some more examples. Is each *data* or *information*?
 
-1. a student's test score
-2. average score of the class
+1. A student's test score
+2. Average score of the class
 3. 2000
 4. 2000 Neuchatel
 5. $2000 monthly income
@@ -367,6 +368,8 @@ Find the craziest Unicode symbol!
 
 # Data types in computer programming
 
+## Overview
+
 [Data types](https://en.wikipedia.org/wiki/Data_type) for computer programming typically refer to various *types* of data that can be interpreted by the computer's [compiler](https://en.wikipedia.org/wiki/Compiler). In programming languages, these include types such as:
 
 * [Integers](https://en.wikipedia.org/wiki/Integer_(computer_science))
@@ -378,11 +381,171 @@ Find the craziest Unicode symbol!
 
 In a [typed programming language](https://en.wikipedia.org/wiki/Type_system), the data type provides information for the compiler to check the [correctness of the computer program](https://en.wikipedia.org/wiki/Correctness_(computer_science)).
 
-R has several data types underlying its data structures, e.g.:
+
+## In R
+
+R has **five** basic [data types](https://en.wikipedia.org/wiki/Data_type):
+
+* integer -- whole numbers
+* numeric -- numbers with decimal points (aka doubles or floats)
+* character -- aka 'strings' (or "strings"; must have quotes around them)
+* logical -- binary value, either TRUE or FALSE
+* complex -- imaginary number (don't worry about these for this class)
+
+Each can be assigned to a [variable](https://en.wikipedia.org/wiki/Variable_(computer_science)). In other words, variables store data of different data types. Different data types can do different things.
+
+Generally, R does not explicitly state what data type is being assigned but infers it from the thing (on the right) being assigned to the variable (on the left). 
+
+```{r}
+i <- 1
+n <- 0.1
+c <- 'string'
+l <- TRUE
+```
+
+The variables can then be used or manipulated with different [operators](https://en.wikipedia.org/wiki/Operator_(computer_programming)) or [functions](https://en.wikipedia.org/wiki/Function_(computer_programming)).
+
+```{r}
+i + i
+i + n
+```
+
+But note that not all operators or functions work with all data types.
+
+```{r}
+# We comment this line of code out because otherwise knitting this document fails.
+# Below is the erorr you will get if you try to add two strings with `+`.
+
+# c + c 
+# Error in c + c : non-numeric argument to binary operator
+```
+
+If you want to [concatenate](https://en.wikipedia.org/wiki/Concatenation) two strings (two character data types) in R, there is a function called `paste()` to do so.
+
+```{r}
+paste(c, c)
+paste(c, "+", c)
+paste("Here is a", c, "and another", c, "and another", c, "...")
+```
+
+When you have a variable and want to check what its data type is, use the `class()` function.
+
+```{r}
+class(i)
+class(n)
+class(c)
+class(l)
+```
+
+An important set of operators when working with data types in R involve comparison.
+
+* == -- is equal to
+* != -- is not equal to (exclamation point or "bang" typically means NOT in programming languages)
+* < -- less than
+* > -- greater than
+* <= -- less than or equal to
+* >= -- greater than or equal to
+
+Some examples.
+
+```{r}
+i == i
+i < n
+l != l
+c != c
+
+# or without variables
+1 == 1
+"cat" == "cats"
+"cat" != "cat"
+```
+When you have a sequence of the **same** data type, R calls these vectors. 
+
+```{r}
+# A vector of strings
+fruits <- c("banana", "apple", "orange")
+
+# A vector of numbers
+numbers <- c(1, 2, 1)
+
+# A vector of logical values
+me_likes <- c(TRUE, FALSE, TRUE)
+```
+
+You can print these to see their contents.
+
+```{r}
+fruits
+numbers
+me_likes
+```
+
+Certain functions also work on vectors.
+
+```{r}
+length(fruits)
+sort(fruits)
+unique(numbers)
+summary(numbers)
+```
+
+Columns in your table data -- your data frame -- will consist of vectors of the same length, which may have different data types **across columns**. Here we create a data frame (tabular data object) from our vectors above.
+
+```{r}
+df <- data.frame (
+  fruits,
+  numbers,
+  me_likes
+)
+
+df
+```
+
+Of course you can also specify the vectors within the `data.frame()` function.
+
+```{r}
+df2 <- data.frame (
+  countries = c("Japan", "Germany", "UK"),
+  GDP_trillions = c(4.8, 3.7, 2.6),
+  population_millions = c(127, 82, 67)
+)
+
+df2
+```
+
+Like functions on vectors, certain function can be used on data frames.
+
+```{r}
+summary(df2)
+```
+
+We will learn more about accessing and manipulating vectors and data frames in the lecture on [data wrangling](../4_data_wrangling/README.md).
+
+Lastly, factors in R are used to categorize data.
+
+```{r}
+beer_types <- factor(c("IPA", "Stout", "Pilsner", "Pilsner", "Porter", "IPA", "Stout", "IPA"))
+beer_types
+```
+
+Factors become important when we work with categorical variables for things like statistical testing.
+
+*** 
+
+A useful function for looking up commands is `help.search()`, where you can search on a keyword within the parentheses.
+
+```{r}
+# help.search("concatenate")
+```
+
+Here are some other resources that describe data types in R:
 
 * https://www.r-bloggers.com/2021/09/r-data-types/
 * https://www.w3schools.com/r/r_data_types.asp
 * https://statsandr.com/blog/data-types-in-r/
+
+
+## Programming vs statistics
 
 [Data types for computer programming](https://en.wikipedia.org/wiki/Data_type) have comparable types of [data types in statistics](https://en.wikipedia.org/wiki/Statistical_data_type) -- or how else would we use computer programs to do statistics? For example:
 

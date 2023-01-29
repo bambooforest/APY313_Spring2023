@@ -2,29 +2,26 @@ Data wrangling
 ================
 Steven Moran
 
-12 October, 2022
+29 January, 2023
 
--   <a href="#overview" id="toc-overview">Overview</a>
--   <a href="#data-wrangling-in-r" id="toc-data-wrangling-in-r">Data
-    wrangling in R</a>
-    -   <a href="#tidyverse" id="toc-tidyverse">tidyverse</a>
-    -   <a href="#loading-data" id="toc-loading-data">Loading data</a>
-    -   <a href="#dplyr" id="toc-dplyr">dplyr</a>
-        -   <a href="#select" id="toc-select"><code>select()</code></a>
-        -   <a href="#arrange" id="toc-arrange"><code>arrange()</code></a>
-        -   <a href="#mutate" id="toc-mutate"><code>mutate()</code></a>
-        -   <a href="#filter" id="toc-filter"><code>filter()</code></a>
-        -   <a href="#summarize" id="toc-summarize"><code>summarize()</code></a>
--   <a href="#databases-advanced" id="toc-databases-advanced">Databases
-    (advanced)</a>
-    -   <a href="#overview-1" id="toc-overview-1">Overview</a>
-    -   <a href="#joining-tables" id="toc-joining-tables">Joining tables</a>
--   <a href="#code-style--advanced" id="toc-code-style--advanced">Code style
-    💩 (advanced)</a>
-    -   <a href="#code-style-in-r" id="toc-code-style-in-r">Code style in R</a>
-    -   <a href="#stylr-and-lintr" id="toc-stylr-and-lintr">stylr and lintr</a>
-    -   <a href="#tests" id="toc-tests">Tests</a>
--   <a href="#references" id="toc-references">References</a>
+- [Overview](#overview)
+- [Data wrangling in R](#data-wrangling-in-r)
+  - [tidyverse](#tidyverse)
+  - [Loading data](#loading-data)
+  - [dplyr](#dplyr)
+    - [`select()`](#select)
+    - [`arrange()`](#arrange)
+    - [`mutate()`](#mutate)
+    - [`filter()`](#filter)
+    - [`summarize()`](#summarize)
+- [Databases (advanced)](#databases-advanced)
+  - [Overview](#overview-1)
+  - [Joining tables](#joining-tables)
+- [Code style 💩 (advanced)](#code-style--advanced)
+  - [Code style in R](#code-style-in-r)
+  - [stylr and lintr](#stylr-and-lintr)
+  - [Tests](#tests)
+- [References](#references)
 
 ------------------------------------------------------------------------
 
@@ -56,32 +53,37 @@ Here’s a [visualization of the
 process](https://en.wikipedia.org/wiki/Data_wrangling#/media/File:Data_Wrangling_From_Messy_To_Clean_Data_Management.jpg)
 of converting raw data to formatted (or structured) data:
 
-![Visualization of data
-wrangling](figures/Data_Wrangling_From_Messy_To_Clean_Data_Management.jpg)
+<figure>
+<img
+src="figures/Data_Wrangling_From_Messy_To_Clean_Data_Management.jpg"
+alt="Visualization of data wrangling" />
+<figcaption aria-hidden="true">Visualization of data
+wrangling</figcaption>
+</figure>
 
 ------------------------------------------------------------------------
 
 The steps in data wrangling, broadly, include:
 
--   **Explore your data** – look at and think about your data and maybe
-    come up with some questions to ask.
--   **Structure your data** – organize the data (necessarily if its in a
-    raw format) and structure it for the functions or methods that will
-    take it as input.
--   **Clean your data** – in the process of dealing with data
-    (especially raw data), you may need to clean it, e.g., get all the
-    dates into the same format (Feb 1 vs 2/1 vs 1/2 etc.).
--   **Enrich your data** – do you need more data for your analysis?
-    E.g., you have a list of languages but you need to know where they
-    are spoken to plot them on a world map.
--   **Validate your data** – basically making sure that your structured
-    and cleaned data is actually structured and clean – also commonly
-    refereed to as [data
-    validation](https://en.wikipedia.org/wiki/Data_validation) and in
-    software development, [software
-    testing](https://en.wikipedia.org/wiki/Software_testing).
--   **Publish your data** – publish your analysis, findings, etc., for
-    consumption, reproducibility, archiving, etc.
+- **Explore your data** – look at and think about your data and maybe
+  come up with some questions to ask.
+- **Structure your data** – organize the data (necessarily if its in a
+  raw format) and structure it for the functions or methods that will
+  take it as input.
+- **Clean your data** – in the process of dealing with data (especially
+  raw data), you may need to clean it, e.g., get all the dates into the
+  same format (Feb 1 vs 2/1 vs 1/2 etc.).
+- **Enrich your data** – do you need more data for your analysis? E.g.,
+  you have a list of languages but you need to know where they are
+  spoken to plot them on a world map.
+- **Validate your data** – basically making sure that your structured
+  and cleaned data is actually structured and clean – also commonly
+  refereed to as [data
+  validation](https://en.wikipedia.org/wiki/Data_validation) and in
+  software development, [software
+  testing](https://en.wikipedia.org/wiki/Software_testing).
+- **Publish your data** – publish your analysis, findings, etc., for
+  consumption, reproducibility, archiving, etc.
 
 # Data wrangling in R
 
@@ -89,9 +91,14 @@ Here is a visualization of how the data science workflow works in the
 book [R for Data Science](https://r4ds.had.co.nz/index.html) within the
 so-called [tidyverse](https://www.tidyverse.org):
 
--   <https://r4ds.had.co.nz/introduction.html>
+- <https://r4ds.had.co.nz/introduction.html>
 
-![Typical data science project workflow](figures/WickhamGrolemund.png)
+<figure>
+<img src="figures/WickhamGrolemund.png"
+alt="Typical data science project workflow" />
+<figcaption aria-hidden="true">Typical data science project
+workflow</figcaption>
+</figure>
 
 That is you:
 
@@ -119,23 +126,15 @@ data science!
 <!-- and to some extent -- if we are trying to follow [coding best practices](https://en.wikipedia.org/wiki/Coding_best_practices); see also [here](https://www.cs.utexas.edu/~mitra/csSummer2014/cs312/lectures/bestPractices.html) -- [software engineering](https://en.wikipedia.org/wiki/Software_engineering). -->
 <!-- 
 ## Loading data
-
-When working with data you first have to have some data. What about this data for example?
-
-* https://digital.library.unt.edu/ark:/67531/metadc855661/
+&#10;When working with data you first have to have some data. What about this data for example?
+&#10;* https://digital.library.unt.edu/ark:/67531/metadc855661/
 * https://digital.library.unt.edu/ark:/67531/metadc855661/m1/2/
-
-How would you load it into R?
-
-What kind of data type is it?
-
-What kind of data structure?
-
-The "tidying" and "transforming" of your data is commonly referred to as "data wrangling".
-
-* https://r4ds.had.co.nz/introduction.html
-
-when your data is tidy, each column is a variable, and each row is an observation. Tidy data is important because the consistent structure lets you focus your struggle on questions about the data, not fighting to get the data into the right form for different functions.
+&#10;How would you load it into R?
+&#10;What kind of data type is it?
+&#10;What kind of data structure?
+&#10;The "tidying" and "transforming" of your data is commonly referred to as "data wrangling".
+&#10;* https://r4ds.had.co.nz/introduction.html
+&#10;when your data is tidy, each column is a variable, and each row is an observation. Tidy data is important because the consistent structure lets you focus your struggle on questions about the data, not fighting to get the data into the right form for different functions.
 -->
 
 ------------------------------------------------------------------------
@@ -144,8 +143,8 @@ The [R](https://en.wikipedia.org/wiki/R_(programming_language))
 programming language has a long history. Here are some resources about
 it:
 
--   <https://bookdown.org/rdpeng/rprogdatascience/history-and-overview-of-r.html>
--   <https://medium.com/@ArtisOne/r-overview-and-history-75ecb036d0df>
+- <https://bookdown.org/rdpeng/rprogdatascience/history-and-overview-of-r.html>
+- <https://medium.com/@ArtisOne/r-overview-and-history-75ecb036d0df>
 
 Primary R is available via the [Comprehensive R Archive
 Network](https://cran.r-project.org) and the [R project
@@ -156,13 +155,13 @@ package](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html)
 contains the basic functions for reading, writing, accessing, and
 working with data. Here is a tutorial:
 
--   <https://cran.r-project.org/doc/contrib/Paradis-rdebuts_en.pdf>
+- <https://cran.r-project.org/doc/contrib/Paradis-rdebuts_en.pdf>
 
 In this course we will also use the `tidyverse` library, which contains
 a set of functions that have corresponding base R functions. Here is an
 overview:
 
--   <https://tavareshugo.github.io/data_carpentry_extras/base-r_tidyverse_equivalents/base-r_tidyverse_equivalents.html>
+- <https://tavareshugo.github.io/data_carpentry_extras/base-r_tidyverse_equivalents/base-r_tidyverse_equivalents.html>
 
 Let’s look at some examples. First we will load some fake data that
 we’ve created that includes the height and weight of some made up cats
@@ -395,19 +394,19 @@ underlying design philosophy, grammar, and data structures.
 [packages](https://www.tidyverse.org/packages/) for data science. We may
 not use all of them in this class, but they currently include:
 
--   [ggplot2](https://ggplot2.tidyverse.org): for creating graphics
--   [dplyr](https://dplyr.tidyverse.org): for data manipulation
--   [tidyr](https://tidyr.tidyverse.org): to make your data tidy
--   [readr](https://readr.tidyverse.org): for reading / loading data
--   [purr](https://purrr.tidyverse.org): enhancements for functional
-    programming
--   [tibble](https://tibble.tidyverse.org): update of the R [data
-    frame](https://stat.ethz.ch/R-manual/R-devel/library/base/html/data.frame.html)
--   [stringr](https://stringr.tidyverse.org): functions for working with
-    strings
--   [forcats](https://forcats.tidyverse.org): functions for dealing with
-    [factors](https://stat.ethz.ch/R-manual/R-devel/library/base/html/factor.html)
-    in R
+- [ggplot2](https://ggplot2.tidyverse.org): for creating graphics
+- [dplyr](https://dplyr.tidyverse.org): for data manipulation
+- [tidyr](https://tidyr.tidyverse.org): to make your data tidy
+- [readr](https://readr.tidyverse.org): for reading / loading data
+- [purr](https://purrr.tidyverse.org): enhancements for functional
+  programming
+- [tibble](https://tibble.tidyverse.org): update of the R [data
+  frame](https://stat.ethz.ch/R-manual/R-devel/library/base/html/data.frame.html)
+- [stringr](https://stringr.tidyverse.org): functions for working with
+  strings
+- [forcats](https://forcats.tidyverse.org): functions for dealing with
+  [factors](https://stat.ethz.ch/R-manual/R-devel/library/base/html/factor.html)
+  in R
 
 To load the `tidyverse` package, which then includes all the libraries
 above, first install it and then load:
@@ -471,7 +470,7 @@ class(df)
 str(df)
 ```
 
-    ## spec_tbl_df [2,859 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+    ## spc_tbl_ [2,859 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
     ##  $ age          : num [1:2859] 17 27 21 21 21 21 18 23 17 21 ...
     ##  $ birthdate    : Date[1:2859], format: "1996-04-12" "1986-05-14" ...
     ##  $ gender       : chr [1:2859] "Male" "Male" "Male" "Male" ...
@@ -572,13 +571,13 @@ basics](https://r4ds.had.co.nz/transform.html?q=dplyr#dplyr-basics).
 `dplyr` is super-fast on data frames. Essentially, one works with five
 basic “verbs” or functions:
 
--   `select()`: for subsetting variables/columns
--   `arrange()`: for re-ordering rows
--   `mutate()`: for adding new columns
--   `filter()`: for subsetting rows
--   `summarize()` (or `summarise()` if you prefer [British
-    spelling](https://en.wikipedia.org/wiki/American_and_British_English_spelling_differences)):
-    for reducing each group to a smaller number of summary statistics
+- `select()`: for subsetting variables/columns
+- `arrange()`: for re-ordering rows
+- `mutate()`: for adding new columns
+- `filter()`: for subsetting rows
+- `summarize()` (or `summarise()` if you prefer [British
+  spelling](https://en.wikipedia.org/wiki/American_and_British_English_spelling_differences)):
+  for reducing each group to a smaller number of summary statistics
 
 Let’s try them out!
 
@@ -604,11 +603,11 @@ list of equal length vectors – each element of the list can be thought
 of as a column and the length of each element of the list is its number
 of rows.) Data frames have the following characteristics:
 
--   Column names should not be empty
--   Row names should be unique
--   Data stored in the data frame can be of type numeric, factor, of
-    character
--   Each column should contain the same number of items
+- Column names should not be empty
+- Row names should be unique
+- Data stored in the data frame can be of type numeric, factor, of
+  character
+- Each column should contain the same number of items
 
 If you are working within this repository on your local computer, you
 can load the data in this directory with this command:
@@ -630,22 +629,22 @@ athletes <- read_csv(url("https://raw.githubusercontent.com/bambooforest/IntroDa
 
 Note that GitHub displays well-formatted CSV files as tabular data:
 
--   <https://github.com/bambooforest/IntroDataScience/blob/main/4_data_wrangling/datasets/athletes.csv>
+- <https://github.com/bambooforest/IntroDataScience/blob/main/4_data_wrangling/datasets/athletes.csv>
 
 But if you want to load it from the web, you need to use the raw data
 (note the button on the GitHub page with the label “raw”, which results
 in this URL:
 
--   <https://raw.githubusercontent.com/bambooforest/IntroDataScience/main/4_data_wrangling/datasets/athletes.csv>
+- <https://raw.githubusercontent.com/bambooforest/IntroDataScience/main/4_data_wrangling/datasets/athletes.csv>
 
-Now that you’ve loaded the `atheletes.csv` data, let’s have a look at
-its structure with the `str()` function:
+Now that you’ve loaded the `athletes.csv` data, let’s have a look at its
+structure with the `str()` function:
 
 ``` r
 str(athletes)
 ```
 
-    ## spec_tbl_df [2,859 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+    ## spc_tbl_ [2,859 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
     ##  $ age          : num [1:2859] 17 27 21 21 21 21 18 23 17 21 ...
     ##  $ birthdate    : Date[1:2859], format: "1996-04-12" "1986-05-14" ...
     ##  $ gender       : chr [1:2859] "Male" "Male" "Male" "Male" ...
@@ -700,7 +699,7 @@ Now note the change in data type:
 str(athletes)
 ```
 
-    ## spec_tbl_df [2,859 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+    ## spc_tbl_ [2,859 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
     ##  $ age          : num [1:2859] 17 27 21 21 21 21 18 23 17 21 ...
     ##  $ birthdate    : Date[1:2859], format: "1996-04-12" "1986-05-14" ...
     ##  $ gender       : Factor w/ 2 levels "Female","Male": 2 2 2 2 2 2 2 2 1 1 ...
@@ -786,8 +785,8 @@ which contains only the variables of immediate interest.
 To prepare such a version of your data set, use the function `select()`
 to select the variables (columns) you need.
 
--   First, you can select the variables of interest just by naming them.
-    Note that this way you can also modify the order of the variables:
+- First, you can select the variables of interest just by naming them.
+  Note that this way you can also modify the order of the variables:
 
 ``` r
 select(athletes, name, height, weight)
@@ -808,8 +807,8 @@ select(athletes, name, height, weight)
     ## 10 Adeline Baud        1.62     56
     ## # … with 2,849 more rows
 
--   You can use `:` to select all columns in a range between two
-    specified columns (inclusively):
+- You can use `:` to select all columns in a range between two specified
+  columns (inclusively):
 
 ``` r
 select(athletes, age:weight)
@@ -830,7 +829,7 @@ select(athletes, age:weight)
     ## 10    21 1992-09-28 Female   1.62 Adeline Baud          56
     ## # … with 2,849 more rows
 
--   You can exclude a variable with the help of `-`.
+- You can exclude a variable with the help of `-`.
 
 ``` r
 select(athletes, -birthdate, -age)
@@ -1377,10 +1376,10 @@ Let’s create a data frame as an [reproducible
 example](http://adv-r.had.co.nz/Reproducibility.html). What is a
 reproducible example:
 
--   <https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example>
--   <https://stackoverflow.com/help/minimal-reproducible-example>
--   <http://adv-r.had.co.nz/Reproducibility.html>
--   <https://xiangxing98.github.io/R_Learning/R_Reproducible.nb.html>
+- <https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example>
+- <https://stackoverflow.com/help/minimal-reproducible-example>
+- <http://adv-r.had.co.nz/Reproducibility.html>
+- <https://xiangxing98.github.io/R_Learning/R_Reproducible.nb.html>
 
 ``` r
 df <- data.frame(
@@ -1599,8 +1598,8 @@ Fundamentally, a relational database is a set of tables, which
 themselves are made up of sets of rows and sets of columns. Relational
 databases provide two basic operations:
 
--   Retrieving a set of columns and
--   Retrieving a set of rows
+- Retrieving a set of columns and
+- Retrieving a set of rows
 
 These two basic operations to retrieve columns and rows can also be
 combined. [Set
@@ -1647,8 +1646,8 @@ citation('gapminder')
     ## 
     ## To cite package 'gapminder' in publications use:
     ## 
-    ##   Bryan J (2017). _gapminder: Data from Gapminder_. R package version
-    ##   0.3.0, <https://CRAN.R-project.org/package=gapminder>.
+    ##   Jennifer Bryan (2017). gapminder: Data from Gapminder. R package
+    ##   version 0.3.0. https://CRAN.R-project.org/package=gapminder
     ## 
     ## A BibTeX entry for LaTeX users is
     ## 
@@ -1716,8 +1715,8 @@ sets](https://csiro-data-school.github.io/r/10-Data-Verbs---join/index.html).
 It has some great visualizations about [relational database
 joins](https://en.wikipedia.org/wiki/Join_(SQL)):
 
--   <https://tavareshugo.github.io/r-intro-tidyverse-gapminder/08-joins/index.html>
--   <https://csiro-data-school.github.io/r/10-Data-Verbs---join/index.html>
+- <https://tavareshugo.github.io/r-intro-tidyverse-gapminder/08-joins/index.html>
+- <https://csiro-data-school.github.io/r/10-Data-Verbs---join/index.html>
 
 Let’s load the [sex ratio
 data](https://csiro-data-school.github.io/r/data/gapminder_sex_ratios.csv)
@@ -1763,7 +1762,7 @@ str(gapminder)
 str(sex_ratios)
 ```
 
-    ## spec_tbl_df [1,722 × 3] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+    ## spc_tbl_ [1,722 × 3] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
     ##  $ country  : chr [1:1722] "Burundi" "Comoros" "Djibouti" "Eritrea" ...
     ##  $ year     : num [1:1722] 1952 1952 1952 1952 1952 ...
     ##  $ sex_ratio: num [1:1722] 91.9 98.8 98.6 98.2 98.6 ...
@@ -1786,19 +1785,22 @@ the logical relationships described by different join functions. The
 following image is taken from
 [here](https://en.wikipedia.org/wiki/Venn_diagram).
 
-![Set functions.](figures/venn_diagrams.png)
+<figure>
+<img src="figures/venn_diagrams.png" alt="Set functions." />
+<figcaption aria-hidden="true">Set functions.</figcaption>
+</figure>
 
 They describe the operations from [set
 theory](https://en.wikipedia.org/wiki/Set_theory) including:
 
--   [Intersection](https://en.wikipedia.org/wiki/Intersection_(set_theory))
--   [Union](https://en.wikipedia.org/wiki/Union_(set_theory))
--   [Symmetric
-    difference](https://en.wikipedia.org/wiki/Symmetric_difference)
--   [Relative
-    complement](https://en.wikipedia.org/wiki/Complement_(set_theory)#Relative_complement)
--   [Absolute
-    complement](https://en.wikipedia.org/wiki/Complement_(set_theory)#Absolute_complement)
+- [Intersection](https://en.wikipedia.org/wiki/Intersection_(set_theory))
+- [Union](https://en.wikipedia.org/wiki/Union_(set_theory))
+- [Symmetric
+  difference](https://en.wikipedia.org/wiki/Symmetric_difference)
+- [Relative
+  complement](https://en.wikipedia.org/wiki/Complement_(set_theory)#Relative_complement)
+- [Absolute
+  complement](https://en.wikipedia.org/wiki/Complement_(set_theory)#Absolute_complement)
 
 Important for us, will be the following types of joins as they are
 implemented in dplyr (for more information see the chapter on
@@ -1806,7 +1808,10 @@ implemented in dplyr (for more information see the chapter on
 Data Science](https://r4ds.had.co.nz/index.html), from which the
 following image was copied):
 
-![Dplyr joins.](figures/dplyr_joins.png)
+<figure>
+<img src="figures/dplyr_joins.png" alt="Dplyr joins." />
+<figcaption aria-hidden="true">Dplyr joins.</figcaption>
+</figure>
 
 Before we return to the gapminder data, let’s illustrate joins with some
 example data. First, let’s create two small tables (data frames) – one
@@ -1843,7 +1848,7 @@ customers
 Now we can use the joins to join the table in various ways. What does
 each do?
 
--   Inner join
+- Inner join
 
 ``` r
 inner_join(orders, customers)
@@ -1854,7 +1859,7 @@ inner_join(orders, customers)
     ##   OrderID CustomerID  OrderData CustomerName   Country
     ## 1     101          2 01.01.2021   Mary Grand Australia
 
--   Full join
+- Full join
 
 ``` r
 full_join(orders, customers)
@@ -1869,7 +1874,7 @@ full_join(orders, customers)
     ## 4      NA          1       <NA>     Lee Stan       USA
     ## 5      NA          3       <NA>     Ana Lake        UK
 
--   Left join
+- Left join
 
 ``` r
 left_join(orders, customers)
@@ -1882,7 +1887,7 @@ left_join(orders, customers)
     ## 2     102         37 01.02.2021         <NA>      <NA>
     ## 3     103         77 02.02.2021         <NA>      <NA>
 
--   Right join
+- Right join
 
 ``` r
 right_join(orders, customers)
@@ -1903,8 +1908,8 @@ exist and the join on those columns. Often it will be the case that you
 would like to join two tables that have different column names. You have
 two options:
 
--   Change the column names to match
--   Tell the join on which columns to match
+- Change the column names to match
+- Tell the join on which columns to match
 
 Let’s make another example. Different programming languages have
 different style for naming variables, column names, etc. These styles go
@@ -1996,11 +2001,11 @@ Let’s talk about (code) style. According to the [dictionary
 app](https://en.wikipedia.org/wiki/Dictionary_(software)) on my
 computer, style can be defined in various ways, including:
 
--   “a manner of doing something”
--   “a way of using language”
--   “a way of behaving or approaching a situation that is characteristic
-    of or favored by a particular person”
--   “elegance and sophistication”
+- “a manner of doing something”
+- “a way of using language”
+- “a way of behaving or approaching a situation that is characteristic
+  of or favored by a particular person”
+- “elegance and sophistication”
 
 Most people recognize style when they see it. Whether it is someone’s
 manner or behavior, the way they speak or write, how they dress, how
@@ -2021,7 +2026,10 @@ website](https://clauswilke.com/dataviz/figure-titles-captions.html):
 
 ------------------------------------------------------------------------
 
-![Ugly tables.](figures/ugly_tables_example.png)
+<figure>
+<img src="figures/ugly_tables_example.png" alt="Ugly tables." />
+<figcaption aria-hidden="true">Ugly tables.</figcaption>
+</figure>
 
 ------------------------------------------------------------------------
 
@@ -2039,67 +2047,66 @@ creates a consistent code base that makes it easier to maintain in the
 long run and it also helps people new to programming, or people not so
 new to programming, in the developer learning curve, e.g.:
 
--   <https://medium.com/@arnabdhar430/why-you-should-keep-learning-as-a-software-engineer-ae69aab8c774>
+- <https://medium.com/@arnabdhar430/why-you-should-keep-learning-as-a-software-engineer-ae69aab8c774>
 
 Major programming languages have official style guides. For example in
 [Python](https://en.wikipedia.org/wiki/Python_(programming_language)):
 
--   <https://www.python.org/dev/peps/pep-0008/>
+- <https://www.python.org/dev/peps/pep-0008/>
 
 But corporations will often make their own tweaks to the style guide (or
 change parts completely) to fit their needs or desires, e.g., Google’s
 Python style guide:
 
--   <https://google.github.io/styleguide/pyguide.html>
+- <https://google.github.io/styleguide/pyguide.html>
 
 Want to know more about Python versus R and what to learn and why? Read
 this:
 
--   <https://www.ibm.com/cloud/blog/python-vs-r>
+- <https://www.ibm.com/cloud/blog/python-vs-r>
 
 R doesn’t seem to have its own official style guide, e.g.:
 
--   <https://www.google.com/search?client=safari&rls=en&q=r+style+guide&ie=UTF-8&oe=UTF-8>
+- <https://www.google.com/search?client=safari&rls=en&q=r+style+guide&ie=UTF-8&oe=UTF-8>
 
 But there are numerous “R style guides”. For example, when writing
 packages for [The Comprehensive R Archive Network
 (CRAN)](https://cran.r-project.org):
 
--   <https://cran.r-project.org/web/packages/AirSensor/vignettes/Developer_Style_Guide.html>
+- <https://cran.r-project.org/web/packages/AirSensor/vignettes/Developer_Style_Guide.html>
 
 Google also has an R style guide:
 
--   <https://google.github.io/styleguide/Rguide.html>
+- <https://google.github.io/styleguide/Rguide.html>
 
 If you are using [tidyverse](https://www.tidyverse.org), they have a
 style guide:
 
--   <https://style.tidyverse.org/>
+- <https://style.tidyverse.org/>
 
 [Advanced R](http://adv-r.had.co.nz) also has a style guide:
 
--   <http://adv-r.had.co.nz/Style.html>
+- <http://adv-r.had.co.nz/Style.html>
 
 [R-bloggers]() has a blog about style guides in R, which covers some of
 the basic different **between style guide standards**:
 
--   <a href="https://www.r-bloggers.com/2019/01/🖊-r-coding-style-guide/"
-    class="uri">https://www.r-bloggers.com/2019/01/🖊-r-coding-style-guide/</a>
+- <https://www.r-bloggers.com/2019/01/🖊-r-coding-style-guide/>
 
 To summarize, every programming language, and most groups of
 programmers, will have different recommendations for how to do things
 like:
 
--   declare you variables (e.g., should_it_be_with_underscores or
-    shouldItBeCamelCase?)
--   are your file names in upper or lower case? (e.g. analysis.R
-    vs. Analysis.R?)
--   depending on the language and its naming constraints are your
-    variables, methods, etc., using punctuation? (e.g., my.fiction vs
-    my_function vs myFunction vs MyFunction… and so on)
--   where should you introduce (or should you introduce) [new
-    lines](https://en.wikipedia.org/wiki/Newline) into your code,
-    editor, etc.?
+- declare you variables (e.g., should_it_be_with_underscores or
+  shouldItBeCamelCase?)
+- are your file names in upper or lower case? (e.g. analysis.R
+  vs. Analysis.R?)
+- depending on the language and its naming constraints are your
+  variables, methods, etc., using punctuation? (e.g., my.fiction vs
+  my_function vs myFunction vs MyFunction… and so on)
+- where should you introduce (or should you introduce) [new
+  lines](https://en.wikipedia.org/wiki/Newline) into your code, editor,
+  etc.?
 
 The
 [TL;DR](https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read)?
@@ -2119,9 +2126,9 @@ style guide!
 So how do you do that in the easiest way possible? There’s tools for
 that! For example, there’s an R library called `styler`:
 
--   <https://style.tidyverse.org>
--   <https://www.tidyverse.org/blog/2017/12/styler-1.0.0/>
--   <https://cran.r-project.org/web/packages/styler/vignettes/introducing_styler.html>
+- <https://style.tidyverse.org>
+- <https://www.tidyverse.org/blog/2017/12/styler-1.0.0/>
+- <https://cran.r-project.org/web/packages/styler/vignettes/introducing_styler.html>
 
 That you can use directly in RStudio (or on the command line)! It is
 going to tell you why your code is ugly and does not follow the
@@ -2142,8 +2149,8 @@ in your code:
 
 In short, make your coding life easier; use a linter! Here’s one for R:
 
--   <https://style.tidyverse.org>
--   <https://cran.r-project.org/web/packages/lintr/readme/README.html>
+- <https://style.tidyverse.org>
+- <https://cran.r-project.org/web/packages/lintr/readme/README.html>
 
 ## Tests
 
@@ -2161,9 +2168,9 @@ of specific code requirements.
 
 In R, information about testing can be found here, e.g.:
 
--   <https://r-pkgs.org/tests.html>
--   <https://testthat.r-lib.org>
--   <https://towardsdatascience.com/unit-testing-in-r-68ab9cc8d211>
+- <https://r-pkgs.org/tests.html>
+- <https://testthat.r-lib.org>
+- <https://towardsdatascience.com/unit-testing-in-r-68ab9cc8d211>
 
 # References
 

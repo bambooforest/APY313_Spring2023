@@ -1,37 +1,33 @@
 Data
 ================
 Steven Moran
-(19 January, 2023)
+(29 January, 2023)
 
-- <a href="#what-is-data" id="toc-what-is-data">What is data?</a>
-- <a href="#where-do-i-find-data" id="toc-where-do-i-find-data">Where do I
-  find data?</a>
-- <a href="#structured-versus-unstructured-data"
-  id="toc-structured-versus-unstructured-data">Structured versus
-  unstructured data</a>
-- <a href="#data-formats" id="toc-data-formats">Data formats</a>
-  - <a href="#analog-versus-digital" id="toc-analog-versus-digital">Analog
-    versus digital</a>
-  - <a href="#binary-and-electronic-text"
-    id="toc-binary-and-electronic-text">Binary and electronic text</a>
-- <a href="#data-types-in-computer-programming"
-  id="toc-data-types-in-computer-programming">Data types in computer
-  programming</a>
-- <a href="#data-types-in-statistics"
-  id="toc-data-types-in-statistics">Data types in statistics</a>
-  - <a href="#qualitative-versus-quantitative-variables"
-    id="toc-qualitative-versus-quantitative-variables">Qualitative versus
-    quantitative variables</a>
-  - <a href="#scales-of-measurement" id="toc-scales-of-measurement">Scales
-    of measurement</a>
-- <a href="#data-structures" id="toc-data-structures">Data structures</a>
-- <a href="#file-formats" id="toc-file-formats">File formats</a>
-- <a href="#tabular-data" id="toc-tabular-data">Tabular data</a>
-- <a href="#metadata" id="toc-metadata">Metadata</a>
-- <a href="#data-archiving" id="toc-data-archiving">Data archiving</a>
-- <a href="#exercises" id="toc-exercises">Exercises</a>
-- <a href="#references-and-footnotes"
-  id="toc-references-and-footnotes">References and footnotes</a>
+- [What is data?](#what-is-data)
+- [Where do I find data?](#where-do-i-find-data)
+- [Structured versus unstructured
+  data](#structured-versus-unstructured-data)
+- [Data formats](#data-formats)
+  - [Analog versus digital](#analog-versus-digital)
+  - [Binary and electronic text](#binary-and-electronic-text)
+- [Data types in computer
+  programming](#data-types-in-computer-programming)
+  - [Overview](#overview)
+  - [In R](#in-r)
+  - [Programming vs statistics](#programming-vs-statistics)
+- [Data types in statistics](#data-types-in-statistics)
+  - [Qualitative versus quantitative
+    variables](#qualitative-versus-quantitative-variables)
+  - [Scales of measurement](#scales-of-measurement)
+- [Data structures](#data-structures)
+- [File formats](#file-formats)
+- [Tabular data](#tabular-data)
+- [Metadata](#metadata)
+- [Data archiving](#data-archiving)
+- [Exercises](#exercises)
+- [References and footnotes](#references-and-footnotes)
+
+------------------------------------------------------------------------
 
 This report uses the [R programming
 language](https://cran.r-project.org/doc/FAQ/R-FAQ.html) (R Core Team
@@ -89,7 +85,10 @@ the data, etc.
 Or
 [visually](https://twitter.com/beco/status/717112009385357316/photo/1):
 
-![Data vs information](figures/CfOwObSVAAAkC2F.jpeg)
+<figure>
+<img src="figures/CfOwObSVAAAkC2F.jpeg" alt="Data vs information" />
+<figcaption aria-hidden="true">Data vs information</figcaption>
+</figure>
 
 Or in code using the built in [Airline passengers
 dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/AirPassengers.html).
@@ -142,8 +141,8 @@ What does the plot tell us about the raw data?
 
 Here are some more examples. Is each *data* or *information*?
 
-1.  a student’s test score
-2.  average score of the class
+1.  A student’s test score
+2.  Average score of the class
 3.  2000
 4.  2000 Neuchatel
 5.  \$2000 monthly income
@@ -405,8 +404,11 @@ is perceived as sound (only sounds between around 20 Hz and 20 kHz).
 
 - <https://www.soundonsound.com/techniques/digital-myth>
 
-![Digital audio
-basics](figures/DigMyth1-wpILIpnPnsuSK1dcyD8V_Ps3F_98.qjE.jpg)
+<figure>
+<img src="figures/DigMyth1-wpILIpnPnsuSK1dcyD8V_Ps3F_98.qjE.jpg"
+alt="Digital audio basics" />
+<figcaption aria-hidden="true">Digital audio basics</figcaption>
+</figure>
 
 The sound source is a
 [continuous](https://en.wikipedia.org/wiki/Discrete_time_and_continuous_time)
@@ -421,12 +423,20 @@ information.
 Here is a visualization of [sampling a wave
 form](https://manual.audacityteam.org/man/digital_audio.html):
 
-![Sampling a wave form](figures/waveform_sample_formats.png)
+<figure>
+<img src="figures/waveform_sample_formats.png"
+alt="Sampling a wave form" />
+<figcaption aria-hidden="true">Sampling a wave form</figcaption>
+</figure>
 
 Increasing the sampling rate leads to higher resolution of the audio
 (right hand side):
 
-![Increased sampling rate](figures/waveform_sample_rates.png)
+<figure>
+<img src="figures/waveform_sample_rates.png"
+alt="Increased sampling rate" />
+<figcaption aria-hidden="true">Increased sampling rate</figcaption>
+</figure>
 
 ## Binary and electronic text
 
@@ -554,6 +564,8 @@ Find the craziest Unicode symbol!
 
 # Data types in computer programming
 
+## Overview
+
 [Data types](https://en.wikipedia.org/wiki/Data_type) for computer
 programming typically refer to various *types* of data that can be
 interpreted by the computer’s
@@ -578,11 +590,317 @@ provides information for the compiler to check the [correctness of the
 computer
 program](https://en.wikipedia.org/wiki/Correctness_(computer_science)).
 
-R has several data types underlying its data structures, e.g.:
+## In R
+
+R has **five** basic [data
+types](https://en.wikipedia.org/wiki/Data_type):
+
+- integer – whole numbers
+- numeric – numbers with decimal points (aka doubles or floats)
+- character – aka ‘strings’ (or “strings”; must have quotes around them)
+- logical – binary value, either TRUE or FALSE
+- complex – imaginary number (don’t worry about these for this class)
+
+Each can be assigned to a
+[variable](https://en.wikipedia.org/wiki/Variable_(computer_science)).
+In other words, variables store data of different data types. Different
+data types can do different things.
+
+Generally, R does not explicitly state what data type is being assigned
+but infers it from the thing (on the right) being assigned to the
+variable (on the left).
+
+``` r
+i <- 1
+n <- 0.1
+c <- 'string'
+l <- TRUE
+```
+
+The variables can then be used or manipulated with different
+[operators](https://en.wikipedia.org/wiki/Operator_(computer_programming))
+or
+[functions](https://en.wikipedia.org/wiki/Function_(computer_programming)).
+
+``` r
+i + i
+```
+
+    ## [1] 2
+
+``` r
+i + n
+```
+
+    ## [1] 1.1
+
+But note that not all operators or functions work with all data types.
+
+``` r
+# We comment this line of code out because otherwise knitting this document fails.
+# Below is the erorr you will get if you try to add two strings with `+`.
+
+# c + c 
+# Error in c + c : non-numeric argument to binary operator
+```
+
+If you want to
+[concatenate](https://en.wikipedia.org/wiki/Concatenation) two strings
+(two character data types) in R, there is a function called `paste()` to
+do so.
+
+``` r
+paste(c, c)
+```
+
+    ## [1] "string string"
+
+``` r
+paste(c, "+", c)
+```
+
+    ## [1] "string + string"
+
+``` r
+paste("Here is a", c, "and another", c, "and another", c, "...")
+```
+
+    ## [1] "Here is a string and another string and another string ..."
+
+When you have a variable and want to check what its data type is, use
+the `class()` function.
+
+``` r
+class(i)
+```
+
+    ## [1] "numeric"
+
+``` r
+class(n)
+```
+
+    ## [1] "numeric"
+
+``` r
+class(c)
+```
+
+    ## [1] "character"
+
+``` r
+class(l)
+```
+
+    ## [1] "logical"
+
+An important set of operators when working with data types in R involve
+comparison.
+
+- == – is equal to
+
+- != – is not equal to (exclamation point or “bang” typically means NOT
+  in programming languages)
+
+- \< – less than
+
+- – greater than
+
+- \<= – less than or equal to
+
+- = – greater than or equal to
+
+Some examples.
+
+``` r
+i == i
+```
+
+    ## [1] TRUE
+
+``` r
+i < n
+```
+
+    ## [1] FALSE
+
+``` r
+l != l
+```
+
+    ## [1] FALSE
+
+``` r
+c != c
+```
+
+    ## [1] FALSE
+
+``` r
+# or without variables
+1 == 1
+```
+
+    ## [1] TRUE
+
+``` r
+"cat" == "cats"
+```
+
+    ## [1] FALSE
+
+``` r
+"cat" != "cat"
+```
+
+    ## [1] FALSE
+
+When you have a sequence of the **same** data type, R calls these
+vectors.
+
+``` r
+# A vector of strings
+fruits <- c("banana", "apple", "orange")
+
+# A vector of numbers
+numbers <- c(1, 2, 1)
+
+# A vector of logical values
+me_likes <- c(TRUE, FALSE, TRUE)
+```
+
+You can print these to see their contents.
+
+``` r
+fruits
+```
+
+    ## [1] "banana" "apple"  "orange"
+
+``` r
+numbers
+```
+
+    ## [1] 1 2 1
+
+``` r
+me_likes
+```
+
+    ## [1]  TRUE FALSE  TRUE
+
+Certain functions also work on vectors.
+
+``` r
+length(fruits)
+```
+
+    ## [1] 3
+
+``` r
+sort(fruits)
+```
+
+    ## [1] "apple"  "banana" "orange"
+
+``` r
+unique(numbers)
+```
+
+    ## [1] 1 2
+
+``` r
+summary(numbers)
+```
+
+    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    ##   1.000   1.000   1.000   1.333   1.500   2.000
+
+Columns in your table data – your data frame – will consist of vectors
+of the same length, which may have different data types **across
+columns**. Here we create a data frame (tabular data object) from our
+vectors above.
+
+``` r
+df <- data.frame (
+  fruits,
+  numbers,
+  me_likes
+)
+
+df
+```
+
+    ##   fruits numbers me_likes
+    ## 1 banana       1     TRUE
+    ## 2  apple       2    FALSE
+    ## 3 orange       1     TRUE
+
+Of course you can also specify the vectors within the `data.frame()`
+function.
+
+``` r
+df2 <- data.frame (
+  countries = c("Japan", "Germany", "UK"),
+  GDP_trillions = c(4.8, 3.7, 2.6),
+  population_millions = c(127, 82, 67)
+)
+
+df2
+```
+
+    ##   countries GDP_trillions population_millions
+    ## 1     Japan           4.8                 127
+    ## 2   Germany           3.7                  82
+    ## 3        UK           2.6                  67
+
+Like functions on vectors, certain function can be used on data frames.
+
+``` r
+summary(df2)
+```
+
+    ##   countries         GDP_trillions  population_millions
+    ##  Length:3           Min.   :2.60   Min.   : 67.0      
+    ##  Class :character   1st Qu.:3.15   1st Qu.: 74.5      
+    ##  Mode  :character   Median :3.70   Median : 82.0      
+    ##                     Mean   :3.70   Mean   : 92.0      
+    ##                     3rd Qu.:4.25   3rd Qu.:104.5      
+    ##                     Max.   :4.80   Max.   :127.0
+
+We will learn more about accessing and manipulating vectors and data
+frames in the lecture on [data
+wrangling](../4_data_wrangling/README.md).
+
+Lastly, factors in R are used to categorize data.
+
+``` r
+beer_types <- factor(c("IPA", "Stout", "Pilsner", "Pilsner", "Porter", "IPA", "Stout", "IPA"))
+beer_types
+```
+
+    ## [1] IPA     Stout   Pilsner Pilsner Porter  IPA     Stout   IPA    
+    ## Levels: IPA Pilsner Porter Stout
+
+Factors become important when we work with categorical variables for
+things like statistical testing.
+
+------------------------------------------------------------------------
+
+A useful function for looking up commands is `help.search()`, where you
+can search on a keyword within the parentheses.
+
+``` r
+# help.search("concatenate")
+```
+
+Here are some other resources that describe data types in R:
 
 - <https://www.r-bloggers.com/2021/09/r-data-types/>
 - <https://www.w3schools.com/r/r_data_types.asp>
 - <https://statsandr.com/blog/data-types-in-r/>
+
+## Programming vs statistics
 
 [Data types for computer
 programming](https://en.wikipedia.org/wiki/Data_type) have comparable
@@ -664,7 +982,11 @@ score can tell you about the degree or amount of variable.
 A hierarchy of variable types in statistics is given in the image below
 taken from this [Stats and R](https://statsandr.com/terms/) blog.
 
-![Variable types.](figures/variable-types-and-examples.png)
+<figure>
+<img src="figures/variable-types-and-examples.png"
+alt="Variable types." />
+<figcaption aria-hidden="true">Variable types.</figcaption>
+</figure>
 
 As you can see, variables in statistics can be classified into four
 types under qualitative and quantitative variables:

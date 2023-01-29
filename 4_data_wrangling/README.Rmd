@@ -276,7 +276,7 @@ But if you want to load it from the web, you need to use the raw data (note the 
 
 * https://raw.githubusercontent.com/bambooforest/IntroDataScience/main/4_data_wrangling/datasets/athletes.csv
 
-Now that you've loaded the `atheletes.csv` data, let's have a look at its structure with the `str()` function:
+Now that you've loaded the `athletes.csv` data, let's have a look at its structure with the `str()` function:
 
 ```{r}
 str(athletes)
