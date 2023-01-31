@@ -278,6 +278,74 @@ For the uninitiated, the terminology in data science (and about data in general)
 
 # Data formats
 
+# Tabular data
+
+In this course, we are mainly going to be dealing with data in [plain text](https://en.wikipedia.org/wiki/Plain_text) and structured data in rectangular format, also known as **tabular data**. Here are some descriptions:
+
+* https://en.wikipedia.org/wiki/Table_(information)
+* https://papl.cs.brown.edu/2016/intro-tabular-data.html
+* https://www.w3.org/TR/tabular-data-model/
+
+Tabular data **can be stored in many ways**, e.g.:
+
+* [CSV](https://en.wikipedia.org/wiki/Comma-separated_values)
+* [Excel sheets](https://en.wikipedia.org/wiki/Microsoft_Excel)
+* [Google sheets](https://en.wikipedia.org/wiki/Google_Sheets)
+* [Numbers](https://en.wikipedia.org/wiki/Numbers_(spreadsheet))
+* [SQLite](https://en.wikipedia.org/wiki/SQLite)
+* [JSON](https://en.wikipedia.org/wiki/JSON)
+
+Which of these formats above are stored in plain text?
+
+***
+
+Tabular (or table) data has several properties. It consists of [rows and columns](https://en.wikipedia.org/wiki/Row_and_column_vectors) in the linear algebra sense, and [rows](https://en.wikipedia.org/wiki/Row_(database)) and [columns](https://en.wikipedia.org/wiki/Column_(database)) in the relational database sense.
+
+[Columns](https://en.wikipedia.org/wiki/Column_(database)) in tabular data contain a set of data of a particular type and contain (typically) one value (data type -- see above) for each row in the table. 
+
+Each [row](https://en.wikipedia.org/wiki/Row_(database)) in the table contains an observation, in which each row represents a set of related data, i.e., every row has the same structure and each cell in each row should adhere to the column's specification (i.e., that data type of that column). 
+
+For example if you run the `data()` command in R / RStudio, you will get a list of all of the pre-loaded data sets available in R.
+
+```{r}
+# Recall you can also use the help() function to learn more about datasets in R, i.e., run: help(data)
+data()
+```
+
+For example, do you want to know about the [Swiss Fertility and Socioeconomic Indicators (1888) Data](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/swiss.html) available in R? This is a dataset with standardized fertility measures and socio-economic indicators for each of the 47 French-speaking provinces of Switzerland in 1888.
+
+```{r}
+help(swiss)
+data(swiss)
+head(swiss)
+```
+
+What are the columns? What their data types? What are the rows? Again, we can use the structure function `str()` and pass it the dataset's name.
+
+```{r}
+str(swiss)
+```
+
+***
+
+When there is more than one table and they are are specified relations between the tables, then you have a [relational database](https://en.wikipedia.org/wiki/Relational_database). We will discuss these later.
+
+Lastly, note that there are lots of non-rectangular (i.e., not tabular) datasets out there. Some examples include text, images, audio files, video files, [tree data structures](https://en.wikipedia.org/wiki/Tree_(data_structure)), and so on.
+
+**We will focus in this course on tabular data -- that is, loading it, transforming it, creating it, and analyzing it.**
+
+Tabular data typically contains numerical data or [categorical data](https://en.wikipedia.org/wiki/Categorical_variable) (recall data types discussed above). Numerical data is either:
+
+* numerical (aka discrete) -- integer values, e.g., counts, indices.
+* continuous -- data that can take any value within in interval, e.g., temperature.
+
+[Categorical data](https://en.wikipedia.org/wiki/Categorical_variable) represents sets of values that represent possible categories. They are not subject to the laws of arithmetic (but note they can be counted, as are the words in the example above). Categorical data includes:
+
+* binary -- dichotomous data, i.e., True vs False (often encoded 1 vs. 0).
+* ordinal -- categorical data with explicit ordering, e.g., grades, ranks, 5-star reviews.
+
+The types of data in your table, i.e., the [statistical data types](https://en.wikipedia.org/wiki/Statistical_data_type) **constrain or determine the types of statistics you can do with your data!**
+
 ## Analog versus digital
 
 The data that we work with is mainly [digital data](https://en.wikipedia.org/wiki/Digital_data). 
@@ -545,7 +613,7 @@ Here are some other resources that describe data types in R:
 * https://statsandr.com/blog/data-types-in-r/
 
 
-## Programming vs statistics
+# Programming vs statistics
 
 [Data types for computer programming](https://en.wikipedia.org/wiki/Data_type) have comparable types of [data types in statistics](https://en.wikipedia.org/wiki/Statistical_data_type) -- or how else would we use computer programs to do statistics? For example:
 
@@ -751,74 +819,6 @@ We can save the results to another data frame or we can write them to disk as a 
 
 Are the results data or information? Was the text string that we started with data or information?
 
-
-# Tabular data
-
-In this course, we are mainly going to be dealing with data in [plain text](https://en.wikipedia.org/wiki/Plain_text) and structured data in rectangular format, also known as **tabular data**. Here are some descriptions:
-
-* https://en.wikipedia.org/wiki/Table_(information)
-* https://papl.cs.brown.edu/2016/intro-tabular-data.html
-* https://www.w3.org/TR/tabular-data-model/
-
-Tabular data **can be stored in many ways**, e.g.:
-
-* [CSV](https://en.wikipedia.org/wiki/Comma-separated_values)
-* [Excel sheets](https://en.wikipedia.org/wiki/Microsoft_Excel)
-* [Google sheets](https://en.wikipedia.org/wiki/Google_Sheets)
-* [Numbers](https://en.wikipedia.org/wiki/Numbers_(spreadsheet))
-* [SQLite](https://en.wikipedia.org/wiki/SQLite)
-* [JSON](https://en.wikipedia.org/wiki/JSON)
-
-Which of these formats above are stored in plain text?
-
-***
-
-Tabular (or table) data has several properties. It consists of [rows and columns](https://en.wikipedia.org/wiki/Row_and_column_vectors) in the linear algebra sense, and [rows](https://en.wikipedia.org/wiki/Row_(database)) and [columns](https://en.wikipedia.org/wiki/Column_(database)) in the relational database sense.
-
-[Columns](https://en.wikipedia.org/wiki/Column_(database)) in tabular data contain a set of data of a particular type and contain (typically) one value (data type -- see above) for each row in the table. 
-
-Each [row](https://en.wikipedia.org/wiki/Row_(database)) in the table contains an observation, in which each row represents a set of related data, i.e., every row has the same structure and each cell in each row should adhere to the column's specification (i.e., that data type of that column). 
-
-For example if you run the `data()` command in R / RStudio, you will get a list of all of the pre-loaded data sets available in R.
-
-```{r}
-# Recall you can also use the help() function to learn more about datasets in R, i.e., run: help(data)
-data()
-```
-
-For example, do you want to know about the [Swiss Fertility and Socioeconomic Indicators (1888) Data](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/swiss.html) available in R? This is a dataset with standardized fertility measures and socio-economic indicators for each of the 47 French-speaking provinces of Switzerland in 1888.
-
-```{r}
-help(swiss)
-data(swiss)
-head(swiss)
-```
-
-What are the columns? What their data types? What are the rows? Again, we can use the structure function `str()` and pass it the dataset's name.
-
-```{r}
-str(swiss)
-```
-
-***
-
-When there is more than one table and they are are specified relations between the tables, then you have a [relational database](https://en.wikipedia.org/wiki/Relational_database). We will discuss these later.
-
-Lastly, note that there are lots of non-rectangular (i.e., not tabular) datasets out there. Some examples include text, images, audio files, video files, [tree data structures](https://en.wikipedia.org/wiki/Tree_(data_structure)), and so on.
-
-**We will focus in this course on tabular data -- that is, loading it, transforming it, creating it, and analyzing it.**
-
-Tabular data typically contains numerical data or [categorical data](https://en.wikipedia.org/wiki/Categorical_variable) (recall data types discussed above). Numerical data is either:
-
-* numerical (aka discrete) -- integer values, e.g., counts, indices.
-* continuous -- data that can take any value within in interval, e.g., temperature.
-
-[Categorical data](https://en.wikipedia.org/wiki/Categorical_variable) represents sets of values that represent possible categories. They are not subject to the laws of arithmetic (but note they can be counted, as are the words in the example above). Categorical data includes:
-
-* binary -- dichotomous data, i.e., True vs False (often encoded 1 vs. 0).
-* ordinal -- categorical data with explicit ordering, e.g., grades, ranks, 5-star reviews.
-
-The types of data in your table, i.e., the [statistical data types](https://en.wikipedia.org/wiki/Statistical_data_type) **constrain or determine the types of statistics you can do with your data!**
 
 
 # Metadata

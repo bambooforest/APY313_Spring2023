@@ -1,27 +1,27 @@
 Data
 ================
 Steven Moran
-(29 January, 2023)
+(31 January, 2023)
 
 - [What is data?](#what-is-data)
 - [Where do I find data?](#where-do-i-find-data)
 - [Structured versus unstructured
   data](#structured-versus-unstructured-data)
 - [Data formats](#data-formats)
+- [Tabular data](#tabular-data)
   - [Analog versus digital](#analog-versus-digital)
   - [Binary and electronic text](#binary-and-electronic-text)
 - [Data types in computer
   programming](#data-types-in-computer-programming)
   - [Overview](#overview)
   - [In R](#in-r)
-  - [Programming vs statistics](#programming-vs-statistics)
+- [Programming vs statistics](#programming-vs-statistics)
 - [Data types in statistics](#data-types-in-statistics)
   - [Qualitative versus quantitative
     variables](#qualitative-versus-quantitative-variables)
   - [Scales of measurement](#scales-of-measurement)
 - [Data structures](#data-structures)
 - [File formats](#file-formats)
-- [Tabular data](#tabular-data)
 - [Metadata](#metadata)
 - [Data archiving](#data-archiving)
 - [Exercises](#exercises)
@@ -384,6 +384,137 @@ that use the word data in the next few sections.
 below.**
 
 # Data formats
+
+# Tabular data
+
+In this course, we are mainly going to be dealing with data in [plain
+text](https://en.wikipedia.org/wiki/Plain_text) and structured data in
+rectangular format, also known as **tabular data**. Here are some
+descriptions:
+
+- <https://en.wikipedia.org/wiki/Table_(information)>
+- <https://papl.cs.brown.edu/2016/intro-tabular-data.html>
+- <https://www.w3.org/TR/tabular-data-model/>
+
+Tabular data **can be stored in many ways**, e.g.:
+
+- [CSV](https://en.wikipedia.org/wiki/Comma-separated_values)
+- [Excel sheets](https://en.wikipedia.org/wiki/Microsoft_Excel)
+- [Google sheets](https://en.wikipedia.org/wiki/Google_Sheets)
+- [Numbers](https://en.wikipedia.org/wiki/Numbers_(spreadsheet))
+- [SQLite](https://en.wikipedia.org/wiki/SQLite)
+- [JSON](https://en.wikipedia.org/wiki/JSON)
+
+Which of these formats above are stored in plain text?
+
+------------------------------------------------------------------------
+
+Tabular (or table) data has several properties. It consists of [rows and
+columns](https://en.wikipedia.org/wiki/Row_and_column_vectors) in the
+linear algebra sense, and
+[rows](https://en.wikipedia.org/wiki/Row_(database)) and
+[columns](https://en.wikipedia.org/wiki/Column_(database)) in the
+relational database sense.
+
+[Columns](https://en.wikipedia.org/wiki/Column_(database)) in tabular
+data contain a set of data of a particular type and contain (typically)
+one value (data type – see above) for each row in the table.
+
+Each [row](https://en.wikipedia.org/wiki/Row_(database)) in the table
+contains an observation, in which each row represents a set of related
+data, i.e., every row has the same structure and each cell in each row
+should adhere to the column’s specification (i.e., that data type of
+that column).
+
+For example if you run the `data()` command in R / RStudio, you will get
+a list of all of the pre-loaded data sets available in R.
+
+``` r
+# Recall you can also use the help() function to learn more about datasets in R, i.e., run: help(data)
+data()
+```
+
+For example, do you want to know about the [Swiss Fertility and
+Socioeconomic Indicators (1888)
+Data](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/swiss.html)
+available in R? This is a dataset with standardized fertility measures
+and socio-economic indicators for each of the 47 French-speaking
+provinces of Switzerland in 1888.
+
+``` r
+help(swiss)
+data(swiss)
+head(swiss)
+```
+
+    ##              Fertility Agriculture Examination Education Catholic
+    ## Courtelary        80.2        17.0          15        12     9.96
+    ## Delemont          83.1        45.1           6         9    84.84
+    ## Franches-Mnt      92.5        39.7           5         5    93.40
+    ## Moutier           85.8        36.5          12         7    33.77
+    ## Neuveville        76.9        43.5          17        15     5.16
+    ## Porrentruy        76.1        35.3           9         7    90.57
+    ##              Infant.Mortality
+    ## Courtelary               22.2
+    ## Delemont                 22.2
+    ## Franches-Mnt             20.2
+    ## Moutier                  20.3
+    ## Neuveville               20.6
+    ## Porrentruy               26.6
+
+What are the columns? What their data types? What are the rows? Again,
+we can use the structure function `str()` and pass it the dataset’s
+name.
+
+``` r
+str(swiss)
+```
+
+    ## 'data.frame':    47 obs. of  6 variables:
+    ##  $ Fertility       : num  80.2 83.1 92.5 85.8 76.9 76.1 83.8 92.4 82.4 82.9 ...
+    ##  $ Agriculture     : num  17 45.1 39.7 36.5 43.5 35.3 70.2 67.8 53.3 45.2 ...
+    ##  $ Examination     : int  15 6 5 12 17 9 16 14 12 16 ...
+    ##  $ Education       : int  12 9 5 7 15 7 7 8 7 13 ...
+    ##  $ Catholic        : num  9.96 84.84 93.4 33.77 5.16 ...
+    ##  $ Infant.Mortality: num  22.2 22.2 20.2 20.3 20.6 26.6 23.6 24.9 21 24.4 ...
+
+------------------------------------------------------------------------
+
+When there is more than one table and they are are specified relations
+between the tables, then you have a [relational
+database](https://en.wikipedia.org/wiki/Relational_database). We will
+discuss these later.
+
+Lastly, note that there are lots of non-rectangular (i.e., not tabular)
+datasets out there. Some examples include text, images, audio files,
+video files, [tree data
+structures](https://en.wikipedia.org/wiki/Tree_(data_structure)), and so
+on.
+
+**We will focus in this course on tabular data – that is, loading it,
+transforming it, creating it, and analyzing it.**
+
+Tabular data typically contains numerical data or [categorical
+data](https://en.wikipedia.org/wiki/Categorical_variable) (recall data
+types discussed above). Numerical data is either:
+
+- numerical (aka discrete) – integer values, e.g., counts, indices.
+- continuous – data that can take any value within in interval, e.g.,
+  temperature.
+
+[Categorical data](https://en.wikipedia.org/wiki/Categorical_variable)
+represents sets of values that represent possible categories. They are
+not subject to the laws of arithmetic (but note they can be counted, as
+are the words in the example above). Categorical data includes:
+
+- binary – dichotomous data, i.e., True vs False (often encoded 1
+  vs. 0).
+- ordinal – categorical data with explicit ordering, e.g., grades,
+  ranks, 5-star reviews.
+
+The types of data in your table, i.e., the [statistical data
+types](https://en.wikipedia.org/wiki/Statistical_data_type) **constrain
+or determine the types of statistics you can do with your data!**
 
 ## Analog versus digital
 
@@ -900,7 +1031,7 @@ Here are some other resources that describe data types in R:
 - <https://www.w3schools.com/r/r_data_types.asp>
 - <https://statsandr.com/blog/data-types-in-r/>
 
-## Programming vs statistics
+# Programming vs statistics
 
 [Data types for computer
 programming](https://en.wikipedia.org/wiki/Data_type) have comparable
@@ -1315,137 +1446,6 @@ section).
 
 Are the results data or information? Was the text string that we started
 with data or information?
-
-# Tabular data
-
-In this course, we are mainly going to be dealing with data in [plain
-text](https://en.wikipedia.org/wiki/Plain_text) and structured data in
-rectangular format, also known as **tabular data**. Here are some
-descriptions:
-
-- <https://en.wikipedia.org/wiki/Table_(information)>
-- <https://papl.cs.brown.edu/2016/intro-tabular-data.html>
-- <https://www.w3.org/TR/tabular-data-model/>
-
-Tabular data **can be stored in many ways**, e.g.:
-
-- [CSV](https://en.wikipedia.org/wiki/Comma-separated_values)
-- [Excel sheets](https://en.wikipedia.org/wiki/Microsoft_Excel)
-- [Google sheets](https://en.wikipedia.org/wiki/Google_Sheets)
-- [Numbers](https://en.wikipedia.org/wiki/Numbers_(spreadsheet))
-- [SQLite](https://en.wikipedia.org/wiki/SQLite)
-- [JSON](https://en.wikipedia.org/wiki/JSON)
-
-Which of these formats above are stored in plain text?
-
-------------------------------------------------------------------------
-
-Tabular (or table) data has several properties. It consists of [rows and
-columns](https://en.wikipedia.org/wiki/Row_and_column_vectors) in the
-linear algebra sense, and
-[rows](https://en.wikipedia.org/wiki/Row_(database)) and
-[columns](https://en.wikipedia.org/wiki/Column_(database)) in the
-relational database sense.
-
-[Columns](https://en.wikipedia.org/wiki/Column_(database)) in tabular
-data contain a set of data of a particular type and contain (typically)
-one value (data type – see above) for each row in the table.
-
-Each [row](https://en.wikipedia.org/wiki/Row_(database)) in the table
-contains an observation, in which each row represents a set of related
-data, i.e., every row has the same structure and each cell in each row
-should adhere to the column’s specification (i.e., that data type of
-that column).
-
-For example if you run the `data()` command in R / RStudio, you will get
-a list of all of the pre-loaded data sets available in R.
-
-``` r
-# Recall you can also use the help() function to learn more about datasets in R, i.e., run: help(data)
-data()
-```
-
-For example, do you want to know about the [Swiss Fertility and
-Socioeconomic Indicators (1888)
-Data](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/swiss.html)
-available in R? This is a dataset with standardized fertility measures
-and socio-economic indicators for each of the 47 French-speaking
-provinces of Switzerland in 1888.
-
-``` r
-help(swiss)
-data(swiss)
-head(swiss)
-```
-
-    ##              Fertility Agriculture Examination Education Catholic
-    ## Courtelary        80.2        17.0          15        12     9.96
-    ## Delemont          83.1        45.1           6         9    84.84
-    ## Franches-Mnt      92.5        39.7           5         5    93.40
-    ## Moutier           85.8        36.5          12         7    33.77
-    ## Neuveville        76.9        43.5          17        15     5.16
-    ## Porrentruy        76.1        35.3           9         7    90.57
-    ##              Infant.Mortality
-    ## Courtelary               22.2
-    ## Delemont                 22.2
-    ## Franches-Mnt             20.2
-    ## Moutier                  20.3
-    ## Neuveville               20.6
-    ## Porrentruy               26.6
-
-What are the columns? What their data types? What are the rows? Again,
-we can use the structure function `str()` and pass it the dataset’s
-name.
-
-``` r
-str(swiss)
-```
-
-    ## 'data.frame':    47 obs. of  6 variables:
-    ##  $ Fertility       : num  80.2 83.1 92.5 85.8 76.9 76.1 83.8 92.4 82.4 82.9 ...
-    ##  $ Agriculture     : num  17 45.1 39.7 36.5 43.5 35.3 70.2 67.8 53.3 45.2 ...
-    ##  $ Examination     : int  15 6 5 12 17 9 16 14 12 16 ...
-    ##  $ Education       : int  12 9 5 7 15 7 7 8 7 13 ...
-    ##  $ Catholic        : num  9.96 84.84 93.4 33.77 5.16 ...
-    ##  $ Infant.Mortality: num  22.2 22.2 20.2 20.3 20.6 26.6 23.6 24.9 21 24.4 ...
-
-------------------------------------------------------------------------
-
-When there is more than one table and they are are specified relations
-between the tables, then you have a [relational
-database](https://en.wikipedia.org/wiki/Relational_database). We will
-discuss these later.
-
-Lastly, note that there are lots of non-rectangular (i.e., not tabular)
-datasets out there. Some examples include text, images, audio files,
-video files, [tree data
-structures](https://en.wikipedia.org/wiki/Tree_(data_structure)), and so
-on.
-
-**We will focus in this course on tabular data – that is, loading it,
-transforming it, creating it, and analyzing it.**
-
-Tabular data typically contains numerical data or [categorical
-data](https://en.wikipedia.org/wiki/Categorical_variable) (recall data
-types discussed above). Numerical data is either:
-
-- numerical (aka discrete) – integer values, e.g., counts, indices.
-- continuous – data that can take any value within in interval, e.g.,
-  temperature.
-
-[Categorical data](https://en.wikipedia.org/wiki/Categorical_variable)
-represents sets of values that represent possible categories. They are
-not subject to the laws of arithmetic (but note they can be counted, as
-are the words in the example above). Categorical data includes:
-
-- binary – dichotomous data, i.e., True vs False (often encoded 1
-  vs. 0).
-- ordinal – categorical data with explicit ordering, e.g., grades,
-  ranks, 5-star reviews.
-
-The types of data in your table, i.e., the [statistical data
-types](https://en.wikipedia.org/wiki/Statistical_data_type) **constrain
-or determine the types of statistics you can do with your data!**
 
 # Metadata
 
