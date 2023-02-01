@@ -1,29 +1,32 @@
 Data
 ================
 Steven Moran
-(31 January, 2023)
+(01 February, 2023)
 
 - [What is data?](#what-is-data)
-- [Where do I find data?](#where-do-i-find-data)
 - [Structured versus unstructured
   data](#structured-versus-unstructured-data)
-- [Data formats](#data-formats)
 - [Tabular data](#tabular-data)
+  - [Wide vs long table formats](#wide-vs-long-table-formats)
+    - [Wide](#wide)
+    - [Long](#long)
+  - [Tidy data](#tidy-data)
+- [Data types](#data-types)
+  - [Overview](#overview)
+  - [Data types in R](#data-types-in-r)
+  - [Data types in programming vs
+    statistics](#data-types-in-programming-vs-statistics)
+  - [Data types in statistics](#data-types-in-statistics)
+    - [Qualitative versus quantitative
+      variables](#qualitative-versus-quantitative-variables)
+    - [Scales of measurement](#scales-of-measurement)
+- [Where do I find data?](#where-do-i-find-data)
+- [Optional reading](#optional-reading)
   - [Analog versus digital](#analog-versus-digital)
   - [Binary and electronic text](#binary-and-electronic-text)
-- [Data types in computer
-  programming](#data-types-in-computer-programming)
-  - [Overview](#overview)
-  - [In R](#in-r)
-- [Programming vs statistics](#programming-vs-statistics)
-- [Data types in statistics](#data-types-in-statistics)
-  - [Qualitative versus quantitative
-    variables](#qualitative-versus-quantitative-variables)
-  - [Scales of measurement](#scales-of-measurement)
-- [Data structures](#data-structures)
-- [File formats](#file-formats)
-- [Metadata](#metadata)
-- [Data archiving](#data-archiving)
+  - [File formats](#file-formats)
+  - [Metadata](#metadata)
+  - [Data archiving](#data-archiving)
 - [Exercises](#exercises)
 - [References and footnotes](#references-and-footnotes)
 
@@ -166,143 +169,6 @@ Data is based on observations or records. Information is based on the
 organization, summarization, or analysis of the data and tells us
 something about the raw data.
 
-# Where do I find data?
-
-The world is awash in data. And the amount of data being created is
-increasingly rapidly. By some estimates, there was 60 or more
-[zettabytes](https://en.wikipedia.org/wiki/Zettabyte_Era) of data as of
-2020.
-
-- <https://www.statista.com/statistics/871513/worldwide-data-created/>
-- <https://seedscientific.com/how-much-data-is-created-every-day/>
-- <https://rivery.io/blog/big-data-statistics-how-much-data-is-there-in-the-world/>
-
-As of 2021, calculations of how much data is being created stood at:
-
-> > > Each day on Earth we generate 500 million tweets, 294 billion
-> > > emails, 4 million gigabytes of Facebook data, 65 billion WhatsApp
-> > > messages and 720,000 hours of new content added daily on YouTube.
-
-- <https://theconversation.com/the-worlds-data-explained-how-much-were-producing-and-where-its-all-stored-159964>
-
-That’s a lot of data. Lots of it’s “closed” or
-[“proprietary”](https://en.wikipedia.org/wiki/Proprietary_software)
-data. But there’s also lots of [open
-data](https://en.wikipedia.org/wiki/Open_data) available.
-
-Try [searching](https://www.google.com/search?q=open+data+sets) for
-some!
-
-[Open data](https://en.wikipedia.org/wiki/Open_data) are data that are
-freely available and also the idea that data should be freely available.
-(Recall what we’ve discussed about data and software licenses.) The idea
-is similar to [open source
-code](https://en.wikipedia.org/wiki/Open_source), i.e., the idea that
-source code is made openly and freely available. Both open data and open
-source code are integral to [open data
-science](https://en.wikipedia.org/wiki/Open_science_data) and
-[reproducible science](https://en.wikipedia.org/wiki/Reproducibility).
-
-There is a lot of openly available datasets out there. Here are some
-that I use:
-
-- <https://archive.ics.uci.edu/ml/index.php>
-- <https://opendata.swiss/en/>
-- <https://zenodo.org>
-
-But don’t be shy – use search to find other places! For example:
-
-- [best places for open
-  datasets](https://www.google.com/search?q=best+places+for+open+datasets)
-
-There are lots of results highlighing where to look for free datasets,
-e.g.:
-
-- <https://careerfoundry.com/en/blog/data-analytics/where-to-find-free-datasets/>
-- <https://www.freecodecamp.org/news/https-medium-freecodecamp-org-best-free-open-data-sources-anyone-can-use-a65b514b0f2d/>
-
-Google for example has a dataset search and a public data portal:
-
-- <https://datasetsearch.research.google.com>
-- <https://www.google.com/publicdata/directory>
-
-Kaggle is another popular place to look for data:
-
-- <https://www.kaggle.com/datasets>
-
-Amazon Web Services has a data portal:
-
-- <https://registry.opendata.aws>
-
-Governments sometimes publish data, e.g.:
-
-- [European Union](https://data.europa.eu)
-- [US government open data](https://data.gov)
-- [Germany government open data](https://www.govdata.de)
-- [CIA world factbook](https://www.cia.gov/the-world-factbook/)
-- [US census data](https://www.census.gov/data.html)
-
-How about some “high quality data and datasets organized by topic”?
-
-- <https://datahub.io/collections>
-
-This is an example of a general repository for datasets, which also
-includes the UCI Machine Learning Repository:
-
-- <https://archive.ics.uci.edu/ml/index.php>
-- <https://archive.ics.uci.edu/ml/datasets.php>
-
-Want some data about the Earth?
-
-- <https://www.earthdata.nasa.gov>
-
-Or particle physics?
-
-- <http://opendata.cern.ch>
-
-Are you interested in global health?
-
-- <https://apps.who.int/gho/data/node.home>
-- <https://data.unicef.org>
-
-Or film?
-
-- <https://www.bfi.org.uk/industry-data-insights>
-- <https://data.world/datasets/movies>
-- <https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset>
-
-Or something more specific? New York city taxis?
-
-- <https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page>
-
-Crime?
-
-- <https://crime-data-explorer.fr.cloud.gov/pages/home>
-
-Finance?
-
-- <https://data.worldbank.org>
-
-Are you interested in [data
-journalism](https://en.wikipedia.org/wiki/Data_journalism)? Try
-FiveThirtyEight or The Pudding:
-
-- <https://data.fivethirtyeight.com>
-- <https://pudding.cool>
-
-[DBpedia](https://en.wikipedia.org/wiki/DBpedia) is a knowledge base
-built on [Wikipedia](https://en.wikipedia.org/wiki/Wikipedia):
-
-- <https://www.dbpedia.org>
-
-Yelp datasets:
-
-- <https://www.yelp.com/dataset>
-
-R also has built in datasets:
-
-- <https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html>
-
 # Structured versus unstructured data
 
 [Raw data](https://en.wikipedia.org/wiki/Raw_data) (aka “primary” data)
@@ -383,8 +249,6 @@ that use the word data in the next few sections.
 **Most pertinent to this class is the discussion on tabular data
 below.**
 
-# Data formats
-
 # Tabular data
 
 In this course, we are mainly going to be dealing with data in [plain
@@ -406,6 +270,144 @@ Tabular data **can be stored in many ways**, e.g.:
 - [JSON](https://en.wikipedia.org/wiki/JSON)
 
 Which of these formats above are stored in plain text?
+
+In a table data format, every column represents a particular variable
+(e.g., a person’s height, number of of vowels) and each row/record
+corresponds to a given member of the data set in question (e.g. a
+person, in a language). Tabular data are inherently rectangular and
+cannot have “ragged rows”. If any row is lacking information for a
+particular column, a missing value (`NA`) is stored in that cell.
+
+For most people working with small amounts of data, the data table is
+the fundamental unit of organization because it is both a way of
+organizing data that can be processed by humans and machines. In
+practice, to enter, organize, modify, analyze, and store data in tabular
+form – it is common for people to use spreadsheet applications. You are
+probably familiar for example with Excel spreadsheets.
+
+Many statistical software packages use similar spreadsheets and many are
+able to import Excel spreadsheets. R is no different.
+
+Importantly, the input to statistical graphics or plots is typically
+some type of data matrix (tabular data) as input. The key is to get the
+data into the correct format as input to the method that will visualize
+the data. [Data wrangling](../4_data_wrangling/README.md) include the
+steps to get the data that is needed for visualization purposes. You
+may, however, also have to reshape the tabular data into various
+formats, so that you can easily feed into the method.
+
+## Wide vs long table formats
+
+There are two basic presentations of tabular data:
+
+- Wide
+- Long (aka narrow)
+
+### Wide
+
+[Wide](https://en.wikipedia.org/wiki/Wide_and_narrow_data) tabular data
+is unstacked and it is presented so that each different data variable is
+in a separate column.
+
+``` r
+df_wide <- data.frame(Person = c('Bob', 'Alice', 'Steve'),
+                 Age = c(32, 24, 64),
+                 Weight = c(168, 150, 144),
+                 Height = c(180, 175, 165))
+df_wide %>% kable()
+```
+
+| Person | Age | Weight | Height |
+|:-------|----:|-------:|-------:|
+| Bob    |  32 |    168 |    180 |
+| Alice  |  24 |    150 |    175 |
+| Steve  |  64 |    144 |    165 |
+
+<!-- if you want to do it by hand in .md insert this:
+&#10;| Person | Age | Weight | Height |
+|----------|--------|---| 
+| Bob | 32 | 168 | 180 |
+| Alice | 24 | 150 | 175 |
+| Steve | 64 | 144 | 165 |
+&#10;-->
+
+### Long
+
+[Long](https://en.wikipedia.org/wiki/Wide_and_narrow_data) tabular data
+is stacked, so that one column contains all of the values and an
+additional column denotes the context of those values, e.g.:
+
+``` r
+df_long <- data.frame(Person = c('Bob', 'Bob', 'Bob', 'Alice', 'Alice', 'Alice', 'Steve', 'Steve', 'Steve'),
+                      Variable = c('Age', 'Weight', 'Height', 'Age', 'Weight', 'Height', 'Age', 'Weight', 'Height'),
+                      Value = c(32, 168, 180, 24, 150, 175, 64, 144, 165))
+df_long %>% kable()
+```
+
+| Person | Variable | Value |
+|:-------|:---------|------:|
+| Bob    | Age      |    32 |
+| Bob    | Weight   |   168 |
+| Bob    | Height   |   180 |
+| Alice  | Age      |    24 |
+| Alice  | Weight   |   150 |
+| Alice  | Height   |   175 |
+| Steve  | Age      |    64 |
+| Steve  | Weight   |   144 |
+| Steve  | Height   |   165 |
+
+Why do people use long format? For example, it looks more difficult to
+work with manually. One important reason is that it is a data model that
+encodes data in a space-efficient manner. For example, if you have a
+[sparse matrix](https://en.wikipedia.org/wiki/Sparse_matrix) in wide
+format, you may have lots of `NA` or `0` cells. In long format, you can
+simply leave those out (because you can infer them when translating from
+long to wide format). This long data format basically encodes what is
+called an [entity-attribute-value data
+model](https://en.wikipedia.org/wiki/Entity–attribute–value_model).
+Similar data models are used in all kinds of applications, such as
+[knowledge graphs](https://en.wikipedia.org/wiki/Knowledge_graph), in
+search engines, [graph
+databases](https://en.wikipedia.org/wiki/Graph_database), and so on.
+
+## Tidy data
+
+The `tidyverse` works on [tidy
+data](https://r4ds.had.co.nz/tidy-data.html), i.e., a consistent way to
+organize data in R. One of the goals of the `tidyverse` suite of tools
+is to make an interface between data input and data output – that is,
+once you have data in the tidy data format, working with the tools in
+the tidyverse become much simpler. In other words, to play and have fun
+with the tools in tidyverse, you should first get your data into the
+tidy format.
+
+As shown above, the same tabular data can be formatted in different
+ways. (The picture is actually more complex because data can be
+represented in many different ways in tables, e.g., [see
+here](https://r4ds.had.co.nz/tidy-data.html).)
+
+To create tidy data, there are three rules you must follow (Wickham and
+Grolemund 2016):
+
+1.  Each variable must have its own column.
+2.  Each observation must have its own row.
+3.  Each value must have its own cell.
+
+So, variables in columns, observations in rows, values in cells – in one
+table!
+
+This boils down to: put your data in a table (or data frame or tibble in
+R) and put each variable in a column.
+
+What are the advantages of this approach to organizing your data? Well,
+other than easy access to methods in the tidyverse, your data (Wickham
+and Grolemund 2016):
+
+1.  Is in a consistent format – and it’s easier to learn to work with
+    one format before learning to deal with multiple formats
+
+2.  When variables are in columns, it is straightforward to vectorize
+    the data – most R functions work on vectorized data
 
 ------------------------------------------------------------------------
 
@@ -495,8 +497,8 @@ on.
 transforming it, creating it, and analyzing it.**
 
 Tabular data typically contains numerical data or [categorical
-data](https://en.wikipedia.org/wiki/Categorical_variable) (recall data
-types discussed above). Numerical data is either:
+data](https://en.wikipedia.org/wiki/Categorical_variable) (see data
+types discussed below). Numerical data is either:
 
 - numerical (aka discrete) – integer values, e.g., counts, indices.
 - continuous – data that can take any value within in interval, e.g.,
@@ -514,186 +516,10 @@ are the words in the example above). Categorical data includes:
 
 The types of data in your table, i.e., the [statistical data
 types](https://en.wikipedia.org/wiki/Statistical_data_type) **constrain
-or determine the types of statistics you can do with your data!**
+or determine the types of statistics you can do with your data!** See
+data types discussion below.
 
-## Analog versus digital
-
-The data that we work with is mainly [digital
-data](https://en.wikipedia.org/wiki/Digital_data).
-
-If for example, we record audio data, e.g., someone’s voice, then a
-continuous (analog) signal is converted from [analog to
-digital](https://en.wikipedia.org/wiki/Analog-to-digital_converter). In
-other words, the audio signal is digitized – meaning that the
-disturbances of air waves created by an instrument or speaker is sampled
-and digitized and stored into an electronic (aka digital) format.
-
-Consider for example the follow images.
-[Sound](https://en.wikipedia.org/wiki/Sound) propagates as an acoustic
-wave, i.e., a vibration. The reception of these waves by the human ear
-is perceived as sound (only sounds between around 20 Hz and 20 kHz).
-
-- <https://www.soundonsound.com/techniques/digital-myth>
-
-<figure>
-<img src="figures/DigMyth1-wpILIpnPnsuSK1dcyD8V_Ps3F_98.qjE.jpg"
-alt="Digital audio basics" />
-<figcaption aria-hidden="true">Digital audio basics</figcaption>
-</figure>
-
-The sound source is a
-[continuous](https://en.wikipedia.org/wiki/Discrete_time_and_continuous_time)
-wave is [analog signal](https://en.wikipedia.org/wiki/Analog_signal).
-
-In contrast, a [digital
-signal](https://en.wikipedia.org/wiki/Digital_signal) is a sampling of
-sequences of the continuous analog wave. See also [analog versus
-digital](https://www.adorama.com/alc/analog-vs-digital-audio/) for more
-information.
-
-Here is a visualization of [sampling a wave
-form](https://manual.audacityteam.org/man/digital_audio.html):
-
-<figure>
-<img src="figures/waveform_sample_formats.png"
-alt="Sampling a wave form" />
-<figcaption aria-hidden="true">Sampling a wave form</figcaption>
-</figure>
-
-Increasing the sampling rate leads to higher resolution of the audio
-(right hand side):
-
-<figure>
-<img src="figures/waveform_sample_rates.png"
-alt="Increased sampling rate" />
-<figcaption aria-hidden="true">Increased sampling rate</figcaption>
-</figure>
-
-## Binary and electronic text
-
-At the “lowest” level, all digital data is [binary
-data](https://en.wikipedia.org/wiki/Binary_data) – see the “stream of
-digits” in the figure above.
-
-What is binary? Consider the joke:
-
-[There are 10 types of people in this world… those who understand binary
-and those who
-don’t.](https://www.urbandictionary.com/define.php?term=there%20are%2010%20types%20of%20people%20in%20this%20world%2C%20those%20who%20understand%20binary%20and%20those%20who%20dont)
-
-Why do we need binary?
-
-At the level that computers function, binary encodes everything – all
-electronic text, audio files, video files, etc. (Note there is a
-difference between different **file formats** – see section below – and
-how those files are digitally encoded.)
-
-In this course we will be focused on [plain
-text](https://en.wikipedia.org/wiki/Plain_text) encodings and file
-formats (unless for example you read data directly from a program like
-Excel). Because all electronic (aka digital) text is encoded at the
-“lowest” level in binary, there are ways of turning binary into plain
-text:
-
-- <https://en.wikipedia.org/wiki/Binary-to-text_encoding>
-
-In other words, an electronic text in binary can be encoded as
-[printable
-characters](https://en.wikipedia.org/wiki/Character_(computing)). What
-you see and read on the screen includes characters.
-
-Which of these files are plain text and which are binary? How do you
-find out?
-
-- <https://drive.google.com/drive/folders/1bRg1MS0iBPvb7Rz3eMaezC_PsaKNoFjF?usp=sharing>
-
-Characters are encoded in various [character
-encodings](https://en.wikipedia.org/wiki/Character_encoding) – that is,
-a character encoding encodes text in computers. Most common character
-encodings are based on [ASCII](https://en.wikipedia.org/wiki/ASCII). An
-ASCII table:
-
-<https://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters>
-
-The point is that each character is encoded in binary and the computer
-knows how to interpret, for example `01100110` and display `f`. Here is
-a table that shows the mappings between binary and ASCII characters:
-
-- <http://sticksandstones.kstrom.com/appen.html>
-
-Nowadays, most of the world uses the [Unicode
-Standard](https://en.wikipedia.org/wiki/Unicode) for character encoding
-of text. The Unicode Standard builds on ASCII and aims to encode all
-writing systems of the world. More recently, its developers aim to make
-sure that “everyone in the world should be able to use their own
-language on phones and computers”:
-
-- <https://home.unicode.org>
-
-This includes of course encoding characters for
-[emojis](https://en.wikipedia.org/wiki/Emoji)! (Both emoji and emojis
-are appropriate plural forms – like data!) According to
-[Unicode](https://home.unicode.org/emoji/about-emoji/):
-
-> > > “92% of the world’s online population use emoji in their
-> > > communications – and Unicode defines the characters that make
-> > > those human connections possible. These 3,600+ emoji represent
-> > > faces, weather, vehicles and buildings, food and drink, animals,
-> > > and more. From a technical perspective, inside the computer or
-> > > phone, each is a sequence of one or more Unicode characters, but
-> > > to the billions of users using emoji each day, they can express
-> > > love, congratulations, ideas, culture, and much more.”
-
-The [Unicode Consortium](https://unicode.org/consortium/consort.html)
-solicits proposals from the public (and from corporations) for adding
-new [scripts](https://en.wikipedia.org/wiki/Writing_system) and new
-emojis. Maybe you should make a formal request for an emoji that you
-would like to see?
-
-Now if are like me, you’re asking yourself how does one puts an emoji
-into R markdown? I’m guess I’m not alone:
-
-- <https://twitter.com/hadleywickham/status/856938704748896258?lang=en>
-
-And there’s apparently an R package for that!
-
-- <https://github.com/hadley/emo>
-
-First you need to install the [devtools](https://devtools.r-lib.org)
-package (first line below) – commented out so that it does not run
-*every time* I compile this R Markdown file. The devtools package allows
-you to install [R
-packages](https://en.wikipedia.org/wiki/R_(programming_language)#Packages)
-from third parties, e.g., from someones GitHub repository. That’s line
-two below (also commented out because you only need to install it once).
-The third line uses the command `emo::ji` and the parameter (or
-argument) within ()’s and the value you’re passing as the parameter,
-i.e., “poop”. This function then renders the [pile of poo
-emoji](https://en.wikipedia.org/wiki/Pile_of_Poo_emoji), aka “poomoji”,
-“poop emoji”, which in binary is: 11110000 10011111 10010010 10101001.
-
-``` r
-# install.packages("devtools")  # line 1
-devtools::install_github("hadley/emo")  # line 2
-```
-
-    ## Skipping install of 'emo' from a github remote, the SHA1 (3f03b114) has not changed since last install.
-    ##   Use `force = TRUE` to force installation
-
-``` r
-emo::ji("poop")  # line 3
-```
-
-    ## 💩
-
-Here’s a Unicode table website to easily search for characters and
-emojis:
-
-- <https://unicode-table.com/en/>
-
-Find the craziest Unicode symbol!
-
-# Data types in computer programming
+# Data types
 
 ## Overview
 
@@ -721,7 +547,7 @@ provides information for the compiler to check the [correctness of the
 computer
 program](https://en.wikipedia.org/wiki/Correctness_(computer_science)).
 
-## In R
+## Data types in R
 
 R has **five** basic [data
 types](https://en.wikipedia.org/wiki/Data_type):
@@ -828,18 +654,13 @@ class(l)
 An important set of operators when working with data types in R involve
 comparison.
 
-- == – is equal to
-
-- != – is not equal to (exclamation point or “bang” typically means NOT
+- is equal to: `==`
+- is not equal to: `!=` (exclamation point or “bang” typically means NOT
   in programming languages)
-
-- \< – less than
-
-- – greater than
-
-- \<= – less than or equal to
-
-- = – greater than or equal to
+- less than: `<`
+- greater than: `>`
+- less than or equal to: `<=`
+- greater than or equal to: `>=`
 
 Some examples.
 
@@ -1031,7 +852,7 @@ Here are some other resources that describe data types in R:
 - <https://www.w3schools.com/r/r_data_types.asp>
 - <https://statsandr.com/blog/data-types-in-r/>
 
-# Programming vs statistics
+## Data types in programming vs statistics
 
 [Data types for computer
 programming](https://en.wikipedia.org/wiki/Data_type) have comparable
@@ -1090,9 +911,9 @@ x + y
 
     ## [1] 2
 
-# Data types in statistics
+## Data types in statistics
 
-## Qualitative versus quantitative variables
+### Qualitative versus quantitative variables
 
 In contrast to variables in computer programming, variables in
 statistics are **properties** or **characteristics** used to measure a
@@ -1175,7 +996,7 @@ knitr::kable(df)
 
 Answers are available [here](data/variables_quiz_answers.csv).
 
-## Scales of measurement
+### Scales of measurement
 
 In statistics, we often talk about [scales of measurement or levels of
 measurement](https://en.wikipedia.org/wiki/Level_of_measurement).
@@ -1294,7 +1115,321 @@ measurement will help you in two tasks:
   is a set of ranks (ordinal data), then a nonparametric statistic is
   required. Etc.
 
-# Data structures
+# Where do I find data?
+
+The world is awash in data. And the amount of data being created is
+increasingly rapidly. By some estimates, there was 60 or more
+[zettabytes](https://en.wikipedia.org/wiki/Zettabyte_Era) of data as of
+2020.
+
+- <https://www.statista.com/statistics/871513/worldwide-data-created/>
+- <https://seedscientific.com/how-much-data-is-created-every-day/>
+- <https://rivery.io/blog/big-data-statistics-how-much-data-is-there-in-the-world/>
+
+As of 2021, calculations of how much data is being created stood at:
+
+> > > Each day on Earth we generate 500 million tweets, 294 billion
+> > > emails, 4 million gigabytes of Facebook data, 65 billion WhatsApp
+> > > messages and 720,000 hours of new content added daily on YouTube.
+
+- <https://theconversation.com/the-worlds-data-explained-how-much-were-producing-and-where-its-all-stored-159964>
+
+That’s a lot of data. Lots of it’s “closed” or
+[“proprietary”](https://en.wikipedia.org/wiki/Proprietary_software)
+data. But there’s also lots of [open
+data](https://en.wikipedia.org/wiki/Open_data) available.
+
+Try [searching](https://www.google.com/search?q=open+data+sets) for
+some!
+
+[Open data](https://en.wikipedia.org/wiki/Open_data) are data that are
+freely available and also the idea that data should be freely available.
+(Recall what we’ve discussed about data and software licenses.) The idea
+is similar to [open source
+code](https://en.wikipedia.org/wiki/Open_source), i.e., the idea that
+source code is made openly and freely available. Both open data and open
+source code are integral to [open data
+science](https://en.wikipedia.org/wiki/Open_science_data) and
+[reproducible science](https://en.wikipedia.org/wiki/Reproducibility).
+
+There is a lot of openly available datasets out there. Here are some
+that I use:
+
+- <https://archive.ics.uci.edu/ml/index.php>
+- <https://opendata.swiss/en/>
+- <https://zenodo.org>
+
+But don’t be shy – use search to find other places! For example:
+
+- [best places for open
+  datasets](https://www.google.com/search?q=best+places+for+open+datasets)
+
+There are lots of results highlighing where to look for free datasets,
+e.g.:
+
+- <https://careerfoundry.com/en/blog/data-analytics/where-to-find-free-datasets/>
+- <https://www.freecodecamp.org/news/https-medium-freecodecamp-org-best-free-open-data-sources-anyone-can-use-a65b514b0f2d/>
+
+Google for example has a dataset search and a public data portal:
+
+- <https://datasetsearch.research.google.com>
+- <https://www.google.com/publicdata/directory>
+
+Kaggle is another popular place to look for data:
+
+- <https://www.kaggle.com/datasets>
+
+Amazon Web Services has a data portal:
+
+- <https://registry.opendata.aws>
+
+Governments sometimes publish data, e.g.:
+
+- [European Union](https://data.europa.eu)
+- [US government open data](https://data.gov)
+- [Germany government open data](https://www.govdata.de)
+- [CIA world factbook](https://www.cia.gov/the-world-factbook/)
+- [US census data](https://www.census.gov/data.html)
+
+How about some “high quality data and datasets organized by topic”?
+
+- <https://datahub.io/collections>
+
+This is an example of a general repository for datasets, which also
+includes the UCI Machine Learning Repository:
+
+- <https://archive.ics.uci.edu/ml/index.php>
+- <https://archive.ics.uci.edu/ml/datasets.php>
+
+Want some data about the Earth?
+
+- <https://www.earthdata.nasa.gov>
+
+Or particle physics?
+
+- <http://opendata.cern.ch>
+
+Are you interested in global health?
+
+- <https://apps.who.int/gho/data/node.home>
+- <https://data.unicef.org>
+
+Or film?
+
+- <https://www.bfi.org.uk/industry-data-insights>
+- <https://data.world/datasets/movies>
+- <https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset>
+
+Or something more specific? New York city taxis?
+
+- <https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page>
+
+Crime?
+
+- <https://crime-data-explorer.fr.cloud.gov/pages/home>
+
+Finance?
+
+- <https://data.worldbank.org>
+
+Are you interested in [data
+journalism](https://en.wikipedia.org/wiki/Data_journalism)? Try
+FiveThirtyEight or The Pudding:
+
+- <https://data.fivethirtyeight.com>
+- <https://pudding.cool>
+
+[DBpedia](https://en.wikipedia.org/wiki/DBpedia) is a knowledge base
+built on [Wikipedia](https://en.wikipedia.org/wiki/Wikipedia):
+
+- <https://www.dbpedia.org>
+
+Yelp datasets:
+
+- <https://www.yelp.com/dataset>
+
+R also has built in datasets:
+
+- <https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html>
+
+# Optional reading
+
+## Analog versus digital
+
+The data that we work with is mainly [digital
+data](https://en.wikipedia.org/wiki/Digital_data).
+
+If for example, we record audio data, e.g., someone’s voice, then a
+continuous (analog) signal is converted from [analog to
+digital](https://en.wikipedia.org/wiki/Analog-to-digital_converter). In
+other words, the audio signal is digitized – meaning that the
+disturbances of air waves created by an instrument or speaker is sampled
+and digitized and stored into an electronic (aka digital) format.
+
+Consider for example the follow images.
+[Sound](https://en.wikipedia.org/wiki/Sound) propagates as an acoustic
+wave, i.e., a vibration. The reception of these waves by the human ear
+is perceived as sound (only sounds between around 20 Hz and 20 kHz).
+
+- <https://www.soundonsound.com/techniques/digital-myth>
+
+<figure>
+<img src="figures/DigMyth1-wpILIpnPnsuSK1dcyD8V_Ps3F_98.qjE.jpg"
+alt="Digital audio basics" />
+<figcaption aria-hidden="true">Digital audio basics</figcaption>
+</figure>
+
+The sound source is a
+[continuous](https://en.wikipedia.org/wiki/Discrete_time_and_continuous_time)
+wave is [analog signal](https://en.wikipedia.org/wiki/Analog_signal).
+
+In contrast, a [digital
+signal](https://en.wikipedia.org/wiki/Digital_signal) is a sampling of
+sequences of the continuous analog wave. See also [analog versus
+digital](https://www.adorama.com/alc/analog-vs-digital-audio/) for more
+information.
+
+Here is a visualization of [sampling a wave
+form](https://manual.audacityteam.org/man/digital_audio.html):
+
+<figure>
+<img src="figures/waveform_sample_formats.png"
+alt="Sampling a wave form" />
+<figcaption aria-hidden="true">Sampling a wave form</figcaption>
+</figure>
+
+Increasing the sampling rate leads to higher resolution of the audio
+(right hand side):
+
+<figure>
+<img src="figures/waveform_sample_rates.png"
+alt="Increased sampling rate" />
+<figcaption aria-hidden="true">Increased sampling rate</figcaption>
+</figure>
+
+## Binary and electronic text
+
+At the “lowest” level, all digital data is [binary
+data](https://en.wikipedia.org/wiki/Binary_data) – see the “stream of
+digits” in the figure above.
+
+What is binary? Consider the joke:
+
+[There are 10 types of people in this world… those who understand binary
+and those who
+don’t.](https://www.urbandictionary.com/define.php?term=there%20are%2010%20types%20of%20people%20in%20this%20world%2C%20those%20who%20understand%20binary%20and%20those%20who%20dont)
+
+Why do we need binary?
+
+At the level that computers function, binary encodes everything – all
+electronic text, audio files, video files, etc. (Note there is a
+difference between different **file formats** – see section below – and
+how those files are digitally encoded.)
+
+In this course we will be focused on [plain
+text](https://en.wikipedia.org/wiki/Plain_text) encodings and file
+formats (unless for example you read data directly from a program like
+Excel). Because all electronic (aka digital) text is encoded at the
+“lowest” level in binary, there are ways of turning binary into plain
+text:
+
+- <https://en.wikipedia.org/wiki/Binary-to-text_encoding>
+
+In other words, an electronic text in binary can be encoded as
+[printable
+characters](https://en.wikipedia.org/wiki/Character_(computing)). What
+you see and read on the screen includes characters.
+
+Which of these files are plain text and which are binary? How do you
+find out?
+
+- <https://drive.google.com/drive/folders/1bRg1MS0iBPvb7Rz3eMaezC_PsaKNoFjF?usp=sharing>
+
+Characters are encoded in various [character
+encodings](https://en.wikipedia.org/wiki/Character_encoding) – that is,
+a character encoding encodes text in computers. Most common character
+encodings are based on [ASCII](https://en.wikipedia.org/wiki/ASCII). An
+ASCII table:
+
+<https://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters>
+
+The point is that each character is encoded in binary and the computer
+knows how to interpret, for example `01100110` and display `f`. Here is
+a table that shows the mappings between binary and ASCII characters:
+
+- <http://sticksandstones.kstrom.com/appen.html>
+
+Nowadays, most of the world uses the [Unicode
+Standard](https://en.wikipedia.org/wiki/Unicode) for character encoding
+of text. The Unicode Standard builds on ASCII and aims to encode all
+writing systems of the world. More recently, its developers aim to make
+sure that “everyone in the world should be able to use their own
+language on phones and computers”:
+
+- <https://home.unicode.org>
+
+This includes of course encoding characters for
+[emojis](https://en.wikipedia.org/wiki/Emoji)! (Both emoji and emojis
+are appropriate plural forms – like data!) According to
+[Unicode](https://home.unicode.org/emoji/about-emoji/):
+
+> > > “92% of the world’s online population use emoji in their
+> > > communications – and Unicode defines the characters that make
+> > > those human connections possible. These 3,600+ emoji represent
+> > > faces, weather, vehicles and buildings, food and drink, animals,
+> > > and more. From a technical perspective, inside the computer or
+> > > phone, each is a sequence of one or more Unicode characters, but
+> > > to the billions of users using emoji each day, they can express
+> > > love, congratulations, ideas, culture, and much more.”
+
+The [Unicode Consortium](https://unicode.org/consortium/consort.html)
+solicits proposals from the public (and from corporations) for adding
+new [scripts](https://en.wikipedia.org/wiki/Writing_system) and new
+emojis. Maybe you should make a formal request for an emoji that you
+would like to see?
+
+Now if are like me, you’re asking yourself how does one puts an emoji
+into R markdown? I’m guess I’m not alone:
+
+- <https://twitter.com/hadleywickham/status/856938704748896258?lang=en>
+
+And there’s apparently an R package for that!
+
+- <https://github.com/hadley/emo>
+
+First you need to install the [devtools](https://devtools.r-lib.org)
+package (first line below) – commented out so that it does not run
+*every time* I compile this R Markdown file. The devtools package allows
+you to install [R
+packages](https://en.wikipedia.org/wiki/R_(programming_language)#Packages)
+from third parties, e.g., from someones GitHub repository. That’s line
+two below (also commented out because you only need to install it once).
+The third line uses the command `emo::ji` and the parameter (or
+argument) within ()’s and the value you’re passing as the parameter,
+i.e., “poop”. This function then renders the [pile of poo
+emoji](https://en.wikipedia.org/wiki/Pile_of_Poo_emoji), aka “poomoji”,
+“poop emoji”, which in binary is: 11110000 10011111 10010010 10101001.
+
+``` r
+# install.packages("devtools")  # line 1
+devtools::install_github("hadley/emo")  # line 2
+```
+
+    ## Skipping install of 'emo' from a github remote, the SHA1 (3f03b114) has not changed since last install.
+    ##   Use `force = TRUE` to force installation
+
+``` r
+emo::ji("poop")  # line 3
+```
+
+    ## 💩
+
+Here’s a Unicode table website to easily search for characters and
+emojis:
+
+- <https://unicode-table.com/en/>
+
+Find the craziest Unicode symbol! \## Data structures
 
 [Data structures](https://en.wikipedia.org/wiki/Data_structure) are
 collections of data values that are organized so that operations can be
@@ -1314,7 +1449,7 @@ structures to implement. R has several data structures:
 is the process of converting one data format to another (whether
 unstructured or structured). This is discussed under data wrangling.
 
-# File formats
+## File formats
 
 [File formants](https://en.wikipedia.org/wiki/File_format) are
 standardized ways of encoding digital data for storage as computer
@@ -1447,7 +1582,7 @@ section).
 Are the results data or information? Was the text string that we started
 with data or information?
 
-# Metadata
+## Metadata
 
 A quick note about metadata.
 [Metadata](https://en.wikipedia.org/wiki/Metadata) is data about data,
@@ -1463,7 +1598,7 @@ metadata types, but most pertinent to this course are:
   pages are ordered to form chapters. It describes the types, versions,
   relationships and other characteristics of digital materials.
 
-# Data archiving
+## Data archiving
 
 We won’t talk much about data archiving, but it is important for
 research and reproducibility, e.g.:
@@ -1520,6 +1655,14 @@ Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy
 D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019.
 “Welcome to the <span class="nocase">tidyverse</span>.” *Journal of Open
 Source Software* 4 (43): 1686. <https://doi.org/10.21105/joss.01686>.
+
+</div>
+
+<div id="ref-WickhamGrolemund2016" class="csl-entry">
+
+Wickham, Hadley, and Garrett Grolemund. 2016. *R for Data Science:
+Import, Tidy, Transform, Visualize, and Model Data*. O’Reilly Media,
+Inc. <https://r4ds.had.co.nz>.
 
 </div>
 
