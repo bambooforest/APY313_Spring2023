@@ -288,13 +288,85 @@ probably familiar for example with Excel spreadsheets.
 Many statistical software packages use similar spreadsheets and many are
 able to import Excel spreadsheets. R is no different.
 
+------------------------------------------------------------------------
+
+Tabular (or table) data has several properties. It consists of [rows and
+columns](https://en.wikipedia.org/wiki/Row_and_column_vectors) in the
+linear algebra sense, and
+[rows](https://en.wikipedia.org/wiki/Row_(database)) and
+[columns](https://en.wikipedia.org/wiki/Column_(database)) in the
+relational database sense.
+
+[Columns](https://en.wikipedia.org/wiki/Column_(database)) in tabular
+data contain a set of data of a particular type and contain (typically)
+one value (data type – see above) for each row in the table.
+
+Each [row](https://en.wikipedia.org/wiki/Row_(database)) in the table
+contains an observation, in which each row represents a set of related
+data, i.e., every row has the same structure and each cell in each row
+should adhere to the column’s specification (i.e., that data type of
+that column).
+
+For example if you run the `data()` command in R / RStudio, you will get
+a list of all of the pre-loaded data sets available in R.
+
+``` r
+# Recall you can also use the help() function to learn more about datasets in R, i.e., run: help(data)
+data()
+```
+
+For example, do you want to know about the [Swiss Fertility and
+Socioeconomic Indicators (1888)
+Data](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/swiss.html)
+available in R? This is a dataset with standardized fertility measures
+and socio-economic indicators for each of the 47 French-speaking
+provinces of Switzerland in 1888.
+
+``` r
+help(swiss)
+data(swiss)
+head(swiss)
+```
+
+    ##              Fertility Agriculture Examination Education Catholic
+    ## Courtelary        80.2        17.0          15        12     9.96
+    ## Delemont          83.1        45.1           6         9    84.84
+    ## Franches-Mnt      92.5        39.7           5         5    93.40
+    ## Moutier           85.8        36.5          12         7    33.77
+    ## Neuveville        76.9        43.5          17        15     5.16
+    ## Porrentruy        76.1        35.3           9         7    90.57
+    ##              Infant.Mortality
+    ## Courtelary               22.2
+    ## Delemont                 22.2
+    ## Franches-Mnt             20.2
+    ## Moutier                  20.3
+    ## Neuveville               20.6
+    ## Porrentruy               26.6
+
+What are the columns? What their data types? What are the rows? Again,
+we can use the structure function `str()` and pass it the dataset’s
+name.
+
+``` r
+str(swiss)
+```
+
+    ## 'data.frame':    47 obs. of  6 variables:
+    ##  $ Fertility       : num  80.2 83.1 92.5 85.8 76.9 76.1 83.8 92.4 82.4 82.9 ...
+    ##  $ Agriculture     : num  17 45.1 39.7 36.5 43.5 35.3 70.2 67.8 53.3 45.2 ...
+    ##  $ Examination     : int  15 6 5 12 17 9 16 14 12 16 ...
+    ##  $ Education       : int  12 9 5 7 15 7 7 8 7 13 ...
+    ##  $ Catholic        : num  9.96 84.84 93.4 33.77 5.16 ...
+    ##  $ Infant.Mortality: num  22.2 22.2 20.2 20.3 20.6 26.6 23.6 24.9 21 24.4 ...
+
 Importantly, the input to statistical graphics or plots is typically
 some type of data matrix (tabular data) as input. The key is to get the
 data into the correct format as input to the method that will visualize
 the data. [Data wrangling](../4_data_wrangling/README.md) include the
 steps to get the data that is needed for visualization purposes. You
 may, however, also have to reshape the tabular data into various
-formats, so that you can easily feed into the method.
+formats, so that you can easily feed into the method. Wide and long data
+formats are common for collecting and processing data, respectively.
 
 ## Wide vs long table formats
 
@@ -408,77 +480,6 @@ and Grolemund 2016):
 
 2.  When variables are in columns, it is straightforward to vectorize
     the data – most R functions work on vectorized data
-
-------------------------------------------------------------------------
-
-Tabular (or table) data has several properties. It consists of [rows and
-columns](https://en.wikipedia.org/wiki/Row_and_column_vectors) in the
-linear algebra sense, and
-[rows](https://en.wikipedia.org/wiki/Row_(database)) and
-[columns](https://en.wikipedia.org/wiki/Column_(database)) in the
-relational database sense.
-
-[Columns](https://en.wikipedia.org/wiki/Column_(database)) in tabular
-data contain a set of data of a particular type and contain (typically)
-one value (data type – see above) for each row in the table.
-
-Each [row](https://en.wikipedia.org/wiki/Row_(database)) in the table
-contains an observation, in which each row represents a set of related
-data, i.e., every row has the same structure and each cell in each row
-should adhere to the column’s specification (i.e., that data type of
-that column).
-
-For example if you run the `data()` command in R / RStudio, you will get
-a list of all of the pre-loaded data sets available in R.
-
-``` r
-# Recall you can also use the help() function to learn more about datasets in R, i.e., run: help(data)
-data()
-```
-
-For example, do you want to know about the [Swiss Fertility and
-Socioeconomic Indicators (1888)
-Data](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/swiss.html)
-available in R? This is a dataset with standardized fertility measures
-and socio-economic indicators for each of the 47 French-speaking
-provinces of Switzerland in 1888.
-
-``` r
-help(swiss)
-data(swiss)
-head(swiss)
-```
-
-    ##              Fertility Agriculture Examination Education Catholic
-    ## Courtelary        80.2        17.0          15        12     9.96
-    ## Delemont          83.1        45.1           6         9    84.84
-    ## Franches-Mnt      92.5        39.7           5         5    93.40
-    ## Moutier           85.8        36.5          12         7    33.77
-    ## Neuveville        76.9        43.5          17        15     5.16
-    ## Porrentruy        76.1        35.3           9         7    90.57
-    ##              Infant.Mortality
-    ## Courtelary               22.2
-    ## Delemont                 22.2
-    ## Franches-Mnt             20.2
-    ## Moutier                  20.3
-    ## Neuveville               20.6
-    ## Porrentruy               26.6
-
-What are the columns? What their data types? What are the rows? Again,
-we can use the structure function `str()` and pass it the dataset’s
-name.
-
-``` r
-str(swiss)
-```
-
-    ## 'data.frame':    47 obs. of  6 variables:
-    ##  $ Fertility       : num  80.2 83.1 92.5 85.8 76.9 76.1 83.8 92.4 82.4 82.9 ...
-    ##  $ Agriculture     : num  17 45.1 39.7 36.5 43.5 35.3 70.2 67.8 53.3 45.2 ...
-    ##  $ Examination     : int  15 6 5 12 17 9 16 14 12 16 ...
-    ##  $ Education       : int  12 9 5 7 15 7 7 8 7 13 ...
-    ##  $ Catholic        : num  9.96 84.84 93.4 33.77 5.16 ...
-    ##  $ Infant.Mortality: num  22.2 22.2 20.2 20.3 20.6 26.6 23.6 24.9 21 24.4 ...
 
 ------------------------------------------------------------------------
 
