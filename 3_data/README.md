@@ -1,7 +1,7 @@
 Data
 ================
 Steven Moran
-(01 February, 2023)
+(02 February, 2023)
 
 - [What is data?](#what-is-data)
 - [Structured versus unstructured
@@ -306,6 +306,29 @@ contains an observation, in which each row represents a set of related
 data, i.e., every row has the same structure and each cell in each row
 should adhere to the column’s specification (i.e., that data type of
 that column).
+
+![Variables and observations in a table](figures/table_example.png) In
+sum:
+
+- Every **column** represents a particular variable (height, weight,
+  number of vowels).
+
+- Each **row/record** corresponds to a given member of the data set in
+  question (e.g. a person, a sentence, a language, a phoneme, a
+  measurement).
+
+- Every record shares the same set of variables, i.e., **every row has
+  the same set of column headers**.
+
+- Tabular data are **inherently rectangular** and cannot have “ragged
+  rows”.
+
+- Each value (each cell) is **known as a datum**.
+
+- If any row is lacking information for a particular column a **missing
+  value (NA)** must be stored in that cell.
+
+------------------------------------------------------------------------
 
 For example if you run the `data()` command in R / RStudio, you will get
 a list of all of the pre-loaded data sets available in R.
