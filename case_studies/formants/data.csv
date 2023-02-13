@@ -1,0 +1,16 @@
+ID,Word,Vowel,F0,F1,F2,F3,Sex,L1,Height
+1,heed,i,120,319,2522,3299,M,English,168
+1,hayed,e,115,418,2119,3631,M,English,168
+1,hawed,a,115,558,1044,2677,M,English,168
+1,who'd,u,122,317,874,2668,M,English,168
+1,hoed,o,119,457,1044,2587,M,English,168
+2,heed,i,217,234,2695,3460,F,English,180
+2,hayed,e,170,500,2684,3540,F,English,180
+2,hawed,a,139,641,985,3118,F,English,180
+2,who'd,u,172,295,997,2582,F,English,180
+2,hoed,o,220,235,2695,3467,F,English,180
+3,heed,i,111,278,2241,2948,M,French,185
+3,hayed,e,101,293,2013,2550,M,French,185
+3,hawed,a,101,614,969,2598,M,French,185
+3,who'd,u,105,336,1406,2830,M,French,185
+3,hoed,o,181,396,917,2777,M,French,185

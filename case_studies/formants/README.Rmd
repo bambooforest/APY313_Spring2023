@@ -1,0 +1,374 @@
+---
+title: "Vowel formants example"
+author: "Steven Moran"
+date: "(`r format(Sys.time(), '%d %B, %Y')`)"
+output:
+  github_document:
+      toc: true
+---
+
+# Getting started
+
+## R packages
+
+In R, you need to install (once) any R software package (aka library) that you want to use, before you load it with the `library()` function each time that you run a script or RMarkdown file.
+
+This code will check whether or not you have those packages, and if not, will install them and load the packages.
+
+```{r, message=FALSE}
+if(!require("tidyverse")) install.packages("tidyverse")
+if(!require("ggpubr")) install.packages("ggpubr")
+if(!require("devtools")) install.packages("devtools")
+library(devtools)
+if(!require("ggConvexHull")) devtools::install_github("cmartin/ggConvexHull")
+```
+
+Normally, once a package is already installed, you simply load it with the `library()` function, like this:
+
+```{r, message=FALSE}
+library(tidyverse)
+library(ggpubr)
+library(ggConvexHull)
+```
+
+The [tidyverse](https://www.tidyverse.org) package will install several [R packages](https://www.tidyverse.org/packages/) including:
+
+* [ggplot](https://ggplot2.tidyverse.org) for creating nice looking plots
+* [dplyr](https://dplyr.tidyverse.org) for manipulating data easily
+
+We are going to additionally use [ggpubr](http://www.sthda.com/english/wiki/ggpubr-create-easily-publication-ready-plots) package because it is helpful in making [professional looking plots](https://medium.com/swlh/beautiful-charts-with-r-and-ggpubr-c94122d6b7c6). 
+
+And the [ggConvexHull](https://github.com/cmartin/ggConvexHull) package, which extends the `geom_polyon()` function in the ggplot package, so that we can add a [convex hull](https://en.wikipedia.org/wiki/Convex_hull) around our vowel polygon data. This package is available via GitHub and hence the [devtools](https://devtools.r-lib.org) package.
+
+
+## Load our vowel data
+
+Let's load the vowel formants data from our measurements in class. 
+
+First download it from the shared Google sheets as a [CSV file](https://en.wikipedia.org/wiki/Comma-separated_values). 
+
+I renamed my downloaded file to `data.csv` to remove the spaces in the filename (you don't have to) and I saved it in the same directory as this `README.Rmd` file. If you want to get the current working directory in RStudio (or R) you can use this command:
+
+```{r}
+getwd()
+```
+
+In RStudio, I [set the working directory](https://support.rstudio.com/hc/en-us/articles/200711843-Working-Directories-and-Workspaces-in-the-RStudio-IDE) to the directory that contains this script. In this folder with the script, I also put the downloaded vowels data.
+
+Make your life easier and **put both files in the same folder!**
+
+You can set the working directory a la the link above or you can also do it manually with the `setwd()` function, e.g.:
+
+```{r}
+# setwd('/Users/stiv/GitHub/APY313/case_studies/formants')
+```
+
+***
+
+Let's load the data that's in the same directory as this script.
+
+```{r, message=FALSE}
+df <- read_csv('data.csv')
+
+# If you want the data in a different directory, you can give `read_csv()` the full path! E.g.:
+# df <- read_csv('/Users/stiv/Downloads/data.csv')
+```
+
+With the `read_csv()` function we read the [CSV file](https://en.wikipedia.org/wiki/Comma-separated_values) -- a comma delimited text file that represents [tabular (i.e. table) data](https://en.wikipedia.org/wiki/Table_(information)) as rows and columns.
+
+The `read_csv()` function reads the file into R as a [data frame](http://www.r-tutor.com/r-introduction/data-frame), essentially a table!^[It's actuall a ["tibble"](https://tibble.tidyverse.org), which is tidyverse's version of the data frame, but that's not important for now.]
+
+
+## Have a look at the raw data
+
+Let's have a look at the data. The function structure `str()` shows the data structure of the loaded data frame. It tells you what the columns are, what each column's data type is (e.g. `chr` means the rows in that column include characters; `num` means they include numbers) -- followed by human rows there are and examples of the first few rows.
+
+```{r}
+str(df)
+```
+
+The function `head()` shows us the first few rows, so we can have an idea of its contents.
+
+```{r}
+head(df)
+```
+
+The function `tail()` gives us the last few rows.
+
+```{r}
+tail(df)
+```
+
+We can also simply ask for the dimensions of the data frame (table!) with the `dim()` function. This tells us the number of **rows** (i.e. observations) by the number of **columns** (i.e. variables).
+
+```{r}
+dim(df)
+```
+
+Recall from class that every data has a [data type](https://github.com/bambooforest/APY313/tree/main/3_data#data-types-in-computer-programming). We can ask R to tell us the data type with the `class()` function:
+
+```{r}
+class(df)
+```
+
+Or if you want to know the data type of a specific column in the table.
+
+```{r}
+class(df$ID)
+```
+
+The `$` in R is used to access specific columns! You can access each column by its name, e.g.:
+
+```{r}
+df$Word
+```
+
+
+# Working with the data
+
+## Overview
+
+Above we had a quick look at the raw data, which you can also do directly with RStudio by clicking on the dataframe in the Environment tab.
+
+There are lots of ways of doing preliminary data analysis and one great way is to visualize the data!
+
+Recall our discussion of how the International Phonetic Alphabet (IPA) [vowel chart](https://en.wikipedia.org/wiki/Vowel_diagram) looks -- head faces left, vertical access is the jaw's height (closed to open) and the horizontal access is the position of the tongue (front to back in the mouth).
+
+***
+
+## Single speaker
+
+Let's look at one speaker in our sample. This is where the data manipulation R package [dplyr](https://dplyr.tidyverse.org) comes in handy! We will talk about how to use these functions [in class](https://github.com/bambooforest/APY313/tree/main/4_data_wrangling).
+
+The dplyr package has several functions that allow us to `filter()` rows and to `select()` columns (among many other useful things!).
+
+Let's filter out a single speaker and plot their vowels. You can set the ID to yourself!
+
+```{r}
+single_speaker <- df %>% filter(ID == 1)
+```
+
+Above, we have saved the output of filtering by `ID == 1` (read "subject ID equals one") to a new data frame and named it `single_speaker`. Let's have a look.
+
+```{r}
+single_speaker
+```
+
+Now let's plot Subject ID 1's vowel formant values for F1 and F2.
+
+```{r}
+ggplot(single_speaker, aes(x = F2, y = F1, color = Vowel)) + 
+  geom_convexhull(alpha = 0, colour = "black") +
+  geom_text(aes(label = Vowel), size = 12) +
+  scale_x_reverse() +
+  scale_y_reverse() +
+  coord_cartesian() +
+  theme_pubr(border = TRUE, legend = "none") +
+  theme(axis.ticks.length = unit(.25, "cm")) +
+  scale_color_manual(
+    name = "Vowel",
+    values = c(
+      "a" = "indianred",
+      "i" = "black",
+      "u" = "cornflowerblue",
+      "o" = "wheat3",
+      "e" = "purple3"
+    )
+  ) +
+  ggtitle('Subject ID 1')
+```
+
+## All speakers
+
+Let's plot all of the F1 and F2 formants in our sample and see what they look like. We use the `ggplot()` function with lots of other functions. This is complicated -- do not worry, we will go through this mess in class.
+
+```{r}
+ggplot(df, aes(x = F2, y = F1, color = Vowel)) + 
+  geom_convexhull(alpha = 0, colour = "black") +
+  geom_text(aes(label = Vowel), size = 12) +
+  scale_x_reverse() +
+  scale_y_reverse() +
+  coord_cartesian() +
+  theme_pubr(border = TRUE, legend = "none") +
+  theme(axis.ticks.length = unit(.25, "cm")) +
+  scale_color_manual(
+    name = "Vowel",
+    values = c(
+      "a" = "indianred",
+      "i" = "black",
+      "u" = "cornflowerblue",
+      "o" = "wheat3",
+      "e" = "purple3"
+    )
+  ) +
+  ggtitle('All speakers')
+```
+
+This isn't a very normal looking vowel chart! We seem to have some outliers and/or mistakes in formant measurements, e.g., the "e" vowel in the bottom left corner is way too high in terms of F1 and F2 frequencies.
+
+
+## Filter out outliers
+
+If we have outliers in our data, we can filter them out for exploratory purposes. For example, perhaps we find some data points (observations) that are missing data or perhaps some mistakes were made in the data collection. (Note that you should never remove outliers in real scientific experiments!)
+
+First, let's check that all subjects have recorded all five vowels.
+
+This code is a bit complex, but we will discuss it in class. By using `dplyr` we can "pipe" data frames (table data) into functions and manipulate the data.
+
+Here we group by `ID`, i.e., we group each subjects responses into their own groups, and then we count (by "summarizing") how many rows (`n()` function) are in each group -- and we do so by creating a new column called `vowels`.
+
+```{r}
+df %>% group_by(ID) %>% summarize(vowels = n())
+```
+
+We will pretend that subject ID 2 does not have 5 observations. What we can do is remove that subject from our data set like this:
+
+```{r}
+temp <- df %>% filter(ID != 2)
+```
+
+We saved the new data frame in a "temporary" data frame, so that we still have the full data in the `df` data frame.
+
+Now let's revisualize what's left. We can use the same code we used above.
+
+```{r}
+ggplot(temp, aes(x = F2, y = F1, color = Vowel)) + 
+  geom_convexhull(alpha = 0, colour = "black") +
+  geom_text(aes(label = Vowel), size = 12) +
+  scale_x_reverse() +
+  scale_y_reverse() +
+  coord_cartesian() +
+  theme_pubr(border = TRUE, legend = "none") +
+  theme(axis.ticks.length = unit(.25, "cm")) +
+  scale_color_manual(
+    name = "Vowel",
+    values = c(
+      "a" = "indianred",
+      "i" = "black",
+      "u" = "cornflowerblue",
+      "o" = "wheat3",
+      "e" = "purple3"
+    )
+  ) +
+  ggtitle('All speakers')
+```
+
+See how the vowel chart changes. If we have great or more outliers, we will see more change.
+
+***
+
+For each speaker, we can add the vowel polygon lines.
+
+```{r}
+ggplot(df, aes(x = F2, y = F1)) +
+  geom_convexhull(alpha = 0, aes(colour = ID)) +
+  geom_text(aes(label = Vowel), size = 10) +
+  scale_x_reverse() +
+  scale_y_reverse() +
+  coord_cartesian() +
+  theme_pubr(border = TRUE) +
+  theme(axis.ticks.length = unit(.25, "cm"))
+```
+
+
+# Analyses
+
+## Phonetic differences by sex
+
+Let's plot individual vowel polygons by the reported sex of the speaker. As we expect from the literature on [phonetic differences between male and female speech](https://compass.onlinelibrary.wiley.com/doi/abs/10.1111/j.1749-818X.2009.00125.x), the vowel polygon of the women in our sample displays greater acoustic range than the men.
+
+```{r}
+ggplot(df, aes(x = F2, y = F1)) +
+  geom_convexhull(alpha = 0, aes(colour = Sex)) +
+  geom_text(aes(label = Vowel), size = 10) +
+  scale_x_reverse() +
+  scale_y_reverse() +
+  coord_cartesian() +
+  theme_pubr(border = TRUE) +
+  theme(axis.ticks.length = unit(.25, "cm"))
+```
+
+We can also plot individual vowel polygon spaces by sex and filled in by color. 
+
+```{r}
+ggplot(df, aes(x = F2, y = F1)) +
+  geom_convexhull(alpha = 0.3, lwd = 0, aes(colour = ID, fill = Sex)) +
+  geom_text(aes(label = Vowel), size = 10) +
+  scale_x_reverse() +
+  scale_y_reverse() +
+  coord_cartesian() +
+  theme_pubr(border = TRUE) +
+  theme(axis.ticks.length = unit(.25, "cm"))
+```
+
+## Differences in pitch
+
+Recall that we also recorded our F0 -- our fundamental frequency, which we perceive as our pitch. This is in the F0 column of our data frame:
+
+```{r}
+head(df)
+```
+
+Again, we access any column in the data frame with the `$` operator with the name of the column as the suffix, e.g. let's get all values (aka observations, rows) of F0:
+
+```{r}
+df$F0
+```
+
+We can also use various R functions on columns. For example, you can summarize numerical values from a column with the `summary()` function!
+
+```{r}
+summary(df$F0)
+```
+
+Perhaps we want to summarize the F0 by sex? In "[base R](https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf)":
+
+```{r}
+# Get a column by name
+df$F0
+
+# Get rows by filtering the contents of a colum; here by "sex is F(emale)"
+df[df$Sex == "F", ]
+
+# Get just the contents of the column we want by the filter -- ugh this is painful!
+df[df$Sex == "F", ]$F0
+
+# Now let's summarize that mess
+summary(df[df$Sex == "F", ]$F0)
+
+# And the men
+summary(df[df$Sex == "M", ]$F0)
+```
+
+Men in the sample have on average lower pitch.
+
+
+## Pitch versus height
+
+Lastly, let's see if there is a correlation between one's height and one's F0.
+
+First, let's get the data we want by "grouping" the height variable and summarizing the mean F0 for each by height.
+
+```{r}
+tmp <- df %>% group_by(Height) %>% summarize(Mean_F0 = mean(F0))
+```
+Now let's plot the results as a linear regression.
+
+```{r}
+ggplot(tmp, aes(Height, Mean_F0)) +
+  geom_point(colour = "black", alpha = 1) +
+  xlab("Height") +
+  ylab("Mean F0") +
+  theme_pubr(border = TRUE, margin = TRUE) + 
+  geom_smooth(method = "lm", se = FALSE, colour = "red") +
+  ggpubr::stat_cor(aes(label = paste(..rr.label.., ..p.label.., sep = "~`,`~")))
+```
+
+And indeed it looks like as one gets taller, their pitch on average gets lower.
+
+We can also get the model statistics directly from the data with these functions.
+
+```{r}
+model1 <- lm(Mean_F0 ~ Height, data = tmp)
+summary(model1)
+```
