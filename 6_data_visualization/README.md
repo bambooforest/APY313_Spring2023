@@ -2,25 +2,22 @@ Data visualization II
 ================
 Steven Moran & Alena Witzlack-Makarevich
 
-26 October, 2022
+21 February, 2023
 
--   <a href="#visualizing-data" id="toc-visualizing-data">Visualizing
-    data</a>
-    -   <a href="#recap" id="toc-recap">Recap</a>
-    -   <a href="#data" id="toc-data">Data</a>
-    -   <a href="#geometries" id="toc-geometries">Geometries</a>
-    -   <a href="#facets" id="toc-facets">Facets</a>
-    -   <a href="#statistics" id="toc-statistics">Statistics</a>
-    -   <a href="#coordinates" id="toc-coordinates">Coordinates</a>
-    -   <a href="#theme" id="toc-theme">Theme</a>
--   <a href="#visualizations" id="toc-visualizations">Visualizations</a>
-    -   <a href="#which-plots-to-use" id="toc-which-plots-to-use">Which plot(s)
-        to use?</a>
-    -   <a href="#putting-it-all-together-an-example"
-        id="toc-putting-it-all-together-an-example">Putting it all together: an
-        example</a>
--   <a href="#exercises" id="toc-exercises">Exercises</a>
--   <a href="#references" id="toc-references">References</a>
+- [Visualizing data](#visualizing-data)
+  - [Recap](#recap)
+  - [Data](#data)
+  - [Geometries](#geometries)
+  - [Facets](#facets)
+  - [Statistics](#statistics)
+  - [Coordinates](#coordinates)
+  - [Theme](#theme)
+- [Visualizations](#visualizations)
+  - [Which plot(s) to use?](#which-plots-to-use)
+  - [Putting it all together: an
+    example](#putting-it-all-together-an-example)
+- [Exercises](#exercises)
+- [References](#references)
 
 ------------------------------------------------------------------------
 
@@ -36,6 +33,7 @@ library(knitr)
 library(dslabs)
 library(ggthemes)
 library(ggrepel)
+library(maps)
 ```
 
 ------------------------------------------------------------------------
@@ -58,7 +56,7 @@ system](https://en.wikipedia.org/wiki/Coordinate_system).
 
 Here is a cheat sheet describing the process:
 
--   <https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf>
+- <https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf>
 
 ------------------------------------------------------------------------
 
@@ -70,16 +68,20 @@ for Data Analysis*](https://ggplot2-book.org/index.html).
 
 A simple plot with `ggplot()` needs minimally:
 
--   Data to visualize – a data frame or tibble!
--   Aesthetics – mappings from aesthetic attributes (e.g., color, shape,
-    size) to geometric objects (e.g., points, lines, bars)
--   Geometries – e.g., dots, lines, boxes
+- Data to visualize – a data frame or tibble!
+- Aesthetics – mappings from aesthetic attributes (e.g., color, shape,
+  size) to geometric objects (e.g., points, lines, bars)
+- Geometries – e.g., dots, lines, boxes
 
 These essential ingredients (bordered in red) for creating a plot with
 `ggplot()` are illustrated below in a visualization within the layered
 grammar of graphics (Wickham 2009).
 
-![Essentials.](../5_data_visualization/figures/essential_ingredients.png)
+<figure>
+<img src="../5_data_visualization/figures/essential_ingredients.png"
+alt="Essentials." />
+<figcaption aria-hidden="true">Essentials.</figcaption>
+</figure>
 
 But let’s go through each in detail – but from bottom up.
 
@@ -124,9 +126,9 @@ head(diamonds) %>% kable()
 
 Now one way forward is to ask:
 
--   Which kinds of visualizations can we produce?
--   Which kind of research questions can be answered on the basis of
-    this data set?
+- Which kinds of visualizations can we produce?
+- Which kind of research questions can be answered on the basis of this
+  data set?
 
 ## Geometries
 
@@ -136,9 +138,9 @@ are labeled like There are [several basic plot
 types](https://ggplot2-book.org/individual-geoms.html), e.g., but
 definitely not limited to:
 
--   geom_point() – produces a scatter plot
--   geom_line() – makes a line plot
--   geom_bar(stat = “identity”) – makes a bar chart
+- geom_point() – produces a scatter plot
+- geom_line() – makes a line plot
+- geom_bar(stat = “identity”) – makes a bar chart
 
 <!--
 Here is a more comprehensive list:
@@ -167,7 +169,10 @@ ggplot(diamonds, aes(x = carat, y = price)) +
 Now, each geom function has mandatory and optional aesthetics. This
 reference table is taken from Teutonico (2015):
 
-![Geoms and their aesthetics.](figures/geoms.png)
+<figure>
+<img src="figures/geoms.png" alt="Geoms and their aesthetics." />
+<figcaption aria-hidden="true">Geoms and their aesthetics.</figcaption>
+</figure>
 
 It is important to note that function names may change in programming
 languages – so always reference the latest version of the programming
@@ -238,7 +243,7 @@ ggplot(diamonds, aes(x=carat, y=price)) +
   geom_smooth()
 ```
 
-    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+    ## `geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'
 
 ![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- --> Geoms in
 `ggplot2` have sensible defaults. Above the gray area encompassing the
@@ -256,7 +261,7 @@ ggplot(diamonds, aes(x=carat, y=price, color=clarity)) +
   geom_smooth(se=FALSE)
 ```
 
-    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+    ## `geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'
 
 ![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- --> Sometimes
 the combinations of geoms and their aesthetics can make the picture more
@@ -269,7 +274,7 @@ ggplot(diamonds, aes(x=carat, y=price, color=clarity)) +
   geom_smooth(se=FALSE)
 ```
 
-    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+    ## `geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'
 
 ![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
@@ -279,8 +284,8 @@ to annotate (aka label) them!
 ``` r
 ggplot(diamonds, aes(x = carat, y = price)) +
   geom_point() + 
-  ggtitle("Number of carets vsrsus their price") +
-  xlab("Weight of the dimaon (carats)") +
+  ggtitle("Number of carets versus their price") +
+  xlab("Weight of the diamond (carats)") +
   ylab("Price in US dollars")
 ```
 
@@ -332,7 +337,7 @@ ggplot(diamonds, aes(x=carat, y=price)) +
   geom_smooth()
 ```
 
-    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+    ## `geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'
 
 ![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
@@ -342,22 +347,22 @@ ggplot(diamonds, aes(x=carat, y=price)) +
 `ggplot2` [have two purposes](https://ggplot2-book.org/coord.html)
 (Wickham 2016):
 
--   “Combine the two position aesthetics to produce a 2d position on the
-    plot.”
--   “In coordination with the faceter, coordinate systems draw axes and
-    panel backgrounds.”
+- “Combine the two position aesthetics to produce a 2d position on the
+  plot.”
+- “In coordination with the faceter, coordinate systems draw axes and
+  panel backgrounds.”
 
 Coordinate systems in `ggplot2` come in two types:
 
--   Linear – they preserve the shape of geoms
--   Non-linear – they can change their shapes
+- Linear – they preserve the shape of geoms
+- Non-linear – they can change their shapes
 
 These are advanced techniques and when you think you need them, you
 should probably study them in detail. There’s a free online book for
 that (Wickham 2016):
 
--   <https://ggplot2-book.org/>
--   <https://ggplot2-book.org/coord.html>
+- <https://ggplot2-book.org/>
+- <https://ggplot2-book.org/coord.html>
 
 But note they also include functions for things like [map
 projection](https://en.wikipedia.org/wiki/Map_projection). Note also
@@ -367,12 +372,12 @@ libraries to do the same things.
 Remember to search for it and you’ll find lots of results (as of writing
 79 million plus hits):
 
--   <https://www.google.com/search?client=safari&rls=en&q=how+to+make+geographic+maps+in+R&ie=UTF-8&oe=UTF-8>
+- <https://www.google.com/search?client=safari&rls=en&q=how+to+make+geographic+maps+in+R&ie=UTF-8&oe=UTF-8>
 
 Here’s a simple example that plots the languages of the world on a
 simple map.
 
-Let’s get the data from the \[Glottolog\].
+Let’s get the data from the [Glottolog](https://glottolog.org).
 
 ``` r
 df <- read_csv(url('https://cdstar.eva.mpg.de/bitstreams/EAEA0-F8BB-0AB6-96FA-0/languages_and_dialects_geo.csv'))
@@ -421,7 +426,7 @@ ggplot(data=df, aes(x=longitude,y=latitude)) +
   geom_point()
 ```
 
-    ## Warning: Removed 323 rows containing missing values (geom_point).
+    ## Warning: Removed 323 rows containing missing values (`geom_point()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-20-1.png)<!-- --> Want to add
 some color? You need a variable for that.
@@ -432,7 +437,7 @@ ggplot(data=df, aes(x=longitude,y=latitude, color=macroarea)) +
   geom_point()
 ```
 
-    ## Warning: Removed 323 rows containing missing values (geom_point).
+    ## Warning: Removed 323 rows containing missing values (`geom_point()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
 
@@ -464,7 +469,7 @@ ggplot(data=atheletes, aes(x = gender, y = weight)) +
   geom_boxplot()
 ```
 
-    ## Warning: Removed 378 rows containing non-finite values (stat_boxplot).
+    ## Warning: Removed 378 rows containing non-finite values (`stat_boxplot()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
@@ -476,7 +481,7 @@ ggplot(data=atheletes, aes(x = gender, y = weight)) +
   theme_minimal()
 ```
 
-    ## Warning: Removed 378 rows containing non-finite values (stat_boxplot).
+    ## Warning: Removed 378 rows containing non-finite values (`stat_boxplot()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
@@ -486,7 +491,7 @@ ggplot(data=atheletes, aes(x = gender, y = weight)) +
   theme_dark()
 ```
 
-    ## Warning: Removed 378 rows containing non-finite values (stat_boxplot).
+    ## Warning: Removed 378 rows containing non-finite values (`stat_boxplot()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
@@ -496,7 +501,7 @@ ggplot(data=atheletes, aes(x = gender, y = weight)) +
   theme_classic()
 ```
 
-    ## Warning: Removed 378 rows containing non-finite values (stat_boxplot).
+    ## Warning: Removed 378 rows containing non-finite values (`stat_boxplot()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
 
@@ -507,7 +512,7 @@ ggplot(data=atheletes, aes(x = gender, y = weight)) +
   theme_tufte(ticks = FALSE)
 ```
 
-    ## Warning: Removed 378 rows containing non-finite values (stat_boxplot).
+    ## Warning: Removed 378 rows containing non-finite values (`stat_boxplot()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
 
@@ -530,7 +535,7 @@ ggplot(atheletes, aes(x=weight, fill=gender)) +
 
     ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
-    ## Warning: Removed 378 rows containing non-finite values (stat_bin).
+    ## Warning: Removed 378 rows containing non-finite values (`stat_bin()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
 
@@ -542,7 +547,7 @@ ggplot(atheletes, aes(x=weight)) +
 
     ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
-    ## Warning: Removed 378 rows containing non-finite values (stat_bin).
+    ## Warning: Removed 378 rows containing non-finite values (`stat_bin()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
 
@@ -580,7 +585,7 @@ tree](https://en.wikipedia.org/wiki/Decision_tree) so that you can
 decide what kind of visualization best fits your data and which caveats
 you should avoid when creating those visualizations:
 
--   <https://www.data-to-viz.com>
+- <https://www.data-to-viz.com>
 
 First you need to know your data type, e.g., are you working with
 numeric or categorical data? Then ask how many variables you are working
@@ -592,12 +597,12 @@ variable, in what relation do they stand to each other? Is there order?
 
 Note also the caveats!
 
--   <https://www.data-to-viz.com/caveats.html>
+- <https://www.data-to-viz.com/caveats.html>
 
 Remember, you want your visualizations to tell a story. And there are a
 lot of visualization graphics out there!
 
--   <https://www.data-to-viz.com/#story>
+- <https://www.data-to-viz.com/#story>
 
 ## Putting it all together: an example
 
@@ -650,12 +655,12 @@ str(murders)
 
 The data set contains variables for:
 
--   Character vector for US states
--   Character vector for abbreviations of each US state
--   The region in which the state (four categorical values including:
-    Northeast, South, North Central, and West)
--   Numerical values for the US state’s population
--   Numerical values for the total number of gun murders in each state
+- Character vector for US states
+- Character vector for abbreviations of each US state
+- The region in which the state (four categorical values including:
+  Northeast, South, North Central, and West)
+- Numerical values for the US state’s population
+- Numerical values for the total number of gun murders in each state
 
 The data manipulation. Here we calculate the [r correlation
 coefficient](https://en.wikipedia.org/wiki/Correlation_coefficient).

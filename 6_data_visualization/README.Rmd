@@ -18,6 +18,7 @@ library(knitr)
 library(dslabs)
 library(ggthemes)
 library(ggrepel)
+library(maps)
 ```
 
 ***
@@ -170,8 +171,8 @@ An important way of making your visualizations clear to your audience is to anno
 ```{r}
 ggplot(diamonds, aes(x = carat, y = price)) +
   geom_point() + 
-  ggtitle("Number of carets vsrsus their price") +
-  xlab("Weight of the dimaon (carats)") +
+  ggtitle("Number of carets versus their price") +
+  xlab("Weight of the diamond (carats)") +
   ylab("Price in US dollars")
 ```
 
@@ -237,7 +238,7 @@ Remember to search for it and you'll find lots of results (as of writing 79 mill
 
 Here's a simple example that plots the languages of the world on a simple map.
 
-Let's get the data from the [Glottolog].
+Let's get the data from the [Glottolog](https://glottolog.org).
 
 ```{r, message=FALSE}
 df <- read_csv(url('https://cdstar.eva.mpg.de/bitstreams/EAEA0-F8BB-0AB6-96FA-0/languages_and_dialects_geo.csv'))
