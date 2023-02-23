@@ -1,0 +1,409 @@
+---
+title: "Words, text mining, corpus linguistics"
+author: "Steven Moran"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  github_document:
+    toc: true
+bibliography: 'references.bib'
+---
+
+# Setup
+
+We use [R](https://www.r-project.org/) [@R] and the following [R packages](https://cran.r-project.org/web/packages/available_packages_by_name.html) [@tidyverse;@tidytext;@wordcloud].
+
+```{r libraries, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(tidytext)
+library(gutenbergr)
+library(wordcloud)
+```
+
+# Data
+
+We can access books from [Gutenberg](https://www.gutenberg.org) project via the R [gutenbergr package](https://cran.r-project.org/web/packages/gutenbergr/index.html). Who was [Gutenberg](https://en.wikipedia.org/wiki/Johannes_Gutenberg)? 
+
+What can the `gutenbergr` package do?
+
+```{r}
+?gutenbergr
+```
+
+When we look at the help, there are some functions native to this package for browsing the collection of books.
+
+```{r}
+gutenberg_metadata
+gutenberg_authors
+```
+
+Let's grab [Moby Dick](https://en.wikipedia.org/wiki/Moby-Dick) by [Herman Melville](https://en.wikipedia.org/wiki/Herman_Melville).
+
+On the web, it looks like this:
+
+* https://www.gutenberg.org/files/2701/2701-h/2701-h.htm
+
+Let's download it and have a look. What has the `gutenberg_download()` done?
+
+```{r}
+moby_dick <- gutenberg_download(2701)
+moby_dick
+```
+
+Now, recall we want to work with [tidy data](https://r4ds.had.co.nz/tidy-data.html) typically. What is so-called tidy data?
+
+1. Each variable must have its own column.
+2. Each observation must have its own row.
+3. Each value must have its own cell.
+
+How can we do that?
+
+***
+
+One way is that we can use other people's work, i.e., another library that someone has created, to process the data for us. Pro-tip: when you need something done, go look for it on the web before you build it from scratch!
+
+We can use the [tidytext](https://cran.r-project.org/web/packages/tidytext/vignettes/tidytext.html) package for that. 
+
+```{r}
+help(tidytext)
+```
+
+It has an `unnest_tokens()` function.
+
+```{r}
+?unnest_tokens
+```
+
+
+```{r}
+tidy_moby_dick <- moby_dick %>%
+  unnest_tokens(word, text)
+```
+
+Now what does our data structure look like?
+
+```{r}
+tidy_moby_dick
+```
+
+This took has *tokenized* the data for us, i.e., it has split the raw data (sentences in parapgrahs in chapters in a book) into words.
+
+*Tokenization* is the process of splitting text into tokens.
+
+This one-token-per-row structure is in contrast to the ways text is often stored, perhaps as strings or in a document-term matrix.
+
+For tidy text mining, the token that is stored in each row is most often a single word, but can also be an n-gram, sentence, or paragraph.
+
+Now compare the first and tokenized data. What's are the differences?
+
+```{r}
+moby_dick
+tidy_moby_dick
+```
+
+What happened in the `unnest_tokens()` function?
+
+```{r}
+moby_dick
+moby_dick %>%
+  unnest_tokens(word, text)
+```
+
+What else happened?
+
+Hint: bag of words.
+
+Remember, use the power of the force. Help `?` is your friend -- in all its forms.
+
+```{r}
+?unnest_tokens
+help(unnest_tokens)
+```
+
+
+# Exploration
+
+What can we do with this "bag of words"?
+
+One thing we can do is ask R to calculate the number words (tokens) in the novel. 
+
+```{r}
+length(tidy_moby_dick$word)
+```
+
+Another thing we can do is is ask R to calculate the number unique words (types) in the novel. 
+
+```{r}
+length(unique(tidy_moby_dick$word))
+```
+
+R's `unique()` function will examine all the values in the character vector (word column) and identify those that are the same and those that are different. By embedding the `unique()` function into the `length()` function, you calculate the number of unique word types from all the word tokens, i.e., all the unique words in Melville's Moby Dick vocabulary.
+
+We can also ask R to `count()` the elements in the column for us. 
+
+What do we see here? What do we have to pass to the `count()` function?
+
+```{r}
+tidy_moby_dick %>% 
+  count(word)
+```
+
+Most functions have parameters and we can tell them what to do with certain variables or properties. How to know what they are? Ask for help!
+
+```{r}
+?count
+```
+
+There's a parameter in `sort()` that is by default set to `FALSE`, i.e., if we do not tell the function `count()` explicitly, `count(sort = TRUE)`, it will assume that it should NOT sort the count. 
+
+So what happens if we set `sort = TRUE`?
+
+```{r}
+tidy_moby_dick %>% 
+  count(word, sort = TRUE)
+```
+
+That's interesting, perhaps we want to save the results into a new data frame that we can call by a new variable name.
+
+```{r}
+moby_dick_word_counts <- tidy_moby_dick %>% 
+  count(word, sort = TRUE)
+moby_dick_word_counts
+```
+
+Now we have a data frame with two columns that includes and two data types:
+
+* word
+* n
+
+How can we visualize these data?
+
+* https://www.data-to-viz.com
+
+*** 
+
+Let's consider the column `n` (a common acronym used for "count"). What kind of data type is it? 
+
+What kind of visualizations can we make with one numeric data point?
+
+```{r}
+tidy_moby_dick %>%
+  count(word, sort = TRUE) %>% 
+  filter(n > 600) %>%
+  ggplot(aes(word, n)) +
+  geom_col() +
+  xlab(NULL)
+```
+
+This data visualization -- a [bar chart](https://en.wikipedia.org/wiki/Bar_chart) aka bar plot or bar graph tells us what?
+
+Is it useful as is?
+
+How can we display the information more meaningfully for the reader?
+
+```{r}
+tidy_moby_dick %>%
+  count(word, sort = TRUE) %>% filter(n > 600) %>%
+  mutate(word = reorder(word, n)) %>% 
+  ggplot(aes(word, n)) +
+  geom_col() +
+  xlab(NULL) +
+  coord_flip()
+```
+
+What's another fun way to visualize one variable data?
+
+```{r}
+tidy_moby_dick %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 100))
+```
+
+***
+
+What if we're intrested in particular words?
+
+How many occurrences of the word `whale` are in the book?
+
+```{r}
+moby_dick_word_count <- tidy_moby_dick %>% 
+  count(word, sort = TRUE)
+
+moby_dick_word_count %>% filter(word == "whale")
+```
+
+But is this a lot?
+
+The raw count does NOT tell us much in terms of the validity of some hypothesis.
+
+For example, is the word whale *much* more common in Moby Dick than in, say, some other works? How about Jane Austen?
+
+We cannot say, because frequency is a *relative* judgement.
+
+One way to put this number "of whales" into perspective is to express it as a percentage of the whole corpus, i.e., Moby Dick as a novel is over 200k words.
+
+What percentage does the word for whale make out of the entire book, or in corpus linguistics speak, the "corpus"?
+
+```{r}
+whale_count <- moby_dick_word_count %>% filter(word == "whale")
+```
+
+But is that a lot, relatively speaking, compared to other words?
+
+***
+
+Let's express the words as a percentage of the whole corpus in which we see the words.
+
+How many words do we have in the whole book / corpus?
+
+```{r}
+length(tidy_moby_dick$word)
+```
+
+Now we can use the total number of words as our denominator and we can extend our data frame by adding a new column.
+
+```{r}
+moby_dick_word_count$frequency <- moby_dick_word_count$n / length(tidy_moby_dick$word) * 100
+moby_dick_word_count
+```
+
+Now we can again look at how frequent *within* the text a given word is.
+
+```{r}
+moby_dick_word_count %>% filter(word == "whale")
+moby_dick_word_count %>% filter(word == "harpoon")
+```
+
+# Word type-token ratio (TTR)
+
+The type–token ratio is one of the basic corpus statistics.
+
+Comparing the number of tokens in the text to the number of types of tokens (unique word form) can tell us how large a range of vocabulary is used in the text.
+
+* TTR = (number of types/number of tokens), or
+* TTR = (number of types/number of tokens) * 100 (as a percentage)
+
+TTR allows us to measure vocabulary variation between corpora: the closer the result is to 1 (or 100%), the greater the vocabulary variation.
+
+Here's our tidy data.
+
+```{r}
+tidy_moby_dick
+```
+
+Now let's get the TTR.
+
+```{r}
+types <- length(unique(tidy_moby_dick$word))
+tokens <- length(tidy_moby_dick$word)
+ttr <- types / tokens
+ttr
+```
+
+So now we can compare two (or more) texts to see which text has a greater range of vocabulary. For example, consider the vocabulary of rappers:
+
+* https://pudding.cool/projects/vocabulary/index.html
+
+
+# Comparing vocabulary between corpora
+
+Now let's compare the vocabulary range of Melville with, say, Jane Austin.
+
+This should get you started.
+
+```{r}
+sense_sensibility <- gutenberg_download(161)
+sense_sensibility
+```
+
+Which text has the greater range in vocabulary in terms of its type-to-token ratio?
+
+***
+
+But note we can also drill down into a specific words and compare them. 
+
+
+# Is Moby Dick all about men?
+
+Let's compare the (relative) frequencies of pronouns between texts for the pronouns "he" and "she".
+
+Start first by calculating their normalized frequencies. Choose an appropriate normalization base.
+
+Next, filter for all relevant pronouns (e.g. with the notation %in% c(...) or other filter options). Hint:
+
+```{r}
+tidy_moby_dick %>% filter(word %in% c('he', 'his'))
+```
+
+Compare the pronouns' relative frequencies between texts.
+
+Is there a discrepancy between Moby Dick and other texts? 
+
+For comparison, load another text, pre-process it, and calculate the normalized frequency of the two sets of pronouns.
+
+
+# Ngrams
+
+The `unnest_tokens()` function also takes other types tokenizations.
+
+```{r}
+moby_dick_bigrams <- moby_dick %>%
+  unnest_tokens(bigram, text, token = "ngrams", n = 2)
+moby_dick_bigrams
+
+moby_dick_bigrams %>% count(bigram, sort = TRUE)
+
+moby_dick_bigrams <- moby_dick_bigrams %>%
+  separate(bigram, c("word1", "word2"), sep = " ")
+
+moby_dick_bigrams_counts <- moby_dick_bigrams %>% count(word1, word2, sort = TRUE)
+
+moby_dick_bigrams_counts
+```
+
+
+# Sentiment analysis
+
+```{r}
+library(textdata)
+library(tidytext)
+library(janeaustenr)
+sentiments
+```
+
+```{r}
+get_sentiments("afinn")
+```
+```{r}
+ tidy_books <- austen_books() %>%
+      group_by(book) %>%
+      mutate(linenumber = row_number(),
+chapter = cumsum(str_detect(text, regex("^chapter [\\divxlc]", ignore_case = TRUE)))) %>%
+      ungroup() %>%
+      unnest_tokens(word, text)
+```
+
+```{r}
+nrcjoy <- get_sentiments("nrc") %>%
+  filter(sentiment == "joy")
+
+tidy_books %>%
+  filter(book == "Emma") %>% inner_join(nrcjoy) %>% 
+  count(word, sort = TRUE)
+```
+```{r}
+janeaustensentiment <- tidy_books %>%
+      inner_join(get_sentiments("bing")) %>%
+      count(book, index = linenumber %/% 80, sentiment) %>%
+      spread(sentiment, n, fill = 0) %>%
+      mutate(sentiment = positive - negative)
+```
+
+```{r}
+ggplot(janeaustensentiment, aes(index, sentiment, fill = book)) + 
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~book, ncol = 2, scales = "free_x")
+```
+
+
+# References
+
