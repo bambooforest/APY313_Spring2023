@@ -1,11 +1,11 @@
 ---
-title: "Words, text mining, corpus linguistics"
-author: "Steven Moran"
+title: "Words, text mining, some basic corpus linguistics"
+author: "Steven Moran & Alena Witzlack-Makarevich"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   github_document:
     toc: true
-bibliography: 'references.bib'
+bibliography: 'references.bib'    
 ---
 
 # Setup
@@ -210,6 +210,14 @@ tidy_moby_dick %>%
   coord_flip()
 ```
 
+```{r}
+tidy_moby_dick %>%
+  count(word, sort = TRUE) %>% filter(n > 600) %>%
+  ggplot(aes(x = reorder(word, -n), y = n)) +
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
 What's another fun way to visualize one variable data?
 
 ```{r}
@@ -220,7 +228,16 @@ tidy_moby_dick %>%
 
 ***
 
-What if we're intrested in particular words?
+We can also do a so-called dot plot. Try it!
+
+```{r}
+# Hint: use geom_point()
+```
+
+
+***
+
+What if we're interested in particular words?
 
 How many occurrences of the word `whale` are in the book?
 
@@ -273,6 +290,7 @@ moby_dick_word_count %>% filter(word == "whale")
 moby_dick_word_count %>% filter(word == "harpoon")
 ```
 
+
 # Word type-token ratio (TTR)
 
 The type–token ratio is one of the basic corpus statistics.
@@ -306,20 +324,29 @@ So now we can compare two (or more) texts to see which text has a greater range 
 
 # Comparing vocabulary between corpora
 
-Now let's compare the vocabulary range of Melville with, say, Jane Austin.
+Now let's compare the vocabulary range of Melville with, say, Jane Austin -- or some other book of your choosing.
 
 This should get you started.
 
 ```{r}
+# You can replace with some other book -- maybe something at random? :)
 sense_sensibility <- gutenberg_download(161)
 sense_sensibility
 ```
 
-Which text has the greater range in vocabulary in terms of its type-to-token ratio?
+Which text has the greater range in vocabulary in terms of its type-to-token ratio? 
+
+Put your code here:
+
+```{r}
+# Insert your code
+```
+
+How does the type-toke ratio between the two source look?
 
 ***
 
-But note we can also drill down into a specific words and compare them. 
+But note we can also drill down into a specific words and compare them!
 
 
 # Is Moby Dick all about men?
@@ -334,74 +361,165 @@ Next, filter for all relevant pronouns (e.g. with the notation %in% c(...) or ot
 tidy_moby_dick %>% filter(word %in% c('he', 'his'))
 ```
 
-Compare the pronouns' relative frequencies between texts.
+Compare the pronouns' relative frequencies between texts. Write your code here:
 
-Is there a discrepancy between Moby Dick and other texts? 
+```{r}
+# Insert your code
+```
+
+What about Moby Dick versus some other text? 
 
 For comparison, load another text, pre-process it, and calculate the normalized frequency of the two sets of pronouns.
+
+```{r}
+# Insert your code here
+```
 
 
 # Ngrams
 
-The `unnest_tokens()` function also takes other types tokenizations.
+[N-grams](https://en.wikipedia.org/wiki/N-gram) is a sequence of n tokens (usually words or characters), which typically come from a text or corpus. Typically terms:
+
+- unigram: one token
+- bigram: two tokens
+- trigram: three tokens
+
+And so forth.
+
+They are used in [language models](https://en.wikipedia.org/wiki/Language_model), which are are [probabilistic distribution](https://en.wikipedia.org/wiki/Probability_distribution) over sequences of words. Language models are used in computational linguistics for lots of things, e.g.:
+
+- machine translation
+- speech recognition
+- part-of-speech tagging
+- optical character recognition and hand writing recognition
+- information retrieval (e.g., search engines)
+
+The `unnest_tokens()` function takes both other types tokenizations and other lengths of tokenization.
 
 ```{r}
 moby_dick_bigrams <- moby_dick %>%
   unnest_tokens(bigram, text, token = "ngrams", n = 2)
+
 moby_dick_bigrams
+```
 
+How do we filter (out) the NAs? We can use the `is.na()` function.
+
+```{r}
+moby_dick_bigrams <- moby_dick %>%
+  unnest_tokens(bigram, text, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigram))
+
+moby_dick_bigrams
+```
+
+Let's count them.
+
+```{r}
 moby_dick_bigrams %>% count(bigram, sort = TRUE)
+```
 
-moby_dick_bigrams <- moby_dick_bigrams %>%
+What do you notice about the words?
+
+We can filter out so-called [stop words](https://en.wikipedia.org/wiki/Stop_word), i.e., words that we want to filter out of our data because they for example carry very little meaning, such as "the", "of", etc.
+
+To make this process easier, we first separate the bigrams into different columns with the `separate()` function. (Tip: there's also a `unite() function that will unite two columns!)
+
+```{r}
+bigrams_separated <- moby_dick_bigrams %>%
   separate(bigram, c("word1", "word2"), sep = " ")
 
-moby_dick_bigrams_counts <- moby_dick_bigrams %>% count(word1, word2, sort = TRUE)
-
-moby_dick_bigrams_counts
+bigrams_separated
 ```
 
-
-# Sentiment analysis
+Now let's filter.
 
 ```{r}
-library(textdata)
-library(tidytext)
-library(janeaustenr)
-sentiments
+bigrams_filtered <- bigrams_separated %>%
+  filter(!word1 %in% stop_words$word) %>%
+  filter(!word2 %in% stop_words$word)
 ```
 
-```{r}
-get_sentiments("afinn")
-```
-```{r}
- tidy_books <- austen_books() %>%
-      group_by(book) %>%
-      mutate(linenumber = row_number(),
-chapter = cumsum(str_detect(text, regex("^chapter [\\divxlc]", ignore_case = TRUE)))) %>%
-      ungroup() %>%
-      unnest_tokens(word, text)
-```
+And generate new counts.
 
 ```{r}
-nrcjoy <- get_sentiments("nrc") %>%
-  filter(sentiment == "joy")
+bigram_counts <- bigrams_filtered %>% 
+  count(word1, word2, sort = TRUE)
 
-tidy_books %>%
-  filter(book == "Emma") %>% inner_join(nrcjoy) %>% 
-  count(word, sort = TRUE)
-```
-```{r}
-janeaustensentiment <- tidy_books %>%
-      inner_join(get_sentiments("bing")) %>%
-      count(book, index = linenumber %/% 80, sentiment) %>%
-      spread(sentiment, n, fill = 0) %>%
-      mutate(sentiment = positive - negative)
+bigram_counts
 ```
 
+How can we visualize this type of data?
+
+***
+
+Now we can use this format to look at certain contexts.
+
 ```{r}
-ggplot(janeaustensentiment, aes(index, sentiment, fill = book)) + 
+bigrams_separated %>%
+  filter(word1 == "not") %>%
+  count(word1, word2, sort = TRUE)
+```
+
+Now we can do some simple [sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) on text, e.g., looking at polarity.
+
+Sentiment analysis involves a lexicon that has been defined for values such as positivity versus negativity.
+
+```{r}
+AFINN <- get_sentiments("afinn")
+
+AFINN
+```
+
+So let's look at the words preceded by "not" and their associated sentiment.
+
+```{r}
+not_words <- bigrams_separated %>%
+  filter(word1 == "not") %>%
+  inner_join(AFINN, by = c(word2 = "word")) %>%
+  count(word2, value, sort = TRUE)
+
+not_words
+```
+
+Now we can visualize the results.
+
+```{r}
+not_words %>%
+  mutate(contribution = n * value) %>%
+  arrange(desc(abs(contribution))) %>%
+  head(20) %>%
+  mutate(word2 = reorder(word2, contribution)) %>%
+  ggplot(aes(n * value, word2, fill = n * value > 0)) +
   geom_col(show.legend = FALSE) +
-  facet_wrap(~book, ncol = 2, scales = "free_x")
+  labs(x = "Sentiment value * number of occurrences",
+       y = "Words preceded by \"not\"")
+```
+
+The bigrams "not die" and "not killed" may be giving the text a more negative sentiment. For example, we could compare this to another text and compare them.
+
+We can also look at more negation words.
+
+```{r}
+negation_words <- c("not", "no", "never", "without")
+
+negated_words <- bigrams_separated %>%
+  filter(word1 %in% negation_words) %>%
+  inner_join(AFINN, by = c(word2 = "word")) %>%
+  count(word1, word2, value, sort = TRUE)
+```
+
+```{r}
+negated_words %>%
+  mutate(contribution = n * value) %>%
+  arrange(desc(abs(contribution))) %>%
+  head(30) %>%
+  mutate(word2 = reorder(word2, contribution)) %>%
+  ggplot(aes(n * value, word2, fill = n * value > 0)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = "Sentiment value * number of occurrences",
+       y = "Words preceded by negation") +
+  facet_grid(~word1)
 ```
 
 

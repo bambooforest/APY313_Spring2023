@@ -1,7 +1,7 @@
-Words, text mining, corpus linguistics
+Words, text mining, some basic corpus linguistics
 ================
-Steven Moran
-23 February, 2023
+Steven Moran & Alena Witzlack-Makarevich
+28 February, 2023
 
 - [Setup](#setup)
 - [Data](#data)
@@ -11,7 +11,6 @@ Steven Moran
   corpora](#comparing-vocabulary-between-corpora)
 - [Is Moby Dick all about men?](#is-moby-dick-all-about-men)
 - [Ngrams](#ngrams)
-- [Sentiment analysis](#sentiment-analysis)
 - [References](#references)
 
 # Setup
@@ -441,6 +440,16 @@ tidy_moby_dick %>%
 
 ![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
+``` r
+tidy_moby_dick %>%
+  count(word, sort = TRUE) %>% filter(n > 600) %>%
+  ggplot(aes(x = reorder(word, -n), y = n)) +
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+
 What’s another fun way to visualize one variable data?
 
 ``` r
@@ -449,11 +458,19 @@ tidy_moby_dick %>%
   with(wordcloud(word, n, max.words = 100))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 ------------------------------------------------------------------------
 
-What if we’re intrested in particular words?
+We can also do a so-called dot plot. Try it!
+
+``` r
+# Hint: use geom_point()
+```
+
+------------------------------------------------------------------------
+
+What if we’re interested in particular words?
 
 How many occurrences of the word `whale` are in the book?
 
@@ -604,11 +621,12 @@ rappers:
 # Comparing vocabulary between corpora
 
 Now let’s compare the vocabulary range of Melville with, say, Jane
-Austin.
+Austin – or some other book of your choosing.
 
 This should get you started.
 
 ``` r
+# You can replace with some other book -- maybe something at random? :)
 sense_sensibility <- gutenberg_download(161)
 sense_sensibility
 ```
@@ -631,9 +649,17 @@ sense_sensibility
 Which text has the greater range in vocabulary in terms of its
 type-to-token ratio?
 
+Put your code here:
+
+``` r
+# Insert your code
+```
+
+How does the type-toke ratio between the two source look?
+
 ------------------------------------------------------------------------
 
-But note we can also drill down into a specific words and compare them.
+But note we can also drill down into a specific words and compare them!
 
 # Is Moby Dick all about men?
 
@@ -665,20 +691,54 @@ tidy_moby_dick %>% filter(word %in% c('he', 'his'))
     ## 10         2701 his  
     ## # … with 4,296 more rows
 
-Compare the pronouns’ relative frequencies between texts.
+Compare the pronouns’ relative frequencies between texts. Write your
+code here:
 
-Is there a discrepancy between Moby Dick and other texts?
+``` r
+# Insert your code
+```
+
+What about Moby Dick versus some other text?
 
 For comparison, load another text, pre-process it, and calculate the
 normalized frequency of the two sets of pronouns.
 
+``` r
+# Insert your code here
+```
+
 # Ngrams
 
-The `unnest_tokens()` function also takes other types tokenizations.
+[N-grams](https://en.wikipedia.org/wiki/N-gram) is a sequence of n
+tokens (usually words or characters), which typically come from a text
+or corpus. Typically terms:
+
+- unigram: one token
+- bigram: two tokens
+- trigram: three tokens
+
+And so forth.
+
+They are used in [language
+models](https://en.wikipedia.org/wiki/Language_model), which are are
+[probabilistic
+distribution](https://en.wikipedia.org/wiki/Probability_distribution)
+over sequences of words. Language models are used in computational
+linguistics for lots of things, e.g.:
+
+- machine translation
+- speech recognition
+- part-of-speech tagging
+- optical character recognition and hand writing recognition
+- information retrieval (e.g., search engines)
+
+The `unnest_tokens()` function takes both other types tokenizations and
+other lengths of tokenization.
 
 ``` r
 moby_dick_bigrams <- moby_dick %>%
   unnest_tokens(bigram, text, token = "ngrams", n = 2)
+
 moby_dick_bigrams
 ```
 
@@ -697,75 +757,155 @@ moby_dick_bigrams
     ## 10         2701 <NA>           
     ## # … with 201,307 more rows
 
+How do we filter (out) the NAs? We can use the `is.na()` function.
+
+``` r
+moby_dick_bigrams <- moby_dick %>%
+  unnest_tokens(bigram, text, token = "ngrams", n = 2) %>%
+  filter(!is.na(bigram))
+
+moby_dick_bigrams
+```
+
+    ## # A tibble: 198,017 × 2
+    ##    gutenberg_id bigram           
+    ##           <int> <chr>            
+    ##  1         2701 moby dick        
+    ##  2         2701 or the           
+    ##  3         2701 the whale        
+    ##  4         2701 by herman        
+    ##  5         2701 herman melville  
+    ##  6         2701 extracts supplied
+    ##  7         2701 supplied by      
+    ##  8         2701 by a             
+    ##  9         2701 a sub            
+    ## 10         2701 sub sub          
+    ## # … with 198,007 more rows
+
+Let’s count them.
+
 ``` r
 moby_dick_bigrams %>% count(bigram, sort = TRUE)
 ```
 
-    ## # A tibble: 107,359 × 2
+    ## # A tibble: 107,358 × 2
     ##    bigram        n
     ##    <chr>     <int>
-    ##  1 <NA>       3300
-    ##  2 of the     1778
-    ##  3 in the     1115
-    ##  4 to the      701
-    ##  5 from the    410
-    ##  6 of his      355
-    ##  7 and the     351
-    ##  8 on the      340
-    ##  9 the whale   329
-    ## 10 of a        322
-    ## # … with 107,349 more rows
+    ##  1 of the     1778
+    ##  2 in the     1115
+    ##  3 to the      701
+    ##  4 from the    410
+    ##  5 of his      355
+    ##  6 and the     351
+    ##  7 on the      340
+    ##  8 the whale   329
+    ##  9 of a        322
+    ## 10 to be       318
+    ## # … with 107,348 more rows
+
+What do you notice about the words?
+
+We can filter out so-called [stop
+words](https://en.wikipedia.org/wiki/Stop_word), i.e., words that we
+want to filter out of our data because they for example carry very
+little meaning, such as “the”, “of”, etc.
+
+To make this process easier, we first separate the bigrams into
+different columns with the `separate()` function. (Tip: there’s also a
+\`unite() function that will unite two columns!)
 
 ``` r
-moby_dick_bigrams <- moby_dick_bigrams %>%
+bigrams_separated <- moby_dick_bigrams %>%
   separate(bigram, c("word1", "word2"), sep = " ")
 
-moby_dick_bigrams_counts <- moby_dick_bigrams %>% count(word1, word2, sort = TRUE)
-
-moby_dick_bigrams_counts
+bigrams_separated
 ```
 
-    ## # A tibble: 107,359 × 3
+    ## # A tibble: 198,017 × 3
+    ##    gutenberg_id word1    word2   
+    ##           <int> <chr>    <chr>   
+    ##  1         2701 moby     dick    
+    ##  2         2701 or       the     
+    ##  3         2701 the      whale   
+    ##  4         2701 by       herman  
+    ##  5         2701 herman   melville
+    ##  6         2701 extracts supplied
+    ##  7         2701 supplied by      
+    ##  8         2701 by       a       
+    ##  9         2701 a        sub     
+    ## 10         2701 sub      sub     
+    ## # … with 198,007 more rows
+
+Now let’s filter.
+
+``` r
+bigrams_filtered <- bigrams_separated %>%
+  filter(!word1 %in% stop_words$word) %>%
+  filter(!word2 %in% stop_words$word)
+```
+
+And generate new counts.
+
+``` r
+bigram_counts <- bigrams_filtered %>% 
+  count(word1, word2, sort = TRUE)
+
+bigram_counts
+```
+
+    ## # A tibble: 23,124 × 3
+    ##    word1   word2       n
+    ##    <chr>   <chr>   <int>
+    ##  1 sperm   whale     133
+    ##  2 white   whale      87
+    ##  3 moby    dick       78
+    ##  4 captain ahab       56
+    ##  5 mast    head       50
+    ##  6 mast    heads      37
+    ##  7 quarter deck       32
+    ##  8 whale   ship       32
+    ##  9 cried   ahab       31
+    ## 10 sperm   whale’s    31
+    ## # … with 23,114 more rows
+
+How can we visualize this type of data?
+
+------------------------------------------------------------------------
+
+Now we can use this format to look at certain contexts.
+
+``` r
+bigrams_separated %>%
+  filter(word1 == "not") %>%
+  count(word1, word2, sort = TRUE)
+```
+
+    ## # A tibble: 393 × 3
     ##    word1 word2     n
     ##    <chr> <chr> <int>
-    ##  1 <NA>  <NA>   3300
-    ##  2 of    the    1778
-    ##  3 in    the    1115
-    ##  4 to    the     701
-    ##  5 from  the     410
-    ##  6 of    his     355
-    ##  7 and   the     351
-    ##  8 on    the     340
-    ##  9 the   whale   329
-    ## 10 of    a       322
-    ## # … with 107,349 more rows
+    ##  1 not   a        69
+    ##  2 not   the      61
+    ##  3 not   to       57
+    ##  4 not   only     50
+    ##  5 not   so       38
+    ##  6 not   be       26
+    ##  7 not   at       18
+    ##  8 not   one      17
+    ##  9 not   that     15
+    ## 10 not   have     14
+    ## # … with 383 more rows
 
-# Sentiment analysis
+Now we can do some simple [sentiment
+analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) on text,
+e.g., looking at polarity.
 
-``` r
-library(textdata)
-library(tidytext)
-library(janeaustenr)
-sentiments
-```
-
-    ## # A tibble: 6,786 × 2
-    ##    word        sentiment
-    ##    <chr>       <chr>    
-    ##  1 2-faces     negative 
-    ##  2 abnormal    negative 
-    ##  3 abolish     negative 
-    ##  4 abominable  negative 
-    ##  5 abominably  negative 
-    ##  6 abominate   negative 
-    ##  7 abomination negative 
-    ##  8 abort       negative 
-    ##  9 aborted     negative 
-    ## 10 aborts      negative 
-    ## # … with 6,776 more rows
+Sentiment analysis involves a lexicon that has been defined for values
+such as positivity versus negativity.
 
 ``` r
-get_sentiments("afinn")
+AFINN <- get_sentiments("afinn")
+
+AFINN
 ```
 
     ## # A tibble: 2,477 × 2
@@ -783,58 +923,78 @@ get_sentiments("afinn")
     ## 10 abhors        -3
     ## # … with 2,467 more rows
 
+So let’s look at the words preceded by “not” and their associated
+sentiment.
+
 ``` r
- tidy_books <- austen_books() %>%
-      group_by(book) %>%
-      mutate(linenumber = row_number(),
-chapter = cumsum(str_detect(text, regex("^chapter [\\divxlc]", ignore_case = TRUE)))) %>%
-      ungroup() %>%
-      unnest_tokens(word, text)
+not_words <- bigrams_separated %>%
+  filter(word1 == "not") %>%
+  inner_join(AFINN, by = c(word2 = "word")) %>%
+  count(word2, value, sort = TRUE)
+
+not_words
 ```
 
-``` r
-nrcjoy <- get_sentiments("nrc") %>%
-  filter(sentiment == "joy")
+    ## # A tibble: 51 × 3
+    ##    word2   value     n
+    ##    <chr>   <dbl> <int>
+    ##  1 fail       -2     4
+    ##  2 help        2     4
+    ##  3 die        -3     3
+    ##  4 killed     -3     3
+    ##  5 like        2     3
+    ##  6 kill       -3     2
+    ##  7 true        2     2
+    ##  8 afraid     -2     1
+    ##  9 alone      -2     1
+    ## 10 curious     1     1
+    ## # … with 41 more rows
 
-tidy_books %>%
-  filter(book == "Emma") %>% inner_join(nrcjoy) %>% 
-  count(word, sort = TRUE)
-```
-
-    ## Joining, by = "word"
-
-    ## # A tibble: 301 × 2
-    ##    word          n
-    ##    <chr>     <int>
-    ##  1 good        359
-    ##  2 friend      166
-    ##  3 hope        143
-    ##  4 happy       125
-    ##  5 love        117
-    ##  6 deal         92
-    ##  7 found        92
-    ##  8 present      89
-    ##  9 kind         82
-    ## 10 happiness    76
-    ## # … with 291 more rows
+Now we can visualize the results.
 
 ``` r
-janeaustensentiment <- tidy_books %>%
-      inner_join(get_sentiments("bing")) %>%
-      count(book, index = linenumber %/% 80, sentiment) %>%
-      spread(sentiment, n, fill = 0) %>%
-      mutate(sentiment = positive - negative)
-```
-
-    ## Joining, by = "word"
-
-``` r
-ggplot(janeaustensentiment, aes(index, sentiment, fill = book)) + 
+not_words %>%
+  mutate(contribution = n * value) %>%
+  arrange(desc(abs(contribution))) %>%
+  head(20) %>%
+  mutate(word2 = reorder(word2, contribution)) %>%
+  ggplot(aes(n * value, word2, fill = n * value > 0)) +
   geom_col(show.legend = FALSE) +
-  facet_wrap(~book, ncol = 2, scales = "free_x")
+  labs(x = "Sentiment value * number of occurrences",
+       y = "Words preceded by \"not\"")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-43-1.png)<!-- -->
+
+The bigrams “not die” and “not killed” may be giving the text a more
+negative sentiment. For example, we could compare this to another text
+and compare them.
+
+We can also look at more negation words.
+
+``` r
+negation_words <- c("not", "no", "never", "without")
+
+negated_words <- bigrams_separated %>%
+  filter(word1 %in% negation_words) %>%
+  inner_join(AFINN, by = c(word2 = "word")) %>%
+  count(word1, word2, value, sort = TRUE)
+```
+
+``` r
+negated_words %>%
+  mutate(contribution = n * value) %>%
+  arrange(desc(abs(contribution))) %>%
+  head(30) %>%
+  mutate(word2 = reorder(word2, contribution)) %>%
+  ggplot(aes(n * value, word2, fill = n * value > 0)) +
+  geom_col(show.legend = FALSE) +
+  labs(x = "Sentiment value * number of occurrences",
+       y = "Words preceded by negation") +
+  facet_grid(~word1)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-45-1.png)<!-- -->
 
 # References
 
