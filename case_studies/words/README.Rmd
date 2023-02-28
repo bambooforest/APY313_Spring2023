@@ -1,7 +1,7 @@
 ---
 title: "Words, text mining, some basic corpus linguistics"
 author: "Steven Moran & Alena Witzlack-Makarevich"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+date: "(`r format(Sys.time(), '%d %B, %Y')`)"
 output:
   github_document:
     toc: true
@@ -10,7 +10,7 @@ bibliography: 'references.bib'
 
 # Setup
 
-We use [R](https://www.r-project.org/) [@R] and the following [R packages](https://cran.r-project.org/web/packages/available_packages_by_name.html) [@tidyverse;@tidytext;@wordcloud].
+We use [R](https://www.r-project.org/) [@R] and the following [R packages](https://cran.r-project.org/web/packages/available_packages_by_name.html) [@tidyverse;@tidytext;@wordcloud;@gutenbergr].
 
 ```{r libraries, warning=FALSE, message=FALSE}
 library(tidyverse)
@@ -19,13 +19,16 @@ library(gutenbergr)
 library(wordcloud)
 ```
 
+Many of the examples are taken from or inspired by [Text Mining with R: A Tidy Approach](https://www.tidytextmining.com) by [Julia Silge](https://juliasilge.com) and [David Robinson](http://varianceexplained.org).
+
+
 # Data
 
 We can access books from [Gutenberg](https://www.gutenberg.org) project via the R [gutenbergr package](https://cran.r-project.org/web/packages/gutenbergr/index.html). Who was [Gutenberg](https://en.wikipedia.org/wiki/Johannes_Gutenberg)? 
 
 What can the `gutenbergr` package do?
 
-```{r}
+```{r load_data}
 ?gutenbergr
 ```
 
@@ -167,6 +170,7 @@ That's interesting, perhaps we want to save the results into a new data frame th
 ```{r}
 moby_dick_word_counts <- tidy_moby_dick %>% 
   count(word, sort = TRUE)
+
 moby_dick_word_counts
 ```
 
@@ -186,10 +190,9 @@ Let's consider the column `n` (a common acronym used for "count"). What kind of 
 What kind of visualizations can we make with one numeric data point?
 
 ```{r}
-tidy_moby_dick %>%
-  count(word, sort = TRUE) %>% 
+moby_dick_word_counts %>% 
   filter(n > 600) %>%
-  ggplot(aes(word, n)) +
+  ggplot(aes(x = word, y = n)) +
   geom_col() +
   xlab(NULL)
 ```
@@ -202,17 +205,18 @@ How can we display the information more meaningfully for the reader?
 
 ```{r}
 tidy_moby_dick %>%
-  count(word, sort = TRUE) %>% filter(n > 600) %>%
+  count(word, sort = TRUE) %>% 
+  filter(n > 600) %>%
   mutate(word = reorder(word, n)) %>% 
   ggplot(aes(word, n)) +
   geom_col() +
-  xlab(NULL) +
   coord_flip()
 ```
 
 ```{r}
 tidy_moby_dick %>%
-  count(word, sort = TRUE) %>% filter(n > 600) %>%
+  count(word, sort = TRUE) %>% 
+  filter(n > 600) %>%
   ggplot(aes(x = reorder(word, -n), y = n)) +
   geom_col() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
@@ -223,7 +227,7 @@ What's another fun way to visualize one variable data?
 ```{r}
 tidy_moby_dick %>%
   count(word) %>%
-  with(wordcloud(word, n, max.words = 100))
+  with(wordcloud(word, n, max.words = 600))
 ```
 
 ***
@@ -232,6 +236,11 @@ We can also do a so-called dot plot. Try it!
 
 ```{r}
 # Hint: use geom_point()
+moby_dick_word_counts %>%
+  filter(n > 500) %>% 
+  ggplot(aes(x = reorder(word, -n), y = n)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
 
@@ -339,7 +348,18 @@ Which text has the greater range in vocabulary in terms of its type-to-token rat
 Put your code here:
 
 ```{r}
-# Insert your code
+tidy_sense_sensibility <- sense_sensibility %>%
+  unnest_tokens(word, text)
+
+types <- length(unique(tidy_moby_dick$word))
+tokens <- length(tidy_moby_dick$word)
+ttr <- types / tokens
+ttr
+
+types <- length(unique(tidy_sense_sensibility$word))
+tokens <- length(tidy_sense_sensibility$word)
+ttr <- types / tokens
+ttr
 ```
 
 How does the type-toke ratio between the two source look?
@@ -451,7 +471,9 @@ bigram_counts
 
 How can we visualize this type of data?
 
-***
+
+
+# Sentiment analysis
 
 Now we can use this format to look at certain contexts.
 
@@ -461,9 +483,11 @@ bigrams_separated %>%
   count(word1, word2, sort = TRUE)
 ```
 
-Now we can do some simple [sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) on text, e.g., looking at polarity.
+And we can do some simple [sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) on text, e.g., looking at polarity.
 
-Sentiment analysis involves a lexicon that has been defined for values such as positivity versus negativity.
+For more information, check out this chapter in the [Text Mining with R](https://www.tidytextmining.com/sentiment.html) book [@SilgeRobinson2017].
+
+Sentiment analysis involves a lexicon that has been defined for values such as positivity versus negativity. First we need sentiment lexicon.
 
 ```{r}
 AFINN <- get_sentiments("afinn")

@@ -1,7 +1,7 @@
 Words, text mining, some basic corpus linguistics
 ================
 Steven Moran & Alena Witzlack-Makarevich
-28 February, 2023
+(28 February, 2023)
 
 - [Setup](#setup)
 - [Data](#data)
@@ -11,6 +11,7 @@ Steven Moran & Alena Witzlack-Makarevich
   corpora](#comparing-vocabulary-between-corpora)
 - [Is Moby Dick all about men?](#is-moby-dick-all-about-men)
 - [Ngrams](#ngrams)
+- [Sentiment analysis](#sentiment-analysis)
 - [References](#references)
 
 # Setup
@@ -18,7 +19,8 @@ Steven Moran & Alena Witzlack-Makarevich
 We use [R](https://www.r-project.org/) (R Core Team 2020) and the
 following [R
 packages](https://cran.r-project.org/web/packages/available_packages_by_name.html)
-(Wickham et al. 2019; Silge and Robinson 2016; Fellows 2018).
+(Wickham et al. 2019; Silge and Robinson 2016; Fellows 2018; Johnston
+and Robinson 2022).
 
 ``` r
 library(tidyverse)
@@ -26,6 +28,11 @@ library(tidytext)
 library(gutenbergr)
 library(wordcloud)
 ```
+
+Many of the examples are taken from or inspired by [Text Mining with R:
+A Tidy Approach](https://www.tidytextmining.com) by [Julia
+Silge](https://juliasilge.com) and [David
+Robinson](http://varianceexplained.org).
 
 # Data
 
@@ -374,6 +381,7 @@ frame that we can call by a new variable name.
 ``` r
 moby_dick_word_counts <- tidy_moby_dick %>% 
   count(word, sort = TRUE)
+
 moby_dick_word_counts
 ```
 
@@ -410,15 +418,14 @@ kind of data type is it?
 What kind of visualizations can we make with one numeric data point?
 
 ``` r
-tidy_moby_dick %>%
-  count(word, sort = TRUE) %>% 
+moby_dick_word_counts %>% 
   filter(n > 600) %>%
-  ggplot(aes(word, n)) +
+  ggplot(aes(x = word, y = n)) +
   geom_col() +
   xlab(NULL)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
 This data visualization – a [bar
 chart](https://en.wikipedia.org/wiki/Bar_chart) aka bar plot or bar
@@ -430,35 +437,36 @@ How can we display the information more meaningfully for the reader?
 
 ``` r
 tidy_moby_dick %>%
-  count(word, sort = TRUE) %>% filter(n > 600) %>%
+  count(word, sort = TRUE) %>% 
+  filter(n > 600) %>%
   mutate(word = reorder(word, n)) %>% 
   ggplot(aes(word, n)) +
   geom_col() +
-  xlab(NULL) +
   coord_flip()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 ``` r
 tidy_moby_dick %>%
-  count(word, sort = TRUE) %>% filter(n > 600) %>%
+  count(word, sort = TRUE) %>% 
+  filter(n > 600) %>%
   ggplot(aes(x = reorder(word, -n), y = n)) +
   geom_col() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 What’s another fun way to visualize one variable data?
 
 ``` r
 tidy_moby_dick %>%
   count(word) %>%
-  with(wordcloud(word, n, max.words = 100))
+  with(wordcloud(word, n, max.words = 600))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 ------------------------------------------------------------------------
 
@@ -466,7 +474,14 @@ We can also do a so-called dot plot. Try it!
 
 ``` r
 # Hint: use geom_point()
+moby_dick_word_counts %>%
+  filter(n > 500) %>% 
+  ggplot(aes(x = reorder(word, -n), y = n)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
+
+![](README_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 ------------------------------------------------------------------------
 
@@ -652,8 +667,25 @@ type-to-token ratio?
 Put your code here:
 
 ``` r
-# Insert your code
+tidy_sense_sensibility <- sense_sensibility %>%
+  unnest_tokens(word, text)
+
+types <- length(unique(tidy_moby_dick$word))
+tokens <- length(tidy_moby_dick$word)
+ttr <- types / tokens
+ttr
 ```
+
+    ## [1] 0.08236834
+
+``` r
+types <- length(unique(tidy_sense_sensibility$word))
+tokens <- length(tidy_sense_sensibility$word)
+ttr <- types / tokens
+ttr
+```
+
+    ## [1] 0.05420196
 
 How does the type-toke ratio between the two source look?
 
@@ -870,7 +902,7 @@ bigram_counts
 
 How can we visualize this type of data?
 
-------------------------------------------------------------------------
+# Sentiment analysis
 
 Now we can use this format to look at certain contexts.
 
@@ -895,12 +927,16 @@ bigrams_separated %>%
     ## 10 not   have     14
     ## # … with 383 more rows
 
-Now we can do some simple [sentiment
+And we can do some simple [sentiment
 analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) on text,
 e.g., looking at polarity.
 
+For more information, check out this chapter in the [Text Mining with
+R](https://www.tidytextmining.com/sentiment.html) book (Silge and
+Robinson 2017).
+
 Sentiment analysis involves a lexicon that has been defined for values
-such as positivity versus negativity.
+such as positivity versus negativity. First we need sentiment lexicon.
 
 ``` r
 AFINN <- get_sentiments("afinn")
@@ -964,7 +1000,7 @@ not_words %>%
        y = "Words preceded by \"not\"")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-43-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-42-1.png)<!-- -->
 
 The bigrams “not die” and “not killed” may be giving the text a more
 negative sentiment. For example, we could compare this to another text
@@ -994,7 +1030,7 @@ negated_words %>%
   facet_grid(~word1)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-45-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-44-1.png)<!-- -->
 
 # References
 
@@ -1004,6 +1040,14 @@ negated_words %>%
 
 Fellows, Ian. 2018. *Wordcloud: Word Clouds*.
 <https://CRAN.R-project.org/package=wordcloud>.
+
+</div>
+
+<div id="ref-gutenbergr" class="csl-entry">
+
+Johnston, Myfanwy, and David Robinson. 2022. *Gutenbergr: Download and
+Process Public Domain Works from Project Gutenberg*.
+<https://CRAN.R-project.org/package=gutenbergr>.
 
 </div>
 
@@ -1020,6 +1064,12 @@ Computing*. Vienna, Austria: R Foundation for Statistical Computing.
 Silge, Julia, and David Robinson. 2016. “Tidytext: Text Mining and
 Analysis Using Tidy Data Principles in r.” *JOSS* 1 (3).
 <https://doi.org/10.21105/joss.00037>.
+
+</div>
+
+<div id="ref-SilgeRobinson2017" class="csl-entry">
+
+———. 2017. *Text Mining with r: A Tidy Approach*. O’Reilly Media, Inc.
 
 </div>
 
