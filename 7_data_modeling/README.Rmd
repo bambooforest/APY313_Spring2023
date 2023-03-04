@@ -39,13 +39,13 @@ These topics give us the skills to do various things with data, including:
 These skills helps us undertake exploratory and descriptive analyses.
 
 
-# Modeling
+# Data modeling
 
 The next step is to **model data**. Scientists are interested in **discovering/understanding** something about real world phenomena. Three types of goals:
 
-* Describe
-* Explain
-* Predict
+1. Describe
+2. Explain
+3. Predict
 
 One goal of **data modeling** is to provide a summary of a data set, i.e., describe it. Another is to come up with **hypotheses for descriptive and inference purposes**.
 
@@ -56,7 +56,7 @@ One purpose of descriptive statistics is to efficiently summarize information fo
 * [Shape of the distribution](https://en.wikipedia.org/wiki/List_of_probability_distributions)
 * [Statistical dependence](https://en.wikipedia.org/wiki/Correlation)
 
-**Statistical inference** methods allow you to **draw a conclusion**, i.e., you infer something, about your data. This allows us to do things like fit statistical models and understand how they work and what they tell us about our data, so that we can test our hypotheses.
+On the other hand, **statistical inference** methods allow you to **draw a conclusion**, i.e., you infer something, about your data. This allows us to do things like fit statistical models and understand how they work and what they tell us about our data, so that we can test our hypotheses.
 
 @Nolan2011 define two main branches of modern statistics (not to be confused with the definitions by @Janert2010 above):
 
@@ -69,7 +69,50 @@ One purpose of descriptive statistics is to efficiently summarize information fo
 
 <!-- Descriptive statistics involve quantitatively describing or summarizing features of a data set. They often include [non-parametric statistics](https://en.wikipedia.org/wiki/Nonparametric_statistics). Inferential statistics ... -->
 
-***
+
+# Descriptive statistics
+
+The measure of [central tendency](https://en.wikipedia.org/wiki/Central_tendency) is one way to make many data points comprehensible to humans by compressing them into one value. Central tendency is a descriptive statistic that best represents the center of a data set i.e. a particular value that all the data seem to be gathering around it's the "typical" score.
+
+The most commonly reported measure of central tendency is the **mean**, the arithmetic average of a group of scores.
+
+The **median** is the middle score of all the scores in a sample when the scores are arranged in ascending order.
+
+Simply creating a visual representation of the distribution often reveals its central tendency.
+
+Let's look at some data about athletes.
+
+```{r}
+athletes <- read_csv('../4_data_wrangling/datasets/athletes.csv')
+```
+
+We can quickly visualize our variables.
+
+```{r}
+hist(athletes$height)
+```
+
+```{r}
+hist(athletes$weight)
+```
+
+```{r}
+hist(athletes$age)
+```
+
+In a histogram or a polygon of a normal distribution the central tendency is usually near the highest point
+
+The specific way that data cluster around a distribution's central tendency can be measured three different ways: mean, median, mode.
+
+Summary statistics only apply to unimodal distributions, i.e., distributions that have a single central peak. If this basic assumption is not met, the your conclusions may be wrong.
+
+And recall the `summary` function that will give us a summary of descriptive statistics based on the data type in each column.
+
+```{r}
+summary(athletes)
+```
+
+# The big picture
 
 Here is the big picture.
 
@@ -82,13 +125,29 @@ Here's also a useful tutorial:
 
 **As data scientists, we may or may not be seasoned statisticians!**
 
-One confusing aspect for scientists without a statistics background is: **which statistical test to use?** This question involves asking what are the relevant assumptions of the common statistical tests and when should I use which?
+One confusing aspect for scientists without a statistics background is: 
 
-To answer which kind of statistical test you should use, **first ask what kind of distribution your data follows**. Different tests assume different distributions. In other words, how is your data shaped? Visualize it!
+* **which statistical test do I use?**
 
-And like our [discussion on which plots to use](https://github.com/bambooforest/IntroDataScience/tree/main/6_data_visualization#which-plots-to-use) to visualize you data, **you also need to know what your data types are**, how many variable you have, and how you are testing them, e.g., are you comparing two distributions?
+This question involves asking what are the relevant assumptions of the common statistical tests and when should I use which?
+
+To answer which kind of statistical test you should:
+
+* **first ask: what kind of distribution does your data follow?**
+
+Different tests assume different distributions. In other words, how is your data shaped? Hont: visualize it!
+
+And like our [discussion on which plots to use](https://github.com/bambooforest/IntroDataScience/tree/main/6_data_visualization#which-plots-to-use) to visualize you data:
+
+* **you also need to know what your data types are!**
+
+How many variable you have? 
+
+Wow you going to test them, e.g., are you **comparing** two distributions?
 
 ***
+
+A bit of history about statistics.
 
 @Janert2010 asks, "what you really need to know about classical statistics, in the [excellent book](https://www.oreilly.com/library/view/data-analysis-with/9781449389802/), *Data analysis with open source tools*. Janert writes:
 
@@ -156,6 +215,9 @@ When properties of the population are inferred from a sample, we are undertaking
 
 ***
 
+
+# Statistical modeling
+
 Statistical modeling is an attempt to describe some part of the real world in mathematical terms.
 
 Recall our discussion on [data types in statistics](https://github.com/bambooforest/IntroDataScience/tree/main/3_data#data-types-in-statistics).
@@ -170,7 +232,6 @@ The relevant mathematical concept is the one of **function**. Consider for examp
 Here is the data:
 
 ```{r}
-athletes <- read_csv('../4_data_wrangling/datasets/athletes.csv')
 head(athletes) %>% kable()
 ```
 
@@ -199,10 +260,18 @@ ggplot(athletes, aes(height, weight)) +
 
 Like other statistical tests, **you will have to know the (four) main assumptions** for linear regression, i.e.:
 
-* Independence of observations (aka no autocorrelation)
-* Normality
-* Linearity
-* Homoscedasticity (aka homogeneity of variance)
+* [Independence](https://en.wikipedia.org/wiki/Independence_(probability_theory)) of observations (aka no [autocorrelation](https://en.wikipedia.org/wiki/Autocorrelation))
+* [Normality](https://en.wikipedia.org/wiki/Normal_distribution)
+* [Linearity](https://en.wikipedia.org/wiki/Linear_regression)
+* [Homoscedasticity](https://en.wikipedia.org/wiki/Homoscedasticity_and_heteroscedasticity) (aka homogeneity of variance)
+
+Two events are **independent** if the occurrence of one event does not affect the chances of the occurrence of the other event.
+
+We test for **normality** to see whether a set of data is distributed in a way that is consistent with a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), when our statistical test requires that the data points are normally distributed. 
+
+**Linearity** is demonstrated when the mean values of the outcome variable (dependent variable) for each increment of the predictors (independent variables) lies along a straight line.
+
+**Homoscedasticity** (homogeneity of variances) is an assumption of equal or similar variances in different groups being compared. [Parametric statistical test](https://en.wikipedia.org/wiki/Parametric_statistics) assume that data points in the sample come from a population that can be modeled by a [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) (i.e., a mathematical function that describes the probabilities of occurrence of the outcomes in an experiment) and that has a fixed set of [statistical parameters](https://en.wikipedia.org/wiki/Statistical_parameter). This assumption is important because parametric statistical tests are sensitive to any dissimilarities and uneven variance in samples will bias and skew the results.
 
 We will talk more about linear models in the follow weeks, but here is a good and simple overview:
 
@@ -210,12 +279,21 @@ We will talk more about linear models in the follow weeks, but here is a good an
 
 ***
 
+Let's look at a brief example. 
+
 For height and weight, we only have one independent variable and one dependent variable for each athlete, so we don’t need to test for any hidden relationships the among variables. In other words, we have independence of observations.
 
-We need to check if the dependent variable is normally distributed. We can quickly visualize it. Is it normal?
+We need to check if the dependent variable is normally distributed. We can quickly visualize it. Does it look normal?
 
 ```{r}
 hist(athletes$height)
+```
+
+Another way to look for normality is with a quantile-quantile plot (Q-Q plot), which is a graphical tool to assess whether the data come from some probability distribution. It is a scatter plot that plots two sets of [quantiles](https://en.wikipedia.org/wiki/Quantile) against each other. If for example, we have a relatively straight line, we may assume that our data points come from a normal distribution.
+
+```{r}
+qqnorm(athletes$height, pch = 1, frame = FALSE) # Create the Q-Qplot
+qqline(athletes$height, col = "steelblue", lwd = 2) # Add a blue line for reference
 ```
 
 As we saw above, the data are linearly distributed. Here's another way to quickly visualize the x and y variables.
@@ -300,40 +378,6 @@ Statistical tests make assumptions about the data being tested. If the assumptio
 3. **Normality of data**: the data follows a normal distribution, normality means that the distribution of the test is normally distributed (or bell-shaped) with mean 0, with 1 standard deviation and a symmetric bell-shaped curve.
 
 
-# Descriptive statistics
-
-The measure of [central tendency](https://en.wikipedia.org/wiki/Central_tendency) is one way to make many data points comprehensible to humans by compressing them into one value. Central tendency is a descriptive statistic that best represents the center of a data set i.e. a particular value that all the data seem to be gathering around it’s the “typical” score.
-
-The most commonly reported measure of central tendency is the mean, the arithmetic average of a group of scores.
-
-The median is the middle score of all the scores in a sample when the scores are arranged in ascending order.
-
-Simply creating a visual representation of the distribution often reveals its central tendency. 
-
-In a histogram or a polygon of a normal distribution the central tendency is usually near the highest point
-
-The specific way that data cluster around a distribution's central tendency can be measured three different ways: mean, median, mode.
-
-Summary statistics only apply to unimodal distributions, i.e., distributions that have a single central peak. If this basic assumption is not met, the your conclusions may be wrong.
-
-```{r}
-hist(athletes$height)
-```
-
-```{r}
-hist(athletes$weight)
-```
-
-```{r}
-hist(athletes$age)
-```
-
-And recall the `summary` function!
-
-```{r}
-summary(athletes)
-```
-
 
 # Choosing the right statistic
 
@@ -356,177 +400,13 @@ Non-parametric analyses are tests that do not make any assumptions about the par
 
 **Ask: what are the assumptions of the statistical test?**
 
-An excellent book on doing statistics with R on linguistic data is *How to do Linguistics with R* [@Levshina2015].
-
 
 # Some examples
 
 Comparison tests test for meaningful differences between group means. They are used to test whether there is a statistically significant difference between a categorical variable on the mean value of another variable.
 
+* [Comparing two groups](../case_studies/F1/)
+* [ANOVA](../case_studies/ANOVA/)
 
-## Comparing two groups
-
-T-tests are for comparing the means of two groups (e.g., the average heights of men and women). It is a parametric test based on the [Student's T distribution](https://en.wikipedia.org/wiki/Student%27s_t-distribution). Essentially, you test the significance of the difference of the mean values when the sample size is small (i.e, less than 30) and when the population standard deviation is not available.
-
-Assumptions of this test:
-
-* Population distribution is normal
-* Samples are random and independent
-* The sample size is small
-* Population standard deviation is not known
-
-And recall any hypothesis testing follows these steps:
-
-0. Choose a significance level (α)
-1. Formulate a null hypothesis, H0
-2. Formulate an alternative hypothesis, H1
-3. Gather data, calculate a test statistic, e.g. T or F
-4. Determine the probability (p-value) of obtaining T or F "or a more extreme value" under H0
-5. If p ≤ α, reject H0
-
-And the basic process:
-  
-* Set up a hypothesis, and assume that it is true.
-* Gather data from some real-world experiment that is relevant to the hypothesis.
-* Make a determination about the hypothesis, based on the idea of "how likely is our data given the hypothesis?"
-
-Let's go through an example.
-
-***
-
-We have some data from @Johnson2008 called `F1_data.txt`. Let's have a look:
-
-```{r, message=FALSE}
-f1 <- read_csv('data/F1_data.txt')
-str(f1)
-head(f1) %>% kable()
-```
-
-The data include 19 observations from male and female speakers from four different languages producing different cardinal vowels. For each observation (row) the variables for the columns (male and female) record the F1 [formant measures](https://en.wikipedia.org/wiki/Formant) values in frequency in Hz. Formants are the distinctive properties of vowels in the acoustic signal in speech. Formants F1-F3 allow us to identify different [vowels ](https://en.wikipedia.org/wiki/Vowel).
-
-Now we want to ask if there is a statistically significant difference between the F1 values of females versus males. One way we can do this is by comparing the mean of the two groups.
-
-First we state our hypothesis:
-
-* H0 (null hypothesis): there is no difference between the mean value of F1 for females and males
-* H1 (alternative hypothesis): there is a difference
-
-Next we identify which statistical test we can use. T-tests compare two groups. In this case, we have paired data, i.e., each row has an associated group (male and female), in which the speakers produced the same vowel. The [paired t-test](https://en.wikipedia.org/wiki/Student%27s_t-test#Paired_samples) allows us to test for significance between two paired groups.
-
-Now we [search for examples of how we can do a paired t-test in R](https://www.google.com/search?q=how+to+do+paired+t+test+in+r) and figure out what the function is called and which parameters it needs.
-
-```{r}
-t.test(f1$female, f1$male, paired=T, alternative="greater")
-```
-
-And now we interpret the results and either accept or reject the null hypothesis.
-
-You may also want to visualize the data!
-
-But is this helpful if we are trying to compare males and females?
-
-```{r}
-ggplot(data = f1, aes(female)) +
-  geom_boxplot()
-
-ggplot(data = f1, aes(male)) +
-  geom_boxplot()
-```
-
-Perhaps a bit more useful?
-
-```{r}
-ggplot(data = f1, aes(x = vowel, y = female)) +
-  geom_boxplot()
-
-ggplot(data = f1, aes(x = vowel, y = male)) +
-  geom_boxplot()
-```
-
-The problem is the input data is not in a format that is particularly easy to plot as a box plot. So, what do we do? Transform it into a format that is easy to plot. (Remember, something like 80% of your time is getting the data in formats that are useful for particular purposes.)
-
-There are many ways to transform the data. Often it helps to first think about what format you need to get to -- I often do this on scrap paper and then think about the code needed. (Remember with code there's going to typically myriad ways of doing the same thing.)
-
-What do we want? We want to be able to group on the male and female variable -- but right now they are in columns.
-
-Here's a not particularly elegant, but arguably readable way, to transform the data. 
-
-```{r}
-males <- f1 %>% select(male, vowel, language)
-females <- f1 %>% select(female, vowel, language)
-
-males <- males %>% rename(F1 = male)
-males$sex <- 'male'
-males
-
-females <- females %>% rename(F1 = female)
-females$sex <- 'female'
-females
-
-df <- rbind(females, males)
-```
-Now we have something a bit easier to work with.
-
-```{r}
-ggplot(data = df, aes(sex, F1)) +
-  geom_boxplot()
-```
-
-And we can be begin to explore the data in various ways.
-
-```{r}
-ggplot(data = df, aes(vowel, F1, fill=sex)) +
-  geom_boxplot()
-```
-
-## ANOVA
-
-Analysis of variance ([ANOVA](https://en.wikipedia.org/wiki/Analysis_of_variance)) and Multivariate analysis of variance ([MANOVA](https://en.wikipedia.org/wiki/Multivariate_analysis_of_variance)) tests are used when comparing the means of more than two groups (e.g., the average heights of children, teenagers, and adults).
-
-ANOVA includes a family of statistical test that allow researchers to investigate the differences between any number of groups as specified by one or more categorical variables. ANOVA is used when you want to find out if there are differences between several groups.
-
-Assumptions of this test:
-  
-* Population distribution is normal
-* Samples are random and independent
-* Homogeneity of sample variance
-
-How would you go forward, for example, with the `athletes` data? Here is some example code to get you thinking.
-
-```{r}
-head(athletes) %>% kable()
-```
-
-```{r}
-m_sport_lm <- lm(weight ~ sport, data = athletes)
-summary(m_sport_lm)
-anova(m_sport_lm)
-names(m_sport_lm)
-```
-
-```{r}
-aov_athletes <- aov(weight ~ sport, data = athletes)
-summary(aov_athletes)
-```
-
-```{r}
-qplot(x = sport, y = weight, data = athletes, geom = "boxplot", fill = sport) + 
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
-  theme(legend.position="none")
-```
-
-```{r}
-library(car)
-leveneTest(weight ~ sport, data = athletes)
-m_sport_aov <- aov(weight ~ sport, data = athletes)
-summary(m_sport_aov)
-TukeyHSD(m_sport_aov)
-
-plot(TukeyHSD(m_sport_aov))
-
-m_sport_aovlm <- anova(lm(weight ~ sport, data = athletes))
-m_sport_aovlm
-oneway.test(weight ~ sport, data = athletes)
-```
 
 # References
