@@ -57,6 +57,7 @@ Create a [GitHub](https://en.wikipedia.org/wiki/GitHub) account:
 
 * https://github.com
 
+<!--
 Add your email and your GitHub path / username to the [repositories tab](https://docs.google.com/spreadsheets/d/1di-H7lsmdkT1RJlsXERkIcBSE4Y6XKIwPdulyaZ13DM/edit#gid=788106030&range=A1). For example, see how I added mine in the spreadsheet, which can be rendered like this in [Rmarkdown tables](https://dereksonderegger.github.io/570L/15-rmarkdown-tricks.html):
 
 | Preferred email address | GitHub username | Your data science class repository URL | UniNE email address
@@ -64,6 +65,7 @@ Add your email and your GitHub path / username to the [repositories tab](https:/
 | steven.moran@unine.ch | bambooforest | https://github.com/bambooforest/IntroDataScience/ | steven.moran@unine.ch
 
 If you cannot access the schedule in Google docs, send me an email. I have made it by invitation only so that only course participants have access to it.
+-->
 
 In your GitHub account, e.g. mine is [https://github.com/bambooforest](https://github.com/bambooforest), create a repository for your data practical. It is up to you if you choose to have the repository public or private. 
 
