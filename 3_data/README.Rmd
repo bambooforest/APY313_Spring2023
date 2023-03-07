@@ -394,6 +394,31 @@ c != c
 "cat" == "cats"
 "cat" != "cat"
 ```
+
+## Data structures in R
+
+R has six basic [data structures](https://en.wikipedia.org/wiki/Data_structure):
+
+* Vector: an ordered collection of the same basic data types, i.e., 1-dimension of homogeneous data types
+* List: a generic object that contain objects of different types, i.e., 1D, heterogeneous)
+* Matrix: a vector with attributes (called dimensions) of the same data types, i.e., 2D homogeneous
+* Array: multidimensional matrices of the same data types, i.e., no dimensionality, homogeneous
+* Data frame: an object consisting of columns and rows (2D, heterogeneous)
+
+
+<!--
+  Homogeneous	Heterogeneous
+1d	Atomic vector	List
+2d	Matrix	Data frame
+nd	Array
+
+add tibbles
+-->
+
+Here's a nice overview:
+
+* https://intro2r.com/data-structures.html
+
 When you have a sequence of the **same** data type, R calls these vectors. 
 
 ```{r}

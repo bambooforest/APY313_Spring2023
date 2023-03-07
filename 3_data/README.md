@@ -1,7 +1,7 @@
 Data
 ================
 Steven Moran
-(02 February, 2023)
+(13 February, 2023)
 
 - [What is data?](#what-is-data)
 - [Structured versus unstructured
