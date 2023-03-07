@@ -1,13 +1,30 @@
 ---
-title: "ANOVA"
+title: "ANOVA example"
 author: "Steven Moran"
-date: "2023-03-04"
-output: html_document
+date: "(`r format(Sys.time(), '%d %B, %Y')`)"
+output: github_document
 ---
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(knitr)
+```
+
+# Overview
+
+```{r, warning=FALSE, message=FALSE}
+athletes <- read_csv('../../datasets/athletes.csv')
+```
+
+```{r}
+head(athletes) %>% 
+  kable()
+```
+
 
 # ANOVA
 
-Analysis of variance ([ANOVA](https://en.wikipedia.org/wiki/Analysis_of_variance)) and Multivariate analysis of variance ([MANOVA](https://en.wikipedia.org/wiki/Multivariate_analysis_of_variance)) tests are used when comparing the means of more than two groups (e.g., the average heights of children, teenagers, and adults).
+Analysis of variance ([ANOVA](https://en.wikipedia.org/wiki/Analysis_of_variance)) and Multivariate analysis of variance ([MANOVA](https://en.wikipedia.org/wiki/Multivariate_analysis_of_variance)) tests are used when comparing the means of more than two groups, e.g., the average heights of children, teenagers, and adults.
 
 ANOVA includes a family of statistical test that allow researchers to investigate the differences between any number of groups as specified by one or more categorical variables. ANOVA is used when you want to find out if there are differences between several groups.
 
@@ -17,11 +34,10 @@ Assumptions of this test:
 * Samples are random and independent
 * Homogeneity of sample variance
 
-How would you go forward, for example, with the `athletes` data? Here is some example code to get you thinking.
+How would you go forward, for example, with the `athletes` data? 
 
-```{r}
-head(athletes) %>% kable()
-```
+Here is some example code to get you thinking.
+
 
 ```{r}
 m_sport_lm <- lm(weight ~ sport, data = athletes)
