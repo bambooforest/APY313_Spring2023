@@ -1,4 +1,4 @@
-Data modeling
+Data modeling and statistical testing
 ================
 Steven Moran & Alena Witzlack-Makarevich
 
@@ -19,7 +19,11 @@ Steven Moran & Alena Witzlack-Makarevich
   - [Parametric versus nonparametric
     statistics](#parametric-versus-nonparametric-statistics)
 - [Some examples](#some-examples)
-  - [Statistical modeling](#statistical-modeling)
+- [Some more practice problems](#some-more-practice-problems)
+  - [Dingemanse et al. 2015](#dingemanse-et-al-2015)
+  - [Currie, Thomas E. & Ruth Mace.
+    2009.](#currie-thomas-e--ruth-mace-2009)
+  - [Gavin, M. C. & N. Sibanda. 2012.](#gavin-m-c--n-sibanda-2012)
 - [References](#references)
 
 ------------------------------------------------------------------------
@@ -704,233 +708,108 @@ difference between a categorical variable on the mean value of another
 variable.
 
 - [Comparing two groups](../case_studies/F1/)
+- [Simple linear regression](../case_studies/athletes/)
 - [ANOVA](../case_studies/ANOVA/)
 
-## Statistical modeling
+# Some more practice problems
 
-Statistical modeling is an attempt to describe some part of the real
-world in mathematical terms.
+## Dingemanse et al. 2015
 
-Recall our discussion on [data types in
-statistics](https://github.com/bambooforest/IntroDataScience/tree/main/3_data#data-types-in-statistics).
+Universal Principles in the Repair of Communication Problems. PLOS ONE.
 
-The independent variable (predictor variable) is the variable that is
-being manipulated, so that we can observe if there is an effect on the
-dependent variable (outcome variable).
+<https://doi.org/10.1371/journal.pone.0136100>
 
-- Independent variable(s) – Predictor variable(s)
-- Dependent variable(s) – Outcome/Output variable(s)
+From the paper:
 
-The relevant mathematical concept is the one of **function**. Consider
-for example the input of `height` and output of `weight` with our
-`atheletes` data.
+> > A design requirement for a communication system … is that when
+> > communication fails there should be some mechanism to ‘repair’ it. A
+> > systematic comparison of conversation in a broad sample of the
+> > world’s languages reveals a universal system for the real-time
+> > resolution of frequent breakdowns in communication. In a sample of
+> > 12 languages of 8 language families of varied typological profiles
+> > we find a system of ‘other-initiated repair’, where the recipient of
+> > an unclear message can signal trouble and the sender can repair the
+> > original message. We find that this system is frequently used (on
+> > average about once per 1.4 minutes in any language), and that it has
+> > detailed common properties, contrary to assumptions of radical
+> > cultural variation.
 
-Here is the data:
+If you were to run a study on a different language, how would you
+formulate your hypotheses?
 
-``` r
-head(athletes) %>% kable()
-```
+- H0:
 
-| age | birthdate  | gender | height | name              | weight | gold_medals | silver_medals | bronze_medals | total_medals | sport            | country       |
-|----:|:-----------|:-------|-------:|:------------------|-------:|------------:|--------------:|--------------:|-------------:|:-----------------|:--------------|
-|  17 | 1996-04-12 | Male   |   1.72 | Aaron Blunck      |     68 |           0 |             0 |             0 |            0 | Freestyle Skiing | United States |
-|  27 | 1986-05-14 | Male   |   1.85 | Aaron March       |     85 |           0 |             0 |             0 |            0 | Snowboard        | Italy         |
-|  21 | 1992-06-30 | Male   |   1.78 | Abzal Azhgaliyev  |     68 |           0 |             0 |             0 |            0 | Short Track      | Kazakhstan    |
-|  21 | 1992-05-25 | Male   |   1.68 | Abzal Rakimgaliev |     NA |           0 |             0 |             0 |            0 | Figure Skating   | Kazakhstan    |
-|  21 | 1992-07-30 | Male   |   1.86 | Adam Barwood      |     82 |           0 |             0 |             0 |            0 | Alpine Skiing    | New Zealand   |
-|  21 | 1992-12-18 | Male   |   1.75 | Adam Cieslar      |     57 |           0 |             0 |             0 |            0 | Nordic Combined  | Poland        |
+- H1:
 
-And its contents:
+## Currie, Thomas E. & Ruth Mace. 2009.
 
-``` r
-str(athletes)
-```
+Political complexity predicts the spread of ethnolinguistic groups.
 
-    ## spc_tbl_ [2,859 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
-    ##  $ age          : num [1:2859] 17 27 21 21 21 21 18 23 17 21 ...
-    ##  $ birthdate    : Date[1:2859], format: "1996-04-12" "1986-05-14" ...
-    ##  $ gender       : chr [1:2859] "Male" "Male" "Male" "Male" ...
-    ##  $ height       : num [1:2859] 1.72 1.85 1.78 1.68 1.86 1.75 1.7 1.78 1.63 1.62 ...
-    ##  $ name         : chr [1:2859] "Aaron Blunck" "Aaron March" "Abzal Azhgaliyev" "Abzal Rakimgaliev" ...
-    ##  $ weight       : num [1:2859] 68 85 68 NA 82 57 76 80 NA 56 ...
-    ##  $ gold_medals  : num [1:2859] 0 0 0 0 0 0 0 0 0 0 ...
-    ##  $ silver_medals: num [1:2859] 0 0 0 0 0 0 0 0 0 0 ...
-    ##  $ bronze_medals: num [1:2859] 0 0 0 0 0 0 0 0 0 0 ...
-    ##  $ total_medals : num [1:2859] 0 0 0 0 0 0 0 0 0 0 ...
-    ##  $ sport        : chr [1:2859] "Freestyle Skiing" "Snowboard" "Short Track" "Figure Skating" ...
-    ##  $ country      : chr [1:2859] "United States" "Italy" "Kazakhstan" "Kazakhstan" ...
-    ##  - attr(*, "spec")=
-    ##   .. cols(
-    ##   ..   age = col_double(),
-    ##   ..   birthdate = col_date(format = ""),
-    ##   ..   gender = col_character(),
-    ##   ..   height = col_double(),
-    ##   ..   name = col_character(),
-    ##   ..   weight = col_double(),
-    ##   ..   gold_medals = col_double(),
-    ##   ..   silver_medals = col_double(),
-    ##   ..   bronze_medals = col_double(),
-    ##   ..   total_medals = col_double(),
-    ##   ..   sport = col_character(),
-    ##   ..   country = col_character()
-    ##   .. )
-    ##  - attr(*, "problems")=<externalptr>
+- <https://doi.org/10.1073/pnas.0804698106>
 
-------------------------------------------------------------------------
+From the paper:
 
-One way to look at that relationship is to **plot the input** on the
-x-axis and the output on the y-axis in a scatter plot.
+> > > Languages show a remarkable degree of variation in the area they
+> > > cover. However, the factors governing the distribution of
+> > > languages are not well understood. While previous studies have
+> > > examined the role of a number of environmental variables, the
+> > > importance of cultural factors has not been systematically
+> > > addressed. Here we use a geographical information … to integrate
+> > > information about languages with environmental, ecological, and
+> > > ethnographic data to test a number of hypotheses that have been
+> > > proposed to explain the global distribution of languages. We show
+> > > that the degree of political complexity and type of subsistence
+> > > strategy exhibited by societies are important predictors of the
+> > > area covered by a language.
 
-``` r
-ggplot(athletes, aes(height, weight)) +
-  geom_point()
-```
+What are:
 
-    ## Warning: Removed 380 rows containing missing values (`geom_point()`).
+- H0: There is no relationship between…
 
-![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+- H1: There is a relationship between…
 
-One way to test whether there is a relationship is to use [linear
-regression](https://en.wikipedia.org/wiki/Linear_regression).
+## Gavin, M. C. & N. Sibanda. 2012.
 
-``` r
-ggplot(athletes, aes(height, weight)) +
-  geom_point() +
-  geom_smooth(method='lm')
-```
+The island biogeography of languages.
 
-    ## `geom_smooth()` using formula = 'y ~ x'
+- <https://doi.org/10.1111/j.1466-8238.2011.00744.x>
 
-    ## Warning: Removed 380 rows containing non-finite values (`stat_smooth()`).
+From the paper:
 
-    ## Warning: Removed 380 rows containing missing values (`geom_point()`).
+- Aim: Examine the degree to which area, isolation, environment and time
+  since first settlement explain variation in language richness among
+  the Pacific islands.
 
-![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+- Data: A dataset of 264 Pacific islands that support 1640 languages.
 
-Like other statistical tests, **you will have to know the (four) main
-assumptions** for linear regression, i.e.:
+- Methods: We examined possible predictors (explanatory variables) of
+  language richness using three different types of models: linear
+  regression models, linear mixed models … and simultaneous
+  autoregressive models. We tested whether the following variables
+  (alone or in combination) predict language richness: island area and
+  isolation, climate (rainfall, temperature), mean growing season, soil
+  fertility, habitat heterogeneity (elevation, number of ecoregions),
+  time since first human settlement.
 
-- [Independence](https://en.wikipedia.org/wiki/Independence_(probability_theory))
-  of observations (aka no
-  [autocorrelation](https://en.wikipedia.org/wiki/Autocorrelation))
-- [Normality](https://en.wikipedia.org/wiki/Normal_distribution)
-- [Linearity](https://en.wikipedia.org/wiki/Linear_regression)
-- [Homoscedasticity](https://en.wikipedia.org/wiki/Homoscedasticity_and_heteroscedasticity)
-  (aka homogeneity of variance)
+- Results: We identified two optimal models … . Of the hypotheses tested
+  (mean growing season, ecological risk, habitat heterogeneity, climate,
+  time since settlement, area–isolation theory), area-isolation
+  performed best, alone explaining 44% of variation in language
+  richness.
 
-Two events are **independent** if the occurrence of one event does not
-affect the chances of the occurrence of the other event.
+- Main conclusions: Language diversity relates strongly to island area,
+  and, after controlling for area, with variables linked to isolation
+  (e.g. distance to continent, time since first settlement). The
+  influence of environmental productivity is context dependent. Although
+  environmental productivity may shape language diversity patterns at a
+  global scale, it plays little role on Pacific islands.Approximately
+  half the variance in language richness remains unexplained.
 
-We test for **normality** to see whether a set of data is distributed in
-a way that is consistent with a [normal
-distribution](https://en.wikipedia.org/wiki/Normal_distribution), when
-our statistical test requires that the data points are normally
-distributed.
+What are:
 
-**Linearity** is demonstrated when the mean values of the outcome
-variable (dependent variable) for each increment of the predictors
-(independent variables) lies along a straight line.
+- H0: There is no relationship between…
 
-**Homoscedasticity** (homogeneity of variances) is an assumption of
-equal or similar variances in different groups being compared.
-[Parametric statistical
-test](https://en.wikipedia.org/wiki/Parametric_statistics) assume that
-data points in the sample come from a population that can be modeled by
-a [probability
-distribution](https://en.wikipedia.org/wiki/Probability_distribution)
-(i.e., a mathematical function that describes the probabilities of
-occurrence of the outcomes in an experiment) and that has a fixed set of
-[statistical
-parameters](https://en.wikipedia.org/wiki/Statistical_parameter). This
-assumption is important because parametric statistical tests are
-sensitive to any dissimilarities and uneven variance in samples will
-bias and skew the results.
-
-We will talk more about linear models in the follow weeks, but here is a
-good and simple overview:
-
-- <https://www.scribbr.com/statistics/linear-regression-in-r/>
-
-------------------------------------------------------------------------
-
-Let’s look at a brief example.
-
-For height and weight, we only have one independent variable and one
-dependent variable for each athlete, so we don’t need to test for any
-hidden relationships the among variables. In other words, we have
-independence of observations.
-
-We need to check if the dependent variable is normally distributed. We
-can quickly visualize it. Does it look normal?
-
-``` r
-hist(athletes$height)
-```
-
-![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
-
-Another way to look for normality is with a quantile-quantile plot (Q-Q
-plot), which is a graphical tool to assess whether the data come from
-some probability distribution. It is a scatter plot that plots two sets
-of [quantiles](https://en.wikipedia.org/wiki/Quantile) against each
-other. If for example, we have a relatively straight line, we may assume
-that our data points come from a normal distribution.
-
-``` r
-qqnorm(athletes$height, pch = 1, frame = FALSE) # Create the Q-Qplot
-qqline(athletes$height, col = "steelblue", lwd = 2) # Add a blue line for reference
-```
-
-![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
-
-As we saw above, the data are linearly distributed. Here’s another way
-to quickly visualize the x and y variables.
-
-``` r
-plot(weight ~ height, data = athletes)
-```
-
-![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
-
-[Homoscedasticity](https://en.wikipedia.org/wiki/Homoscedasticity_and_heteroscedasticity)
-means that the prediction error does not change significantly over the
-range of prediction of the model. We will discuss this more in the
-coming weeks – as well as what the output means.
-
-``` r
-lm <- lm(weight ~ height, data = athletes)
-summary(lm)
-```
-
-    ## 
-    ## Call:
-    ## lm(formula = weight ~ height, data = athletes)
-    ## 
-    ## Residuals:
-    ##      Min       1Q   Median       3Q      Max 
-    ## -28.4176  -5.3995  -0.3995   5.0461  27.8007 
-    ## 
-    ## Coefficients:
-    ##             Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept) -147.362      2.974  -49.55   <2e-16 ***
-    ## height       125.454      1.690   74.23   <2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 7.613 on 2477 degrees of freedom
-    ##   (380 observations deleted due to missingness)
-    ## Multiple R-squared:  0.6899, Adjusted R-squared:  0.6898 
-    ## F-statistic:  5510 on 1 and 2477 DF,  p-value: < 2.2e-16
-
-We can say there is a significant positive relationship between height
-and weight of these athletes (p-value \< 0.001).
-
-------------------------------------------------------------------------
-
-Statistical tests are about interpreting data. If we want to interpret
-our data with formal procedures and to make claims about the
-distribution of our data or whether two data sets differ fundamentally
-from each other, then we rely on hypothesis testing.
+- H1: There is a relationship between…
 
 # References
 
