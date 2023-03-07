@@ -31,6 +31,8 @@ First let’s load the R libraries.
 library(tidyverse)
 ```
 
+------------------------------------------------------------------------
+
 We have some data from @Johnson2008 called `F1_data.txt`.
 
 ``` r
