@@ -1,7 +1,7 @@
 Comparing two groups
 ================
 Steve Moran
-(06 March, 2023)
+(07 March, 2023)
 
 Recall any hypothesis testing follows boradly-speaking these steps:
 
