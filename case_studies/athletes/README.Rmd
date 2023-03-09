@@ -1,5 +1,5 @@
 ---
-title: "Comparing athletes height and weight"
+title: "Linear regression example: athletes height vs. weight"
 author: "Steve Moran"
 date: "(`r format(Sys.time(), '%d %B, %Y')`)"
 output:
@@ -14,6 +14,7 @@ library(tidyverse)
 library(knitr)
 ```
 
+***
 
 # Overvierw
 

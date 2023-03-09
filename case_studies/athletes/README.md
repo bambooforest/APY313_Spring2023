@@ -1,4 +1,4 @@
-Comparing athletes height and weight
+Linear regression example: athletes height vs. weight
 ================
 Steve Moran
 (09 March, 2023)
@@ -18,6 +18,8 @@ Steve Moran
 library(tidyverse)
 library(knitr)
 ```
+
+------------------------------------------------------------------------
 
 # Overvierw
 

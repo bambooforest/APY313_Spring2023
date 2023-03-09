@@ -1,4 +1,4 @@
-Linear regression example
+Linear regression example: income vs. happiness
 ================
 Steve Moran
 (09 March, 2023)
@@ -19,6 +19,8 @@ library(tidyverse)
 library(knitr)
 ```
 
+------------------------------------------------------------------------
+
 # Overvierw
 
 Statistical modeling is an attempt to describe some part of the real
@@ -26,8 +28,7 @@ world in mathematical terms.
 
 The relevant mathematical concept is the one of **function**.
 
-Consider for example the input of `income` and output of `happiness`
-with our `atheletes` data.
+Consider for example the input of `income` and output of `happiness`.
 
 # Load the data
 
@@ -197,7 +198,7 @@ We need to check if the dependent variable is normally distributed. We
 can quickly visualize it. Does it look normal?
 
 ``` r
-hist(df$income)
+hist(df$happiness)
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->

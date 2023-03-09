@@ -1,5 +1,5 @@
 ---
-title: "Linear regression example"
+title: "Linear regression example: income vs. happiness"
 author: "Steve Moran"
 date: "(`r format(Sys.time(), '%d %B, %Y')`)"
 output:
@@ -14,6 +14,7 @@ library(tidyverse)
 library(knitr)
 ```
 
+***
 
 # Overvierw
 
@@ -21,7 +22,7 @@ Statistical modeling is an attempt to describe some part of the real world in ma
 
 The relevant mathematical concept is the one of **function**. 
 
-Consider for example the input of `income` and output of `happiness` with our `atheletes` data.
+Consider for example the input of `income` and output of `happiness`.
 
 
 # Load the data
