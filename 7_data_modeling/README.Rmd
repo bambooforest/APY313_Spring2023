@@ -456,7 +456,8 @@ Non-parametric analyses are tests that do not make any assumptions about the par
 Comparison tests test for meaningful differences between group means. They are used to test whether there is a statistically significant difference between a categorical variable on the mean value of another variable.
 
 * [Comparing two groups](../case_studies/F1/)
-* [Simple linear regression](../case_studies/athletes/)
+* [Simple linear regression](../case_studies/linear_regression/)
+* [Another simple linear regression](../case_studies/athletes/)
 * [ANOVA](../case_studies/ANOVA/)
 
 

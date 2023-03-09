@@ -2,7 +2,7 @@ Data modeling and statistical testing
 ================
 Steven Moran & Alena Witzlack-Makarevich
 
-06 March, 2023
+09 March, 2023
 
 - [Data modeling](#data-modeling)
 - [Descriptive statistics](#descriptive-statistics)
@@ -708,7 +708,8 @@ difference between a categorical variable on the mean value of another
 variable.
 
 - [Comparing two groups](../case_studies/F1/)
-- [Simple linear regression](../case_studies/athletes/)
+- [Simple linear regression](../case_studies/linear_regression/)
+- [Another simple linear regression](../case_studies/athletes/)
 - [ANOVA](../case_studies/ANOVA/)
 
 # Some more practice problems
