@@ -1,7 +1,16 @@
 Comparing athletes height and weight
 ================
 Steve Moran
-(06 March, 2023)
+(09 March, 2023)
+
+- [Overvierw](#overvierw)
+- [Load the data](#load-the-data)
+- [Define your hypothesis](#define-your-hypothesis)
+- [Choose a statistical test](#choose-a-statistical-test)
+- [Check your model assumptions](#check-your-model-assumptions)
+- [Perform the linear regression
+  analysis](#perform-the-linear-regression-analysis)
+- [Check for homoscedasticity](#check-for-homoscedasticity)
 
 ------------------------------------------------------------------------
 
@@ -10,7 +19,7 @@ library(tidyverse)
 library(knitr)
 ```
 
-------------------------------------------------------------------------
+# Overvierw
 
 Statistical modeling is an attempt to describe some part of the real
 world in mathematical terms.
@@ -19,6 +28,8 @@ The relevant mathematical concept is the one of **function**.
 
 Consider for example the input of `height` and output of `weight` with
 our `atheletes` data.
+
+# Load the data
 
 Let’s load the data.
 
@@ -41,6 +52,8 @@ head(athletes) %>%
 |  21 | 5/25/92   | Abzal Rakimgaliev | Male   |   1.68 |     NA |           0 |             0 |             0 |            0 | Figure Skating   | Kazakhstan    |
 |  21 | 7/30/92   | Adam Barwood      | Male   |   1.86 |     82 |           0 |             0 |             0 |            0 | Alpine Skiing    | New Zealand   |
 |  21 | 12/18/92  | Adam Cieslar      | Male   |   1.75 |     57 |           0 |             0 |             0 |            0 | Nordic Combined  | Poland        |
+
+# Define your hypothesis
 
 Recall any hypothesis testing follows these steps, broadly speaking:
 
@@ -110,7 +123,7 @@ str(athletes)
 Recall our discussion on [data types in
 statistics](https://github.com/bambooforest/IntroDataScience/tree/main/3_data#data-types-in-statistics).
 
-------------------------------------------------------------------------
+# Choose a statistical test
 
 What kind of statistical test can we use to test if there’s a
 relationship between these two variables?
@@ -151,6 +164,8 @@ ggplot(athletes, aes(height, weight)) +
     ## Warning: Removed 380 rows containing missing values (`geom_point()`).
 
 ![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+# Check your model assumptions
 
 But hold on. Just because we see a pattern does not necessarily mean
 it’s there. We have to be careful of statistical bias. How can we
@@ -193,10 +208,14 @@ Here is a good and simple overview of linear models:
 
 ------------------------------------------------------------------------
 
+1.  Independence
+
 For height and weight, we only have one independent variable and one
 dependent variable for each athlete, so we don’t need to test for any
 hidden relationships among the variables. In other words, we have
 independence of observations.
+
+2.  Normality
 
 We need to check if the dependent variable is normally distributed. We
 can quickly visualize it. Does it look normal?
@@ -221,6 +240,8 @@ qqline(athletes$height, col = "steelblue", lwd = 2) # Add a blue line for refere
 
 ![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
+3.  Linearity
+
 As we saw above, the data are linearly distributed. Here’s another way
 to quickly visualize the x and y variables.
 
@@ -229,6 +250,14 @@ plot(weight ~ height, data = athletes)
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+4.  Homoscedasticity (aka homogeneity of variance)
+
+This means that the prediction error doesn’t change significantly over
+the range of prediction of the model. We can test this assumption later,
+after fitting the linear model.
+
+# Perform the linear regression analysis
 
 So now we can do our linear regression and interpret the results.
 
@@ -261,6 +290,37 @@ summary(lm)
 
 Can we say there is a significant positive relationship between height
 and weight of these athletes (p-value \< 0.001).
+
+------------------------------------------------------------------------
+
+# Check for homoscedasticity
+
+``` r
+par(mfrow=c(2,2))
+plot(lm)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+
+``` r
+par(mfrow=c(1,1))
+```
+
+Residuals are the unexplained variance. They are not exactly the same as
+model error, but they are calculated from it, so seeing a bias in the
+residuals would also indicate a bias in the error.
+
+The most important thing to look for is that the red lines representing
+the mean of the residuals are all basically horizontal and centered
+around zero. This means there are no outliers or biases in the data that
+would make a linear regression invalid.
+
+In the Normal Q-Qplot in the top right, we can see that the real
+residuals from our model form an almost perfectly one-to-one line with
+the theoretical residuals from a perfect model.
+
+Based on these residuals, we can say that our model meets the assumption
+of homoscedasticity.
 
 ------------------------------------------------------------------------
 
