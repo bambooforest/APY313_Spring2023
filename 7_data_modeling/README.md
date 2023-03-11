@@ -2,7 +2,7 @@ Data modeling and statistical testing
 ================
 Steven Moran & Alena Witzlack-Makarevich
 
-09 March, 2023
+11 March, 2023
 
 - [Data modeling](#data-modeling)
 - [Descriptive statistics](#descriptive-statistics)
@@ -18,8 +18,11 @@ Steven Moran & Alena Witzlack-Makarevich
   - [Parametric tests](#parametric-tests)
   - [Parametric versus nonparametric
     statistics](#parametric-versus-nonparametric-statistics)
-- [Some examples](#some-examples)
-- [Some more practice problems](#some-more-practice-problems)
+- [Correlation vs causation](#correlation-vs-causation)
+- [Some case studies using statistical
+  tests](#some-case-studies-using-statistical-tests)
+- [Some more practice problems regarding hypothesis
+  testing](#some-more-practice-problems-regarding-hypothesis-testing)
   - [Dingemanse et al. 2015](#dingemanse-et-al-2015)
   - [Currie, Thomas E. & Ruth Mace.
     2009.](#currie-thomas-e--ruth-mace-2009)
@@ -584,7 +587,7 @@ A note about distributions:
   tests.
 
 And like our [discussion on which plots to
-use](https://github.com/bambooforest/IntroDataScience/tree/main/6_data_visualization#which-plots-to-use)
+use](https://github.com/bambooforest/APY313/tree/main/6_data_visualization#which-plots-to-use)
 to visualize you data:
 
 - **You also need to know what your data types are!**
@@ -700,7 +703,11 @@ distribution. This is why they are also called distribution-free tests.
 
 **Ask**: what are the assumptions of the statistical test?
 
-# Some examples
+# Correlation vs causation
+
+- <https://www.scribbr.com/methodology/correlation-vs-causation/>
+
+# Some case studies using statistical tests
 
 Comparison tests test for meaningful differences between group means.
 They are used to test whether there is a statistically significant
@@ -712,7 +719,7 @@ variable.
 - [Another simple linear regression](../case_studies/athletes/)
 - [ANOVA](../case_studies/ANOVA/)
 
-# Some more practice problems
+# Some more practice problems regarding hypothesis testing
 
 ## Dingemanse et al. 2015
 

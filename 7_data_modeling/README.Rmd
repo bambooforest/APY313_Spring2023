@@ -377,7 +377,7 @@ A note about distributions:
 
 * Non-parametric analyses are tests that do not make any assumptions about the parameters of the population under study, i.e., there is no known distribution. This is why they are also called distribution-free tests.
 
-And like our [discussion on which plots to use](https://github.com/bambooforest/IntroDataScience/tree/main/6_data_visualization#which-plots-to-use) to visualize you data:
+And like our [discussion on which plots to use](https://github.com/bambooforest/APY313/tree/main/6_data_visualization#which-plots-to-use) to visualize you data:
 
 * **You also need to know what your data types are!**
 
@@ -451,7 +451,12 @@ Non-parametric analyses are tests that do not make any assumptions about the par
 **Ask**: what are the assumptions of the statistical test?
 
 
-# Some examples
+# Correlation vs causation
+
+* https://www.scribbr.com/methodology/correlation-vs-causation/
+
+
+# Some case studies using statistical tests
 
 Comparison tests test for meaningful differences between group means. They are used to test whether there is a statistically significant difference between a categorical variable on the mean value of another variable.
 
@@ -461,7 +466,7 @@ Comparison tests test for meaningful differences between group means. They are u
 * [ANOVA](../case_studies/ANOVA/)
 
 
-# Some more practice problems
+# Some more practice problems regarding hypothesis testing
 
 ## Dingemanse et al. 2015
 
