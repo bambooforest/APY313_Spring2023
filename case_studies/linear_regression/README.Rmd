@@ -18,19 +18,19 @@ library(knitr)
 
 # Overvierw
 
-Statistical modeling is an attempt to describe some part of the real world in mathematical terms.
+* https://www.pnas.org/doi/pdf/10.1073/pnas.2016976118
 
-The relevant mathematical concept is the one of **function**. 
-
-Consider for example the input of `income` and output of `happiness`.
+>>> What is the relationship between money and well-being? Research distinguishes between two forms of well-being: people’s feelings during the moments of life (experienced well-being) and people’s evaluation of their lives when they pause and reflect (evaluative well-being). Drawing on 1,725,994 experience-sampling reports from 33,391 employed US adults, the present results show that both experienced and evaluative well-being increased linearly with log(income), with an equally steep slope for higher earners as for lower earners. There was no evidence for an experienced well-being plateau above $75,000/y, contrary to some influential past research. There was also no evidence of an income threshold at which experienced and evaluative well-being diverged, sug- gesting that higher incomes are associated with both feeling bet- ter day-to-day and being more satisfied with life overall.
 
 
 # Load the data
 
+* https://osf.io/cfnbv
+
 Let's load the data.
 
 ```{r, warning=FALSE, message=FALSE}
-df <- read_csv('~/Downloads/income.data.csv')
+df <- read_csv('data/income.data.csv')
 ```
 
 And have a look at it.
@@ -39,6 +39,11 @@ And have a look at it.
 head(df) %>% 
   kable()
 ```
+
+```{r}
+summary(df)
+```
+
 
 
 # Define your hypothesis

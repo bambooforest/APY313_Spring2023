@@ -1,7 +1,7 @@
 Linear regression example: income vs. happiness
 ================
 Steve Moran
-(09 March, 2023)
+(10 March, 2023)
 
 - [Overvierw](#overvierw)
 - [Load the data](#load-the-data)
@@ -35,7 +35,7 @@ Consider for example the input of `income` and output of `happiness`.
 Let’s load the data.
 
 ``` r
-df <- read_csv('~/Downloads/income.data.csv')
+df <- read_csv('data/income.data.csv')
 ```
 
 And have a look at it.
@@ -53,6 +53,18 @@ head(df) %>%
 |   4 | 3.214372 |  2.791114 |
 |   5 | 7.196409 |  5.596398 |
 |   6 | 3.729643 |  2.458556 |
+
+``` r
+summary(df)
+```
+
+    ##       ...1           income        happiness    
+    ##  Min.   :  1.0   Min.   :1.506   Min.   :0.266  
+    ##  1st Qu.:125.2   1st Qu.:3.006   1st Qu.:2.266  
+    ##  Median :249.5   Median :4.424   Median :3.473  
+    ##  Mean   :249.5   Mean   :4.467   Mean   :3.393  
+    ##  3rd Qu.:373.8   3rd Qu.:5.992   3rd Qu.:4.503  
+    ##  Max.   :498.0   Max.   :7.482   Max.   :6.863
 
 # Define your hypothesis
 
@@ -126,7 +138,7 @@ ggplot(df, aes(income, happiness)) +
   geom_point()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 One way to test whether there is a relationship with two continuous data
 points is to use [linear
@@ -140,7 +152,7 @@ ggplot(df, aes(income, happiness)) +
 
     ## `geom_smooth()` using formula = 'y ~ x'
 
-![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 # Check your model assumptions
 
@@ -201,7 +213,7 @@ can quickly visualize it. Does it look normal?
 hist(df$happiness)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 Another way to look for normality is with a quantile-quantile plot (Q-Q
 plot), which is a graphical tool to assess whether the data come from
@@ -215,7 +227,7 @@ qqnorm(df$income, pch = 1, frame = FALSE) # Create the Q-Qplot
 qqline(df$income, col = "steelblue", lwd = 2) # Add a blue line for reference
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 3.  Linearity
 
@@ -226,7 +238,7 @@ to quickly visualize the x and y variables.
 plot(happiness ~ income, data = df)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 4.  Homoscedasticity (aka homogeneity of variance)
 
@@ -276,7 +288,7 @@ par(mfrow=c(2,2))
 plot(lm)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ``` r
 par(mfrow=c(1,1))
