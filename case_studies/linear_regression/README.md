@@ -1,18 +1,25 @@
 Linear regression example: income vs. happiness
 ================
 Steve Moran
-(10 March, 2023)
+(20 March, 2023)
 
 - [Overvierw](#overvierw)
 - [Load the data](#load-the-data)
 - [Define your hypothesis](#define-your-hypothesis)
 - [Choose a statistical test](#choose-a-statistical-test)
 - [Check your model assumptions](#check-your-model-assumptions)
+  - [1. Independence](#1-independence)
+  - [2. Normality](#2-normality)
+  - [3. Linearity](#3-linearity)
+  - [4. Homoscedasticity (aka homogeneity of
+    variance)](#4-homoscedasticity-aka-homogeneity-of-variance)
 - [Perform the linear regression
   analysis](#perform-the-linear-regression-analysis)
 - [Check for homoscedasticity](#check-for-homoscedasticity)
 
 ------------------------------------------------------------------------
+
+Load the libraries.
 
 ``` r
 library(tidyverse)
@@ -23,12 +30,48 @@ library(knitr)
 
 # Overvierw
 
-Statistical modeling is an attempt to describe some part of the real
-world in mathematical terms.
+This example from:
 
-The relevant mathematical concept is the one of **function**.
+- <https://www.scribbr.com/statistics/simple-linear-regression/>
 
-Consider for example the input of `income` and output of `happiness`.
+> > > Bevans, R. (2022, November 15). Simple Linear Regression \| An
+> > > Easy Introduction & Examples. Scribbr. Retrieved March 20, 2023,
+> > > from
+> > > <https://www.scribbr.com/statistics/simple-linear-regression/>
+
+The data below are from this example and the dataset includes an
+**imaginary sample**:
+
+> > > The first dataset contains observations about income (in a range
+> > > of \$15k to \$75k) and happiness (rated on a scale of 1 to 10) in
+> > > an imaginary sample of 500 people. The income values are divided
+> > > by 10,000 to make the income data match the scale of the happiness
+> > > scores (so a value of \$2 represents \$20,000, \$3 is \$30,000,
+> > > etc.)
+
+However, published researched on this topic in general includes, for
+example:
+
+- <https://www.pnas.org/doi/pdf/10.1073/pnas.2016976118>
+
+> > > What is the relationship between money and well-being? Research
+> > > distinguishes between two forms of well-being: people’s feelings
+> > > during the moments of life (experienced well-being) and people’s
+> > > evaluation of their lives when they pause and reflect (evaluative
+> > > well-being). Drawing on 1,725,994 experience-sampling reports from
+> > > 33,391 employed US adults, the present results show that both
+> > > experienced and evaluative well-being increased linearly with
+> > > log(income), with an equally steep slope for higher earners as for
+> > > lower earners. There was no evidence for an experienced well-being
+> > > plateau above \$75,000/y, contrary to some influential past
+> > > research. There was also no evidence of an income threshold at
+> > > which experienced and evaluative well-being diverged, sug- gesting
+> > > that higher incomes are associated with both feeling bet- ter
+> > > day-to-day and being more satisfied with life overall.
+
+With data available here:
+
+- <https://osf.io/cfnbv>
 
 # Load the data
 
@@ -53,6 +96,13 @@ head(df) %>%
 |   4 | 3.214372 |  2.791114 |
 |   5 | 7.196409 |  5.596398 |
 |   6 | 3.729643 |  2.458556 |
+
+What are the variables for:
+
+- income?
+- happiness?
+
+How do we get an overall summary statistic of each?
 
 ``` r
 summary(df)
@@ -197,14 +247,14 @@ Here is a good and simple overview of linear models:
 
 ------------------------------------------------------------------------
 
-1.  Independence
+## 1. Independence
 
 For income and happiness, we only have one independent variable and one
 dependent variable for each athlete, so we don’t need to test for any
 hidden relationships among the variables. In other words, we have
 independence of observations.
 
-2.  Normality
+## 2. Normality
 
 We need to check if the dependent variable is normally distributed. We
 can quickly visualize it. Does it look normal?
@@ -229,7 +279,7 @@ qqline(df$income, col = "steelblue", lwd = 2) # Add a blue line for reference
 
 ![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
-3.  Linearity
+## 3. Linearity
 
 As we saw above, the data are linearly distributed. Here’s another way
 to quickly visualize the x and y variables.
@@ -240,7 +290,7 @@ plot(happiness ~ income, data = df)
 
 ![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
-4.  Homoscedasticity (aka homogeneity of variance)
+## 4. Homoscedasticity (aka homogeneity of variance)
 
 This means that the prediction error doesn’t change significantly over
 the range of prediction of the model. We can test this assumption later,
