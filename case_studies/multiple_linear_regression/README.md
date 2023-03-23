@@ -1,9 +1,9 @@
 Multiple linear regression example: heart disease
 ================
 Steve Moran
-(20 March, 2023)
+(22 March, 2023)
 
-- [Overvierw](#overvierw)
+- [Overview](#overview)
 - [Load the data](#load-the-data)
 - [Define your hypothesis](#define-your-hypothesis)
 - [Choose a statistical test](#choose-a-statistical-test)
@@ -25,32 +25,32 @@ library(knitr)
 
 ------------------------------------------------------------------------
 
-# Overvierw
+# Overview
 
-This example from:
+One way to test whether there is a relationship between two or more
+independent variables and a dependent variable is [multiple linear
+regression](https://en.wikipedia.org/wiki/Linear_regression).
 
-- <https://www.scribbr.com/statistics/simple-linear-regression/>
+Multiple linear regression is used to estimate the relationship between
+**two or more independent variables** and **one dependent variable**.
+
+You can use multiple linear regression when you want to know:
+
+1.  How strong the relationship is between two or more independent
+    variables and one dependent variable, e.g. how rainfall,
+    temperature, and amount of fertilizer added affect crop growth.
+
+2.  The value of the dependent variable at a certain value of the
+    independent variables, e.g. the expected yield of a crop at certain
+    levels of rainfall, temperature, and fertilizer addition.
+
+Let’s look at an example taken from:
 
 > > > Bevans, R. (2022, November 15). Multiple Linear Regression \| A
 > > > Quick Guide (Examples). Scribbr. Retrieved March 20, 2023, from
 > > > <https://www.scribbr.com/statistics/multiple-linear-regression/>
 
-Recall that multiple linear regression is used to estimate the
-relationship between **two or more independent variables** and **one
-dependent variable**.
-
-You can use multiple linear regression when you want to know:
-
-1.  How strong the relationship is between two or more independent
-    variables and one dependent variable (e.g. how rainfall,
-    temperature, and amount of fertilizer added affect crop growth).
-
-2.  The value of the dependent variable at a certain value of the
-    independent variables (e.g. the expected yield of a crop at certain
-    levels of rainfall, temperature, and fertilizer addition).
-
-The data below are from this example and the dataset includes an
-**imaginary sample**:
+These data are an **imaginary sample**:
 
 > > > You are a public health researcher interested in social factors
 > > > that influence heart disease. You survey 500 towns and gather data
@@ -64,6 +64,8 @@ And:
 > > > variable, and all your variables are quantitative, you can use
 > > > multiple linear regression to analyze the relationship between
 > > > them.
+
+Let’s go!
 
 # Load the data
 
@@ -131,48 +133,6 @@ disease, what would be our:
 - Independent (exploratory) variable(s)?
 - Dependent (outcome) variable(s)?
 
-# Define your hypothesis
-
-Recall any hypothesis testing follows these steps, broadly speaking:
-
-1.  Choose a significance level (α)
-2.  Formulate a null hypothesis, H0
-3.  Formulate an alternative hypothesis, H1
-4.  Gather data, calculate a test statistic, e.g. T or F
-5.  Determine the probability (p-value) of obtaining T or F “or a more
-    extreme value” under H0
-6.  If p ≤ α, reject H0
-
-And the basic process is:
-
-- Set up a hypothesis, and assume that it is true.
-- Gather data from some real-world experiment that is relevant to the
-  hypothesis.
-- Make a determination about the hypothesis, based on the idea of “how
-  likely is our data given the hypothesis?”
-
-Let’s go through an example.
-
-------------------------------------------------------------------------
-
-First, let’s set up our hypothesis regarding biking, smoking, and heart
-disease.
-
-- H0:
-- H1:
-
-# Choose a statistical test
-
-What kind of statistical test can we use to test if there’s a
-relationship between these variables?
-
-Recall that the independent variable (predictor variable) is the
-variable that is being manipulated, so that we can observe if there is
-an effect on the dependent variable (outcome variable).
-
-- Independent variable(s) – Predictor variable(s)
-- Dependent variable(s) – Outcome/Output variable(s)
-
 One way to look at that relationship is to **plot the input** on the
 x-axis and the output on the y-axis in a scatter plot.
 
@@ -199,10 +159,10 @@ visualizing it.
 
 ``` r
 ggplot(df) +
-  geom_jitter(aes(biking, heart.disease), colour="red") +
-  geom_smooth(aes(biking, heart.disease, col="red"), method="lm", se=FALSE)+
-  geom_jitter(aes(smoking, heart.disease), colour="green") + 
-  geom_smooth(aes(smoking, heart.disease, col="green"), method="lm", se=FALSE)
+  geom_jitter(aes(biking, heart.disease), color="red") +
+  geom_smooth(aes(biking, heart.disease, col="biking"), method="lm", se=FALSE) +
+  geom_jitter(aes(smoking, heart.disease), color="green") + 
+  geom_smooth(aes(smoking, heart.disease, col="smoking"), method="lm", se=FALSE)
 ```
 
     ## `geom_smooth()` using formula = 'y ~ x'
@@ -224,17 +184,47 @@ ggpairs(df, columns = 2:4)
 
 ![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
+# Define your hypothesis
+
+Recall any hypothesis testing follows these steps, broadly speaking:
+
+1.  Choose a significance level (α)
+2.  Formulate a null hypothesis, H0
+3.  Formulate an alternative hypothesis, H1
+4.  Gather data, calculate a test statistic, e.g. T or F
+5.  Determine the probability (p-value) of obtaining T or F “or a more
+    extreme value” under H0
+6.  If p ≤ α, reject H0
+
+And the basic process is:
+
+- Set up a hypothesis, and assume that it is true.
+- Gather data from some real-world experiment that is relevant to the
+  hypothesis.
+- Make a determination about the hypothesis, based on the idea of “how
+  likely is our data given the hypothesis?”
+
 ------------------------------------------------------------------------
 
-One way to test whether there is a relationship between two or more
-independent variables and a dependent variable is [multiple linear
-regression](https://en.wikipedia.org/wiki/Linear_regression).
+First, let’s set up our hypothesis regarding biking, smoking, and heart
+disease.
+
+- H0:
+- H1:
+
+# Choose a statistical test
+
+What kind of statistical test can we use to test if there’s a
+relationship between these variables?
+
+Recall that the independent variable (predictor variable) is the
+variable that is being manipulated, so that we can observe if there is
+an effect on the dependent variable (outcome variable).
+
+- Independent variable(s) – Predictor variable(s)
+- Dependent variable(s) – Outcome/Output variable(s)
 
 # Check your model assumptions
-
-But hold on. Just because we see a pattern does not necessarily mean
-it’s there. We have to be careful of statistical bias. How can we
-control for bias?
 
 Like other statistical tests, **you will have to know the (four) main
 assumptions** for multiple linear regression, i.e.:
@@ -368,27 +358,44 @@ summary(lm)
     ## Multiple R-squared:  0.9796, Adjusted R-squared:  0.9795 
     ## F-statistic: 1.19e+04 on 2 and 495 DF,  p-value: < 2.2e-16
 
+How to interpret the results?
+
+- The `Call` tells us what we’ve done.
+
+- The `Residuals` reports the residuals and if they are centered roughly
+  around zero with similar spreads on either side, then the model is
+  likely a good fit for the assumption of heteroscedasticity.
+
+- The regression `Coefficients` of the model show the `Intercept` in the
+  first row, i.e., the y-intercept in the regression equation. This
+  allows us to predict the values of the dependent variable:
+
+> > > heart disease = 15 + (-0.2*biking) + (0.178*smoking) ± e
+
 The estimated effect of biking on heart disease is -0.2 and the
-estimated effect of smoking is 0.178.
+estimated effect of smoking is 0.178. In other words:
 
-For every 1% increase in biking to work, there is a correlated 0.2%
-decrease in the incidence of heart disease.
+- For every 1% increase in biking to work, there is a correlated 0.2%
+  decrease in the incidence of heart disease.
 
-For every 1% increase in smoking, there is a 0.178% increase in the rate
-of heart disease.
+- For every 1% increase in smoking, there is a 0.178% increase in the
+  rate of heart disease.
 
 The standard errors for these regression coefficients are very small,
-and the t statistics are very large (-147 and 50.4, respectively).
+which shows how much variation there is around the estimates of the
+regression coefficent.
+
+The t(est) statistics are very large (-147 and 50.4, respectively) – the
+larger the test, the less likely the results occurred by chance. A
+t-test is a statistical test used to compare the means of two groups.
 
 The p values reflect these small errors and large t statistics.
 
 For both parameters, there is almost zero probability that this effect
 is due to chance.
 
-Recall these data are fake!
-
-But what can we say about the relationship between biking and smoking on
-heart disease?
+Recall these data are fake! So, what can we say about the relationship
+between biking and smoking on heart disease?
 
 ------------------------------------------------------------------------
 
