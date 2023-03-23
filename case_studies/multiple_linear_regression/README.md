@@ -1,15 +1,15 @@
 Multiple linear regression example: heart disease
 ================
 Steve Moran
-(22 March, 2023)
+(23 March, 2023)
 
 - [Overview](#overview)
 - [Load the data](#load-the-data)
 - [Define your hypothesis](#define-your-hypothesis)
 - [Choose a statistical test](#choose-a-statistical-test)
 - [Check your model assumptions](#check-your-model-assumptions)
-- [Perform the linear regression
-  analysis](#perform-the-linear-regression-analysis)
+- [Perform the multiple linear regression
+  analysis](#perform-the-multiple-linear-regression-analysis)
 - [Check for homoscedasticity](#check-for-homoscedasticity)
 - [Visualizing the multiple
   regression](#visualizing-the-multiple-regression)
@@ -329,7 +329,7 @@ This means that the prediction error doesn’t change significantly over
 the range of prediction of the model. We can test this assumption later,
 after fitting the linear model.
 
-# Perform the linear regression analysis
+# Perform the multiple linear regression analysis
 
 So now we can do our linear regression and interpret the results.
 

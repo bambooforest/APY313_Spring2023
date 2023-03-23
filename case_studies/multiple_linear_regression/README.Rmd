@@ -214,7 +214,7 @@ plot(heart.disease ~ smoking, data = df)
 This means that the prediction error doesn't change significantly over the range of prediction of the model. We can test this assumption later, after fitting the linear model.
 
 
-# Perform the linear regression analysis
+# Perform the multiple linear regression analysis
 
 So now we can do our linear regression and interpret the results.
 
