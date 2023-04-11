@@ -2,22 +2,25 @@ Data modeling and statistical testing
 ================
 Steven Moran & Alena Witzlack-Makarevich
 
-11 March, 2023
+11 April, 2023
 
 - [Data modeling](#data-modeling)
 - [Descriptive statistics](#descriptive-statistics)
 - [The big picture](#the-big-picture)
+  - [Overview](#overview)
+  - [A bit of history](#a-bit-of-history)
+  - [Practice problems](#practice-problems)
 - [Hypothesis testing](#hypothesis-testing)
   - [Procedure](#procedure)
   - [Directional vs. non-directional
     hypothesis](#directional-vs-non-directional-hypothesis)
-  - [Conceptual steps](#conceptual-steps)
-  - [Type I and type II errors](#type-i-and-type-ii-errors)
-- [Choosing the right statistic](#choosing-the-right-statistic)
-  - [Statistical assumptions](#statistical-assumptions)
+  - [Choosing the right statistic](#choosing-the-right-statistic)
   - [Parametric tests](#parametric-tests)
   - [Parametric versus nonparametric
     statistics](#parametric-versus-nonparametric-statistics)
+  - [Statistical assumptions](#statistical-assumptions)
+  - [Conceptual steps](#conceptual-steps)
+  - [Type I and type II errors](#type-i-and-type-ii-errors)
 - [Correlation vs causation](#correlation-vs-causation)
 - [Some case studies using statistical
   tests](#some-case-studies-using-statistical-tests)
@@ -216,6 +219,8 @@ summary(athletes)
 
 # The big picture
 
+## Overview
+
 Here is the big picture.
 
 ![The big picture.](figures/big_picture.png) Here’s also a useful
@@ -223,7 +228,7 @@ tutorial:
 
 - <http://varianceexplained.org/RData/>
 
-------------------------------------------------------------------------
+## A bit of history
 
 A bit of history about statistics.
 
@@ -296,7 +301,7 @@ every language, every sentence ever produced).
 When properties of the population are inferred from a sample, we are
 undertaking **statistical inference**.
 
-------------------------------------------------------------------------
+## Practice problems
 
 **Population or sample?**
 
@@ -516,41 +521,7 @@ expressions used by men and women when they speak about sex.
 3b. H1: There is a difference in the relative frequencies of metaphoric
 expressions used by men and women when they speak about sex.
 
-## Conceptual steps
-
-Here is a figure of the conceptual steps.
-
-<figure>
-<img src="figures/conceptual_steps.png" alt="Conceptual steps." />
-<figcaption aria-hidden="true">Conceptual steps.</figcaption>
-</figure>
-
-## Type I and type II errors
-
-In general:
-
-<figure>
-<img src="figures/errors_1.png" alt="Type I and type II errors." />
-<figcaption aria-hidden="true">Type I and type II errors.</figcaption>
-</figure>
-
-In medical statistics, false positives and false negatives are concepts
-analogous to type I and type II errors in statistical hypothesis
-testing:
-
-<figure>
-<img src="figures/errors_2.png" alt="Conceptual steps." />
-<figcaption aria-hidden="true">Conceptual steps.</figcaption>
-</figure>
-
-And in machine learning e.g., for a classifier spam vs. not spam:
-
-<figure>
-<img src="figures/errors_3.png" alt="Conceptual steps." />
-<figcaption aria-hidden="true">Conceptual steps.</figcaption>
-</figure>
-
-# Choosing the right statistic
+## Choosing the right statistic
 
 **As data scientists, we may or may not be seasoned statisticians!**
 
@@ -607,27 +578,6 @@ statistical test to use!
 - <https://www.scribbr.com/statistics/statistical-tests/>
 
 - <https://dacg.in/2018/11/17/statistical-test-cheat-sheet/>
-
-## Statistical assumptions
-
-Statistical tests make assumptions about the data being tested. If the
-assumptions for a given statistical test are violated, then the test is
-not valid and the results may also not be valid.
-
-1.  **Independence of observations**: the observations/variables you
-    include in your test should not be related(e.g. several tests from a
-    same test subject are not independent, while several tests from
-    multiple different test subjects are independent)
-
-2.  **Homogeneity of variance**: the “variance” within each group is
-    being compared should be similar to the rest of the group variance.
-    If a group has a bigger variance than the other(s) this will limit
-    the test’s effectiveness.
-
-3.  **Normality of data**: the data follows a normal distribution,
-    normality means that the distribution of the test is normally
-    distributed (or bell-shaped) with mean 0, with 1 standard deviation
-    and a symmetric bell-shaped curve.
 
 ## Parametric tests
 
@@ -702,6 +652,78 @@ distribution. This is why they are also called distribution-free tests.
 </figure>
 
 **Ask**: what are the assumptions of the statistical test?
+
+## Statistical assumptions
+
+Statistical tests make assumptions about the data being tested. If the
+assumptions for a given statistical test are violated, then the test is
+not valid and the results may also not be valid.
+
+1.  **Independence of observations**: the observations/variables you
+    include in your test should not be related(e.g. several tests from a
+    same test subject are not independent, while several tests from
+    multiple different test subjects are independent)
+
+2.  **Homogeneity of variance**: the “variance” within each group is
+    being compared should be similar to the rest of the group variance.
+    If a group has a bigger variance than the other(s) this will limit
+    the test’s effectiveness.
+
+3.  **Normality of data**: the data follows a normal distribution,
+    normality means that the distribution of the test is normally
+    distributed (or bell-shaped) with mean 0, with 1 standard deviation
+    and a symmetric bell-shaped curve.
+
+See the case study on income vs. happiness for a detailed example of
+checking statistical assumption in a linear regression model:
+
+- [Linear regression example: income
+  vs. happiness](../case_studies/linear_regression/README.md)
+
+## Conceptual steps
+
+Here is a figure of the conceptual steps.
+
+<figure>
+<img src="figures/conceptual_steps.png" alt="Conceptual steps." />
+<figcaption aria-hidden="true">Conceptual steps.</figcaption>
+</figure>
+
+## Type I and type II errors
+
+In general:
+
+<figure>
+<img src="figures/errors_1.png" alt="Type I and type II errors." />
+<figcaption aria-hidden="true">Type I and type II errors.</figcaption>
+</figure>
+
+In medical statistics, false positives and false negatives are concepts
+analogous to type I and type II errors in statistical hypothesis
+testing:
+
+<figure>
+<img src="figures/errors_2.png" alt="Conceptual steps." />
+<figcaption aria-hidden="true">Conceptual steps.</figcaption>
+</figure>
+
+And in machine learning e.g., for a classifier spam vs. not spam:
+
+<figure>
+<img src="figures/errors_3.png" alt="Conceptual steps." />
+<figcaption aria-hidden="true">Conceptual steps.</figcaption>
+</figure>
+
+And as an application or theory about fake news:
+
+<figure>
+<img src="figures/fake_news.png" alt="Conceptual steps." />
+<figcaption aria-hidden="true">Conceptual steps.</figcaption>
+</figure>
+
+Which is taken from:
+
+- <https://twitter.com/JWGrieve/status/1641057330585296897>
 
 # Correlation vs causation
 
