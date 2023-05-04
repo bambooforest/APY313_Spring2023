@@ -1,7 +1,7 @@
 Data
 ================
 Steven Moran
-(13 February, 2023)
+(04 May, 2023)
 
 - [What is data?](#what-is-data)
 - [Structured versus unstructured
@@ -15,6 +15,7 @@ Steven Moran
 - [Data types](#data-types)
   - [Overview](#overview)
   - [Data types in R](#data-types-in-r)
+  - [Data structures in R](#data-structures-in-r)
   - [Data types in programming vs
     statistics](#data-types-in-programming-vs-statistics)
   - [Data types in statistics](#data-types-in-statistics)
@@ -674,6 +675,34 @@ c != c
 
     ## [1] FALSE
 
+## Data structures in R
+
+R has six basic [data
+structures](https://en.wikipedia.org/wiki/Data_structure):
+
+- Vector: an ordered collection of the same basic data types, i.e.,
+  1-dimension of homogeneous data types
+- List: a generic object that contain objects of different types, i.e.,
+  1D, heterogeneous)
+- Matrix: a vector with attributes (called dimensions) of the same data
+  types, i.e., 2D homogeneous
+- Array: multidimensional matrices of the same data types, i.e., no
+  dimensionality, homogeneous
+- Data frame: an object consisting of columns and rows (2D,
+  heterogeneous)
+
+<!--
+  Homogeneous   Heterogeneous
+1d  Atomic vector   List
+2d  Matrix  Data frame
+nd  Array
+&#10;add tibbles
+-->
+
+Here’s a nice overview:
+
+- <https://intro2r.com/data-structures.html>
+
 When you have a sequence of the **same** data type, R calls these
 vectors.
 
@@ -1129,6 +1158,7 @@ that I use:
 - <https://archive.ics.uci.edu/ml/index.php>
 - <https://opendata.swiss/en/>
 - <https://zenodo.org>
+- <https://library.harvard.edu/services-tools/harvard-dataverse>
 
 But don’t be shy – use search to find other places! For example:
 
@@ -1601,13 +1631,13 @@ words_df %>%
     ##  2 a              3
     ##  3 sit            3
     ##  4 velit          3
-    ##  5 amet           2
-    ##  6 dui            2
-    ##  7 elit           2
-    ##  8 enim.          2
-    ##  9 eu             2
-    ## 10 id             2
-    ## # … with 80 more rows
+    ##  5 Morbi          2
+    ##  6 amet           2
+    ##  7 dui            2
+    ##  8 elit           2
+    ##  9 enim.          2
+    ## 10 eu             2
+    ## # ℹ 80 more rows
 
 We can save the results to another data frame or we can write them to
 disk as a table for later use, e.g., as a CSV file (more in next

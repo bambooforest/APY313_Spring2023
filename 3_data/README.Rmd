@@ -677,6 +677,7 @@ There is a lot of openly available datasets out there. Here are some that I use:
 * https://archive.ics.uci.edu/ml/index.php
 * https://opendata.swiss/en/
 * https://zenodo.org
+* https://library.harvard.edu/services-tools/harvard-dataverse
 
 But don't be shy -- use search to find other places! For example:
 
